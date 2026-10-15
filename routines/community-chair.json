@@ -1,0 +1,27 @@
+{
+  "format": "open-yoga-routine/1",
+  "id": "community-chair",
+  "title": "Community chair class",
+  "description": "A short chair sequence for community halls, libraries and seniors' groups. Everything happens seated or holding the chair.",
+  "author": { "name": "Open Yoga Poses", "url": "https://github.com/syntithenai/open-yoga-poses" },
+  "level": 1,
+  "language": "en",
+  "tags": ["chair", "seniors", "community", "gentle"],
+  "steps": [
+    { "section": "Settle", "pose": "chair-mountain", "holdSec": 60, "cue": "Feet flat, sit tall, hands resting on the thighs." },
+    { "pose": "seated-cat", "holdSec": 10, "cue": "Exhale and round the back." },
+    { "pose": "seated-cow", "holdSec": 10, "cue": "Inhale and lift the chest." },
+    { "pose": "seated-cat", "holdSec": 10 },
+    { "pose": "seated-cow", "holdSec": 10 },
+    { "section": "Upper body", "pose": "seated-cactus-arms", "holdSec": 20, "cue": "Elbows wide, shoulder blades gently together." },
+    { "pose": "chair-eagle-arms", "holdSec": 20, "side": "right" },
+    { "pose": "chair-eagle-arms", "holdSec": 20, "side": "left" },
+    { "pose": "chair-spine-twist", "holdSec": 25, "side": "right", "cue": "Lengthen up on the inhale, turn a little on the exhale." },
+    { "pose": "chair-spine-twist", "holdSec": 25, "side": "left" },
+    { "section": "Hips and legs", "pose": "chair-figure-four", "holdSec": 30, "side": "right", "cue": "Only lean forward if it feels good." },
+    { "pose": "chair-figure-four", "holdSec": 30, "side": "left" },
+    { "pose": "chair-hinge-fold", "holdSec": 30, "cue": "Hinge from the hips and let the head hang." },
+    { "pose": "chair-sit-to-stand", "holdSec": 30, "cue": "Stand up and sit down slowly, as many times as is comfortable." },
+    { "section": "Rest", "pose": "seated-rest", "holdSec": 90, "cue": "Close the eyes if you like, and let the breath be easy." }
+  ]
+}

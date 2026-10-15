@@ -1,0 +1,54 @@
+name: Pose correction
+description: Something about a 3D pose doesn't look right.
+title: "Pose correction: "
+labels: ["pose correction"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you. Describe what's off in your own words; you don't need any 3D skills. Please don't attach photos you don't own.
+  - type: input
+    id: pose
+    attributes:
+      label: Pose id
+      description: Shown in the viewer under the pose name, for example `warrior-ii`.
+      placeholder: warrior-ii
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Which part of the body?
+      multiple: true
+      options:
+        - Feet and legs
+        - Hips and pelvis
+        - Spine and chest
+        - Shoulders and arms
+        - Hands
+        - Head and neck
+        - Whole body (facing, balance, on the floor)
+  - type: textarea
+    id: correction
+    attributes:
+      label: What should change?
+      description: For example "the back heel should be down" or "the hips should face the long edge of the mat".
+    validations:
+      required: true
+  - type: input
+    id: tradition
+    attributes:
+      label: Tradition or style (optional)
+      description: If the correction is specific to a style, such as Iyengar or Ashtanga.
+  - type: input
+    id: source
+    attributes:
+      label: Source (optional)
+      description: A link to a reference, if you have one.
+  - type: checkboxes
+    id: licence
+    attributes:
+      label: Licence
+      options:
+        - label: I agree my suggestion can be used in the pose data under CC BY-SA 4.0.
+          required: true

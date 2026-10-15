@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Open Yoga Poses: an open library of 3D yoga poses</title>
+    <meta name="description" content="Search about 300 yoga poses in 3D by English or Sanskrit name, muscle or category. Open data (CC BY-SA 4.0) that teachers and practitioners help refine." />
+    <link rel="stylesheet" href="viewer/style.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "./vendor/three/build/three.module.js",
+          "three/addons/": "./vendor/three/examples/jsm/"
+        }
+      }
+    </script>
+    <script type="module" src="viewer/app.js"></script>
+  </head>
+  <body>
+    <header class="top">
+      <div>
+        <h1>Open Yoga Poses</h1>
+        <p class="lede">An open library of 3D yoga poses, made for love and curiosity. Spot something wrong? Suggest a fix: every correction stays open for everyone.</p>
+      </div>
+      <nav>
+        <a href="https://github.com/syntithenai/open-yoga-poses">GitHub</a>
+        <a href="https://github.com/syntithenai/open-yoga-poses/blob/main/CONTRIBUTING.md">Contribute</a>
+        <a href="https://github.com/syntithenai/open-yoga-poses/tree/main/routines">Routines</a>
+      </nav>
+    </header>
+
+    <main class="layout">
+      <section class="browse" aria-label="Find a pose">
+        <input id="q" type="search" placeholder="Search: warrior, trikonasana, hamstrings…" autocomplete="off" aria-label="Search poses" />
+        <div id="cats" class="chips" role="group" aria-label="Category"></div>
+        <p id="count" class="muted"></p>
+        <ul id="list" class="list"></ul>
+      </section>
+
+      <section class="stage" aria-label="3D view">
+        <div id="view" class="view"><p id="status" class="status">Loading…</p></div>
+        <div class="stage-bar">
+          <label>Body <select id="character"></select></label>
+          <button id="reset" type="button">Reset view</button>
+        </div>
+      </section>
+
+      <section id="info" class="info" aria-live="polite"></section>
+    </main>
+
+    <footer class="foot">
+      <p>Pose data, routines and catalog: <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>, Open Yoga Poses contributors. Bodies: CC0 (Anny, MakeHuman). Viewer code: MIT.</p>
+      <p>From <a href="https://yoga.synthfit.online/">SynthYoga</a>, a free yoga app with free tools for teachers and community classes: <a href="https://yoga.synthfit.online/for-teachers">yoga.synthfit.online/for-teachers</a>.</p>
+    </footer>
+  </body>
+</html>

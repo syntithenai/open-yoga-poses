@@ -1,0 +1,258 @@
+:root {
+  --ink: #3b1d12;
+  --accent: #a3261c;
+  --soft: #f7ebd9;
+  --paper: #fffaf2;
+  --muted: #7a6458;
+  --line: #e8d8c3;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+a {
+  color: var(--accent);
+}
+
+.top {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 2rem;
+  align-items: end;
+  justify-content: space-between;
+  padding: 1rem 1.25rem 0.75rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.top h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.lede {
+  margin: 0.25rem 0 0;
+  max-width: 46rem;
+  color: var(--muted);
+}
+
+.top nav {
+  display: flex;
+  gap: 1rem;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(15rem, 20rem) 1fr minmax(15rem, 22rem);
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  min-height: calc(100vh - 12rem);
+}
+
+.browse {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+#q {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  font-size: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+  background: #fff;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0.6rem 0 0.25rem;
+}
+
+.chips button {
+  padding: 0.25rem 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink);
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.chips button[aria-pressed='true'] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  max-height: calc(100vh - 19rem);
+  border-top: 1px solid var(--line);
+}
+
+.list button {
+  display: block;
+  width: 100%;
+  padding: 0.45rem 0.5rem;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+
+.list button:hover,
+.list button[aria-current='true'] {
+  background: var(--soft);
+}
+
+.list small {
+  display: block;
+  color: var(--muted);
+}
+
+.stage {
+  display: flex;
+  flex-direction: column;
+  min-height: 24rem;
+}
+
+.view {
+  position: relative;
+  flex: 1;
+  min-height: 24rem;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background: linear-gradient(#fdf6ec, #f3e4cf);
+}
+
+.view canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.status {
+  position: absolute;
+  inset: auto 0 0 0;
+  margin: 0;
+  padding: 0.5rem;
+  text-align: center;
+  color: var(--muted);
+}
+
+.stage-bar {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.5rem;
+}
+
+.stage-bar select,
+.stage-bar button,
+.actions a,
+.actions button {
+  padding: 0.35rem 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: 0.4rem;
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.9rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.info h2 {
+  margin: 0;
+}
+
+.info .sanskrit {
+  margin: 0.15rem 0;
+  font-style: italic;
+}
+
+.info code {
+  background: var(--soft);
+  padding: 0.05rem 0.3rem;
+  border-radius: 0.25rem;
+}
+
+.info h3 {
+  margin: 1rem 0 0.25rem;
+  font-size: 0.95rem;
+}
+
+.info ul {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 1rem 0;
+}
+
+.actions .primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.note {
+  padding: 0.5rem 0.65rem;
+  border-left: 3px solid var(--accent);
+  background: var(--soft);
+  font-size: 0.85rem;
+}
+
+.foot {
+  padding: 0.75rem 1.25rem 1.5rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.foot p {
+  margin: 0.25rem 0;
+}
+
+@media (max-width: 960px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .stage {
+    order: -1;
+  }
+
+  .view {
+    min-height: 60vh;
+  }
+
+  .list {
+    max-height: 22rem;
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "format": "open-yoga-routine/1",
+  "id": "gentle-morning",
+  "title": "Gentle morning",
+  "description": "About ten easy minutes to wake up the spine, hips and legs. Suits beginners and stiff mornings.",
+  "author": { "name": "Open Yoga Poses", "url": "https://github.com/syntithenai/open-yoga-poses" },
+  "level": 1,
+  "language": "en",
+  "tags": ["morning", "gentle", "beginner"],
+  "steps": [
+    { "section": "Arrive", "pose": "easy", "holdSec": 60, "cue": "Sit tall and let the breath settle." },
+    { "pose": "table", "holdSec": 15, "cue": "Hands under shoulders, knees under hips." },
+    { "pose": "cat", "holdSec": 8, "cue": "Exhale and round the back." },
+    { "pose": "cow", "holdSec": 8, "cue": "Inhale and let the belly drop, chest forward." },
+    { "pose": "cat", "holdSec": 8 },
+    { "pose": "cow", "holdSec": 8 },
+    { "pose": "childs", "holdSec": 30, "cue": "Sink the hips back and rest the forehead down." },
+    { "section": "Open the hips", "pose": "low-lunge", "holdSec": 30, "side": "right" },
+    { "pose": "downward-facing-dog", "holdSec": 30, "cue": "Bend the knees as much as you like and lengthen the spine." },
+    { "pose": "low-lunge", "holdSec": 30, "side": "left" },
+    { "pose": "downward-facing-dog", "holdSec": 30 },
+    { "section": "Stand", "pose": "standing-forward-bend", "holdSec": 30, "cue": "Soft knees, heavy head." },
+    { "pose": "half-standing-forward-bend", "holdSec": 10 },
+    { "pose": "mountain", "holdSec": 20, "cue": "Feet grounded, crown lifting." },
+    { "pose": "upward-salute", "holdSec": 15, "cue": "Inhale the arms up." },
+    { "pose": "mountain", "holdSec": 30, "cue": "Notice how you feel." }
+  ]
+}

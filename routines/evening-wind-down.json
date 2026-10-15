@@ -1,0 +1,21 @@
+{
+  "format": "open-yoga-routine/1",
+  "id": "evening-wind-down",
+  "title": "Evening wind-down",
+  "description": "Slow floor poses to let the day go before sleep.",
+  "author": { "name": "Open Yoga Poses", "url": "https://github.com/syntithenai/open-yoga-poses" },
+  "level": 1,
+  "language": "en",
+  "tags": ["evening", "sleep", "restorative"],
+  "steps": [
+    { "pose": "childs", "holdSec": 60, "cue": "Let the forehead rest and the back body breathe." },
+    { "pose": "sphinx", "holdSec": 45, "cue": "Forearms down, shoulders soft." },
+    { "pose": "childs", "holdSec": 30 },
+    { "pose": "wind-removing", "holdSec": 30, "cue": "Hug the knees in and rock gently." },
+    { "pose": "supine-spinal-twist", "holdSec": 45, "side": "right" },
+    { "pose": "supine-spinal-twist", "holdSec": 45, "side": "left" },
+    { "pose": "happy-baby", "holdSec": 40 },
+    { "pose": "legs-up-wall", "holdSec": 120, "cue": "Let the legs rest against the wall and the breath slow down." },
+    { "pose": "corpse", "holdSec": 180, "cue": "Nothing to do. Let the floor hold you." }
+  ]
+}

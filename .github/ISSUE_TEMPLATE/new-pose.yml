@@ -1,0 +1,39 @@
+name: Suggest a new pose
+description: A pose or named variation the library doesn't have yet.
+title: "New pose: "
+labels: ["new pose"]
+body:
+  - type: input
+    id: name
+    attributes:
+      label: English name
+    validations:
+      required: true
+  - type: input
+    id: sanskrit
+    attributes:
+      label: Sanskrit name (optional)
+  - type: input
+    id: base
+    attributes:
+      label: Is it a variation of a pose in the library? (optional)
+      description: The id of the base pose, for example `warrior-ii`.
+  - type: textarea
+    id: description
+    attributes:
+      label: How the body is arranged
+      description: Where the feet, hips, spine, arms and head are, and what touches the floor. Your own words, please.
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Source (optional)
+      description: A link to a reference, if you have one.
+  - type: checkboxes
+    id: licence
+    attributes:
+      label: Licence
+      options:
+        - label: I agree my suggestion can be used in the pose data under CC BY-SA 4.0.
+          required: true

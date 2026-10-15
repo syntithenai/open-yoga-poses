@@ -1,0 +1,55 @@
+name: Share a routine
+description: A sequence you teach or practise, for anyone to use.
+title: "Routine: "
+labels: ["routine"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        If you're comfortable with JSON you can add the routine directly as a file in `routines/` (see docs/FORMAT.md). Otherwise describe it here and a maintainer will turn it into a file and credit you.
+  - type: input
+    id: title
+    attributes:
+      label: Title
+    validations:
+      required: true
+  - type: input
+    id: author
+    attributes:
+      label: Credit as
+      description: Your name, and a link to your website or studio if you'd like one.
+    validations:
+      required: true
+  - type: dropdown
+    id: level
+    attributes:
+      label: Level
+      options:
+        - 1 Gentle
+        - 2 Easy
+        - 3 Moderate
+        - 4 Challenging
+        - 5 Advanced
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps
+      description: One pose per line with how long to hold it, and right or left for one-sided poses. Pose ids from the viewer help, but names are fine.
+      placeholder: |
+        easy, 60s
+        low-lunge, 30s, right
+        low-lunge, 30s, left
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes (optional)
+      description: Who it's for, cues you like to give, anything else.
+  - type: checkboxes
+    id: licence
+    attributes:
+      label: Licence
+      options:
+        - label: This is my own sequence and I agree to share it under CC BY-SA 4.0.
+          required: true

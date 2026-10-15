@@ -1,0 +1,29 @@
+{
+  "format": "open-yoga-routine/1",
+  "id": "standing-foundations",
+  "title": "Standing foundations",
+  "description": "The core standing poses, one side at a time, with time to find the shape. A good base for a beginners' course.",
+  "author": { "name": "Open Yoga Poses", "url": "https://github.com/syntithenai/open-yoga-poses" },
+  "level": 2,
+  "language": "en",
+  "tags": ["standing", "beginner", "strength"],
+  "steps": [
+    { "section": "Arrive", "pose": "mountain", "holdSec": 30, "cue": "Weight even across both feet." },
+    { "pose": "upward-salute", "holdSec": 10 },
+    { "pose": "standing-forward-bend", "holdSec": 20 },
+    { "pose": "half-standing-forward-bend", "holdSec": 10 },
+    { "pose": "mountain", "holdSec": 15 },
+    { "section": "Right side", "pose": "warrior-ii", "holdSec": 30, "side": "right", "cue": "Front knee over the ankle, arms long." },
+    { "pose": "reverse-warrior", "holdSec": 20, "side": "right" },
+    { "pose": "triangle", "holdSec": 30, "side": "right", "cue": "Lengthen out over the front leg before you tip." },
+    { "pose": "mountain", "holdSec": 15 },
+    { "section": "Left side", "pose": "warrior-ii", "holdSec": 30, "side": "left" },
+    { "pose": "reverse-warrior", "holdSec": 20, "side": "left" },
+    { "pose": "triangle", "holdSec": 30, "side": "left" },
+    { "pose": "mountain", "holdSec": 15 },
+    { "section": "Balance", "pose": "tree", "holdSec": 30, "side": "right", "cue": "Foot on the calf or thigh, never on the knee." },
+    { "pose": "tree", "holdSec": 30, "side": "left" },
+    { "pose": "garland", "holdSec": 30, "cue": "Heels down or on a folded blanket." },
+    { "pose": "mountain", "holdSec": 30 }
+  ]
+}
