@@ -3,7 +3,7 @@ MIT License
 Copyright (c) 2026 Steve Ryan and Open Yoga Poses contributors
 
 This licence covers the code in this repository: viewer/, tools/, index.html and
-.github/. Pose data, routines, catalog.json and muscles.json are licensed under
+.github/. Pose data, routines, catalog.json and transitions.json are licensed under
 CC BY-SA 4.0 (see LICENSE-DATA). Body meshes in characters/ are CC0 (see
 ATTRIBUTION.md). vendor/three/ is three.js under its own MIT licence.
 

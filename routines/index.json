@@ -1,0 +1,50 @@
+[
+ {
+  "id": "community-chair",
+  "title": "Community chair class",
+  "description": "A short chair sequence for community halls, libraries and seniors' groups. Everything happens seated or holding the chair.",
+  "level": 1,
+  "author": {
+   "name": "Open Yoga Poses",
+   "url": "https://github.com/syntithenai/open-yoga-poses"
+  },
+  "steps": 15,
+  "file": "community-chair.json"
+ },
+ {
+  "id": "evening-wind-down",
+  "title": "Evening wind-down",
+  "description": "Slow floor poses to let the day go before sleep.",
+  "level": 1,
+  "author": {
+   "name": "Open Yoga Poses",
+   "url": "https://github.com/syntithenai/open-yoga-poses"
+  },
+  "steps": 9,
+  "file": "evening-wind-down.json"
+ },
+ {
+  "id": "gentle-morning",
+  "title": "Gentle morning",
+  "description": "About ten easy minutes to wake up the spine, hips and legs. Suits beginners and stiff mornings.",
+  "level": 1,
+  "author": {
+   "name": "Open Yoga Poses",
+   "url": "https://github.com/syntithenai/open-yoga-poses"
+  },
+  "steps": 16,
+  "file": "gentle-morning.json"
+ },
+ {
+  "id": "standing-foundations",
+  "title": "Standing foundations",
+  "description": "The core standing poses, one side at a time, with time to find the shape. A good base for a beginners' course.",
+  "level": 2,
+  "author": {
+   "name": "Open Yoga Poses",
+   "url": "https://github.com/syntithenai/open-yoga-poses"
+  },
+  "steps": 17,
+  "file": "standing-foundations.json"
+ }
+]

@@ -4,8 +4,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Open Yoga Poses: an open library of 3D yoga poses</title>
-    <meta name="description" content="Search about 300 yoga poses in 3D by English or Sanskrit name, muscle or category. Open data (CC BY-SA 4.0) that teachers and practitioners help refine." />
+    <meta name="description" content="Search about 300 yoga poses in 3D by English or Sanskrit name or category, edit them in your browser and suggest fixes. Open data (CC BY-SA 4.0) that teachers and practitioners help refine." />
     <link rel="stylesheet" href="viewer/style.css" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23a3261c'/%3E%3C/svg%3E" />
     <script type="importmap">
       {
         "imports": {
@@ -20,18 +21,18 @@
     <header class="top">
       <div>
         <h1>Open Yoga Poses</h1>
-        <p class="lede">An open library of 3D yoga poses, made for love and curiosity. Spot something wrong? Suggest a fix: every correction stays open for everyone.</p>
+        <p class="lede">An open library of 3D yoga poses. Spot something wrong? Edit the body right here, then suggest your fix: every correction stays open for everyone. Edits save in your browser until you're ready.</p>
       </div>
       <nav>
+        <div id="auth" class="auth" aria-label="Account"></div>
         <a href="https://github.com/syntithenai/open-yoga-poses">GitHub</a>
-        <a href="https://github.com/syntithenai/open-yoga-poses/blob/main/CONTRIBUTING.md">Contribute</a>
-        <a href="https://github.com/syntithenai/open-yoga-poses/tree/main/routines">Routines</a>
+        <a href="routines.html">Routines</a>
       </nav>
     </header>
 
     <main class="layout">
       <section class="browse" aria-label="Find a pose">
-        <input id="q" type="search" placeholder="Search: warrior, trikonasana, hamstrings…" autocomplete="off" aria-label="Search poses" />
+        <input id="q" type="search" placeholder="Search: warrior, trikonasana, balance…" autocomplete="off" aria-label="Search poses" />
         <div id="cats" class="chips" role="group" aria-label="Category"></div>
         <p id="count" class="muted"></p>
         <ul id="list" class="list"></ul>
@@ -40,17 +41,19 @@
       <section class="stage" aria-label="3D view">
         <div id="view" class="view"><p id="status" class="status">Loading…</p></div>
         <div class="stage-bar">
-          <label>Body <select id="character"></select></label>
+          <button id="settings" type="button" aria-haspopup="dialog">Settings</button>
+          <p id="look-summary" class="look-summary muted" aria-live="polite"></p>
           <button id="reset" type="button">Reset view</button>
         </div>
       </section>
 
       <section id="info" class="info" aria-live="polite"></section>
+      <datalist id="pose-options"></datalist>
     </main>
 
     <footer class="foot">
-      <p>Pose data, routines and catalog: <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>, Open Yoga Poses contributors. Bodies: CC0 (Anny, MakeHuman). Viewer code: MIT.</p>
-      <p>From <a href="https://yoga.synthfit.online/">SynthYoga</a>, a free yoga app with free tools for teachers and community classes: <a href="https://yoga.synthfit.online/for-teachers">yoga.synthfit.online/for-teachers</a>.</p>
+      <p>Pose data, moves, routines and catalog: <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>, Open Yoga Poses contributors (credited on each pose and in git history). Bodies: CC0 (Anny, MakeHuman). Viewer code: MIT.</p>
+      <p>From <a href="https://yoga.synthfit.online/">SynthYoga</a>, a free yoga app with free tools for teachers and community classes: <a href="https://yoga.synthfit.online/#/for-teachers">yoga.synthfit.online/#/for-teachers</a>. Sign in with the same Google account to suggest poses and be credited.</p>
     </footer>
   </body>
 </html>

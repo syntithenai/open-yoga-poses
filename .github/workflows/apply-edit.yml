@@ -1,0 +1,75 @@
+name: Apply 3D edit
+
+# A maintainer adds the `apply-edit` label to an issue made with the viewer's Suggest buttons. This applies
+# the issue's 3D data with tools/apply_edit.py and opens a pull request crediting the issue's author.
+
+on:
+  issues:
+    types: [labeled]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+concurrency:
+  group: apply-edit-${{ github.event.issue.number }}
+
+jobs:
+  apply:
+    if: github.event.label.name == 'apply-edit'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Apply the 3D data
+        id: apply
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+        run: |
+          printf '%s' "$ISSUE_BODY" > "$RUNNER_TEMP/issue.md"
+          if python3 tools/apply_edit.py "$RUNNER_TEMP/issue.md" > "$RUNNER_TEMP/summary.txt" 2> "$RUNNER_TEMP/error.txt"; then
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Report a problem
+        if: steps.apply.outputs.ok != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          N: ${{ github.event.issue.number }}
+        run: |
+          gh issue comment "$N" --body-file "$RUNNER_TEMP/error.txt"
+          gh issue edit "$N" --remove-label apply-edit
+          exit 1
+      - run: python3 tools/validate.py
+      - name: Open a pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+          N: ${{ github.event.issue.number }}
+          TITLE: ${{ github.event.issue.title }}
+          LOGIN: ${{ github.event.issue.user.login }}
+          USER_ID: ${{ github.event.issue.user.id }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+        run: |
+          branch="edit/issue-$N"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$branch"
+          git add poses transitions.json catalog.json
+          if [ -d incoming ]; then git add incoming; fi
+          CREDIT="$(printf '%s' "$ISSUE_BODY" | sed -n 's/^- Credit: //p' | head -1 | tr -d '\r')"
+          if [ -n "$CREDIT" ]; then
+            COAUTHOR="Co-authored-by: $CREDIT <$USER_ID+$LOGIN@users.noreply.github.com>"
+            THANKS="$CREDIT (@$LOGIN)"
+          else
+            COAUTHOR="Co-authored-by: $LOGIN <$USER_ID+$LOGIN@users.noreply.github.com>"
+            THANKS="@$LOGIN"
+          fi
+          git commit -q -m "$TITLE (#$N)" -m "$(cat "$RUNNER_TEMP/summary.txt")" -m "$COAUTHOR"
+          git push -q -f origin "$branch"
+          body="$(cat "$RUNNER_TEMP/summary.txt") Applied from #$N by $THANKS. Closes #$N."
+          url="$(gh pr view "$branch" --json url -q .url 2>/dev/null || gh pr create --head "$branch" --title "$TITLE" --body "$body")"
+          gh issue comment "$N" --body "Thanks $THANKS! Your edit is ready for review: $url"

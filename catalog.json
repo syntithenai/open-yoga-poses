@@ -7,7 +7,6 @@
    "Open Heart Lord of the Dance Pose"
   ],
   "category": "standing",
-  "muscles": [],
   "drishti": "Forward, toward the extended hand (Hastagrai)",
   "basePoseId": "dancer"
  },
@@ -20,7 +19,6 @@
    "Sleeping Vishnu Pose"
   ],
   "category": "floor",
-  "muscles": [],
   "drishti": "forward"
  },
  {
@@ -28,7 +26,6 @@
   "name": "Pose Dedicated to Goddess Arani",
   "sanskrit": "Aranyasana",
   "category": "floor",
-  "muscles": [],
   "drishti": "Bhrumadhye or Ajna Chakra (third eye, between the eyebrows)",
   "basePoseId": "eight-point"
  },
@@ -40,12 +37,6 @@
    "Shooting Bow Pose"
   ],
   "category": "floor",
-  "muscles": [
-   "hamstrings",
-   "hips",
-   "shoulders",
-   "core"
-  ],
   "drishti": "Bhrumadhye or Ajna Chakra (third eye, between the eyebrows)"
  },
  {
@@ -60,12 +51,6 @@
    "sugarcane"
   ],
   "category": "standing",
-  "muscles": [
-   "standing-leg glutes",
-   "quads",
-   "hip flexors",
-   "shoulders"
-  ],
   "drishti": "down toward the floor",
   "basePoseId": "ardha-chandrasana-namaskar"
  },
@@ -79,12 +64,6 @@
   ],
   "category": "standing",
   "difficulty": 4,
-  "muscles": [
-   "standing-leg glutes",
-   "hamstrings",
-   "core",
-   "shoulders"
-  ],
   "drishti": "Down at the floor"
  },
  {
@@ -97,7 +76,6 @@
    "Half Fish Pose"
   ],
   "category": "floor",
-  "muscles": [],
   "drishti": "over the back shoulder",
   "basePoseId": "seated-twist"
  },
@@ -109,7 +87,6 @@
    "Low Boat Pose"
   ],
   "category": "floor",
-  "muscles": [],
   "drishti": "Padayoragrai or Padayoragre (toes/feet)",
   "basePoseId": "boat"
  },
@@ -118,7 +95,6 @@
   "name": "Half Lotus Pose",
   "sanskrit": "Ardha Padmasana",
   "category": "floor",
-  "muscles": [],
   "drishti": "forward",
   "basePoseId": "lotus"
  },
@@ -133,14 +109,6 @@
    "Half Eastern Intense Stretch Pose"
   ],
   "category": "floor",
-  "muscles": [
-   "glutes",
-   "hamstrings",
-   "triceps",
-   "shoulders",
-   "core",
-   "quadriceps"
-  ],
   "drishti": "Urdhva or Antara Drishti (up to the sky)",
   "basePoseId": "upward-plank"
  },
@@ -149,7 +117,6 @@
   "name": "Half Camel Pose",
   "sanskrit": "Ardha Ushtrasana",
   "category": "floor",
-  "muscles": [],
   "drishti": "Up and back, toward the camera",
   "basePoseId": "camel"
  },
@@ -161,7 +128,6 @@
    "Wind-Relieving Pose"
   ],
   "category": "floor",
-  "muscles": [],
   "drishti": "Nasagrai or Nasagre (nose)"
  },
  {
@@ -172,7 +138,6 @@
    "Baddha Hasta Utthita Nindra Vayu Muktyasana Prep"
   ],
   "category": "standing",
-  "muscles": [],
   "drishti": "forward"
  },
  {
@@ -183,7 +148,6 @@
    "Bound Yoga Squat"
   ],
   "category": "standing",
-  "muscles": [],
   "drishti": "Nasagrai or Nasagre (nose)",
   "basePoseId": "garland"
  },
@@ -197,7 +161,6 @@
    "Yogi Yogananda Pose"
   ],
   "category": "standing",
-  "muscles": [],
   "drishti": "steady forward gaze at a fixed point",
   "basePoseId": "dancer"
  },
@@ -211,13 +174,6 @@
    "Bound Warrior"
   ],
   "category": "standing",
-  "muscles": [
-   "hamstrings",
-   "quadriceps",
-   "glutes",
-   "shoulders",
-   "hip flexors"
-  ],
   "drishti": "Padayoragrai or Padayoragre (toes/feet)",
   "basePoseId": "warrior-i"
  },
@@ -232,11 +188,6 @@
   "tags": [
    "restorative"
   ],
-  "muscles": [
-   "obliques",
-   "IT band",
-   "side body"
-  ],
   "drishti": "eyes closed"
  },
  {
@@ -249,13 +200,6 @@
    "Seated Side Twist"
   ],
   "category": "floor",
-  "muscles": [
-   "obliques",
-   "spine",
-   "outer hips",
-   "neck",
-   "shoulders"
-  ],
   "drishti": "Parshva Drishti (over the back shoulder)"
  },
  {
@@ -267,14 +211,6 @@
    "Snake Pose"
   ],
   "category": "floor",
-  "muscles": [
-   "erector spinae",
-   "glutes",
-   "triceps",
-   "shoulders",
-   "chest",
-   "abdominals"
-  ],
   "drishti": "Nasagre (tip of the nose) or a soft forward gaze",
   "basePoseId": "cobra"
  },
@@ -287,11 +223,6 @@
    "padangushtasana"
   ],
   "category": "standing",
-  "muscles": [
-   "hamstrings",
-   "calves",
-   "forearms"
-  ],
   "drishti": "Nasagrai or Nasagre (nose)"
  },
  {
@@ -303,13 +234,6 @@
    "Bird Dog Pose"
   ],
   "category": "floor",
-  "muscles": [
-   "abdominals",
-   "lower back",
-   "glutes",
-   "hamstrings",
-   "shoulders"
-  ],
   "drishti": "Nasagrai or Nasagre (nose)",
   "basePoseId": "table"
  },
@@ -318,12 +242,6 @@
   "name": "Bird of Paradise",
   "sanskrit": "Svarga Dvijasana",
   "category": "standing",
-  "muscles": [
-   "hamstrings",
-   "shoulders",
-   "standing-leg glutes",
-   "core"
-  ],
   "drishti": "Forward, at a steady point"
  },
  {
@@ -332,11 +250,6 @@
   "sanskrit": "Navasana",
   "category": "floor",
   "difficulty": 3,
-  "muscles": [
-   "hip flexors",
-   "core",
-   "quads"
-  ],
   "drishti": "forward"
  },
  {
@@ -347,11 +260,6 @@
    "Two Legs Behind the Head Pose"
   ],
   "category": "floor",
-  "muscles": [
-   "hips",
-   "hamstrings",
-   "core"
-  ],
   "drishti": "forward"
  },
  {
@@ -362,11 +270,6 @@
    "Two Legs Behind the Head Pose"
   ],
   "category": "floor",
-  "muscles": [
-   "core",
-   "legs",
-   "postural muscles"
-  ],
   "drishti": "forward",
   "basePoseId": "both-feet-behind-the-head-i"
  },
@@ -381,11 +284,6 @@
   ],
   "category": "floor",
   "difficulty": 2,
-  "muscles": [
-   "adductors",
-   "hips",
-   "groin"
-  ],
   "drishti": "Forward, straight ahead"
  },
  {
@@ -393,11 +291,6 @@
   "name": "Bound Revolved Chair Pose",
   "sanskrit": "Baddha Parivritta Utkatasana",
   "category": "standing",
-  "muscles": [
-   "core",
-   "legs",
-   "postural muscles"
-  ],
   "drishti": "Urdhva or Antara Drishti (up to the sky)",
   "basePoseId": "chair"
  },
@@ -411,14 +304,6 @@
    "baddha-utthita-parshva-konasana"
   ],
   "category": "standing",
-  "muscles": [
-   "quadriceps",
-   "hamstrings",
-   "glutes",
-   "inner thighs",
-   "obliques",
-   "chest"
-  ],
   "drishti": "Urdhva or Antara Drishti (up to the sky)",
   "basePoseId": "extended-side-angle"
  },
@@ -428,12 +313,6 @@
   "sanskrit": "Dhanurasana",
   "category": "floor",
   "difficulty": 4,
-  "muscles": [
-   "spinal extensors",
-   "quads",
-   "chest",
-   "hip flexors"
-  ],
   "drishti": "Gaze forward, toward the tip of the nose"
  },
  {
@@ -445,12 +324,7 @@
    "Abdominal Breathing"
   ],
   "category": "breath",
-  "difficulty": 1,
-  "muscles": [
-   "diaphragm",
-   "belly",
-   "nervous system"
-  ]
+  "difficulty": 1
  },
  {
   "id": "breath-bhastrika",
@@ -461,12 +335,7 @@
    "Bellows Pranayama"
   ],
   "category": "breath",
-  "difficulty": 5,
-  "muscles": [
-   "abdominals",
-   "diaphragm",
-   "intercostals"
-  ]
+  "difficulty": 5
  },
  {
   "id": "breath-bhramari",
@@ -479,11 +348,6 @@
   ],
   "category": "breath",
   "difficulty": 1,
-  "muscles": [
-   "face",
-   "throat (soft)",
-   "nervous system"
-  ],
   "drishti": "eyes closed"
  },
  {
@@ -498,11 +362,6 @@
   ],
   "category": "breath",
   "difficulty": 1,
-  "muscles": [
-   "diaphragm",
-   "intercostals",
-   "nervous system"
-  ],
   "drishti": "eyes closed"
  },
  {
@@ -515,12 +374,7 @@
    "Breath of Fire (related)"
   ],
   "category": "breath",
-  "difficulty": 5,
-  "muscles": [
-   "abdominals",
-   "diaphragm",
-   "nervous system"
-  ]
+  "difficulty": 5
  },
  {
   "id": "breath-kumbhaka",
@@ -533,11 +387,6 @@
   ],
   "category": "breath",
   "difficulty": 5,
-  "muscles": [
-   "diaphragm",
-   "intercostals",
-   "nervous system"
-  ],
   "drishti": "upward"
  },
  {
@@ -550,12 +399,7 @@
    "Alternate Nostril"
   ],
   "category": "breath",
-  "difficulty": 1,
-  "muscles": [
-   "diaphragm",
-   "postural back",
-   "nervous system"
-  ]
+  "difficulty": 1
  },
  {
   "id": "breath-sama-vritti",
@@ -568,10 +412,6 @@
   ],
   "category": "breath",
   "difficulty": 1,
-  "muscles": [
-   "diaphragm",
-   "nervous system"
-  ],
   "drishti": "soft forward gaze"
  },
  {
@@ -585,12 +425,7 @@
    "Cooling Pranayama"
   ],
   "category": "breath",
-  "difficulty": 1,
-  "muscles": [
-   "tongue",
-   "diaphragm",
-   "nervous system"
-  ]
+  "difficulty": 1
  },
  {
   "id": "breath-ujjayi",
@@ -603,11 +438,6 @@
   ],
   "category": "breath",
   "difficulty": 1,
-  "muscles": [
-   "throat (soft)",
-   "diaphragm",
-   "postural back"
-  ],
   "drishti": "soft forward gaze"
  },
  {
@@ -620,12 +450,6 @@
   ],
   "category": "floor",
   "difficulty": 2,
-  "muscles": [
-   "glutes",
-   "hamstrings",
-   "spinal extensors",
-   "core"
-  ],
   "drishti": "Bhrumadhye or Ajna Chakra (third eye, between the eyebrows)"
  },
  {
@@ -634,12 +458,6 @@
   "sanskrit": "Ustrasana",
   "category": "floor",
   "difficulty": 4,
-  "muscles": [
-   "quads",
-   "hip flexors",
-   "spinal extensors",
-   "chest"
-  ],
   "drishti": "Up toward the ceiling as the head drops back"
  },
  {
@@ -651,10 +469,6 @@
   ],
   "category": "floor",
   "difficulty": 1,
-  "muscles": [
-   "core",
-   "spinal flexors"
-  ],
   "drishti": "toward the navel",
   "basePoseId": "table"
  },
@@ -664,12 +478,6 @@
   "sanskrit": "Utkatasana",
   "category": "standing",
   "difficulty": 3,
-  "muscles": [
-   "quads",
-   "glutes",
-   "core",
-   "shoulders"
-  ],
   "drishti": "Angushtamadhye or Angushta Ma Dyai (thumbs)"
  },
  {
@@ -682,11 +490,6 @@
   ],
   "category": "chair",
   "difficulty": 1,
-  "muscles": [
-   "shoulders",
-   "upper back",
-   "rhomboids"
-  ],
   "drishti": "forward",
   "basePoseId": "seated-rest"
  },
@@ -700,11 +503,6 @@
   ],
   "category": "chair",
   "difficulty": 1,
-  "muscles": [
-   "outer hips",
-   "glutes",
-   "hip rotators"
-  ],
   "drishti": "forward",
   "basePoseId": "seated-rest"
  },
@@ -718,11 +516,6 @@
   ],
   "category": "chair",
   "difficulty": 1,
-  "muscles": [
-   "hamstrings",
-   "low back",
-   "hips"
-  ],
   "drishti": "toward the floor",
   "basePoseId": "seated-rest"
  },
@@ -737,11 +530,6 @@
   ],
   "category": "chair",
   "difficulty": 1,
-  "muscles": [
-   "postural back",
-   "core",
-   "hip flexors"
-  ],
   "basePoseId": "seated-rest"
  },
  {
@@ -754,11 +542,6 @@
   ],
   "category": "chair",
   "difficulty": 2,
-  "muscles": [
-   "outer hips",
-   "glutes",
-   "hip rotators"
-  ],
   "drishti": "forward",
   "basePoseId": "seated-rest"
  },
@@ -772,12 +555,6 @@
   ],
   "category": "chair",
   "difficulty": 2,
-  "muscles": [
-   "quads",
-   "glutes",
-   "core",
-   "hips"
-  ],
   "drishti": "forward and slightly down",
   "basePoseId": "seated-rest"
  },
@@ -792,11 +569,6 @@
   ],
   "category": "chair",
   "difficulty": 1,
-  "muscles": [
-   "obliques",
-   "spine",
-   "shoulders"
-  ],
   "drishti": "over the back shoulder",
   "basePoseId": "seated-rest"
  },
@@ -810,12 +582,6 @@
   ],
   "category": "chair",
   "difficulty": 1,
-  "muscles": [
-   "hamstrings",
-   "glutes",
-   "low back",
-   "core"
-  ],
   "basePoseId": "seated-rest"
  },
  {
@@ -830,11 +596,6 @@
    "restorative"
   ],
   "difficulty": 1,
-  "muscles": [
-   "hips",
-   "spinal erectors",
-   "shoulders (passive)"
-  ],
   "drishti": "Nasagrai or Nasagre (nose)"
  },
  {
@@ -842,14 +603,6 @@
   "name": "Chin Stand Pose",
   "sanskrit": "Ganda Bherundasana",
   "category": "inversion",
-  "muscles": [
-   "back",
-   "neck",
-   "shoulders",
-   "triceps",
-   "wrists",
-   "core"
-  ],
   "drishti": "Gaze forward along the mat"
  },
  {
@@ -858,11 +611,6 @@
   "sanskrit": "Bhujangasana",
   "category": "floor",
   "difficulty": 2,
-  "muscles": [
-   "spinal extensors",
-   "glutes",
-   "chest"
-  ],
   "drishti": "Forward and slightly upward"
  },
  {
@@ -874,9 +622,6 @@
    "restorative"
   ],
   "difficulty": 1,
-  "muscles": [
-   "full-body release"
-  ],
   "drishti": "Bhrumadhye or Ajna Chakra (third eye, between the eyebrows)"
  },
  {
@@ -885,10 +630,6 @@
   "sanskrit": "Bitilasana",
   "category": "floor",
   "difficulty": 1,
-  "muscles": [
-   "spinal extensors",
-   "chest"
-  ],
   "drishti": "Forward, just above eyeline",
   "basePoseId": "table"
  },
@@ -897,12 +638,6 @@
   "name": "Cow Face Pose",
   "sanskrit": "Gomukhasana",
   "category": "floor",
-  "muscles": [
-   "hips",
-   "external rotators",
-   "shoulders",
-   "triceps"
-  ],
   "drishti": "Straight ahead"
  },
  {
@@ -911,11 +646,6 @@
   "sanskrit": "Bakasana",
   "category": "arm-balance",
   "difficulty": 5,
-  "muscles": [
-   "shoulders",
-   "core",
-   "wrists"
-  ],
   "drishti": "Down to the floor"
  },
  {
@@ -927,12 +657,6 @@
    "Sukhasana Fold"
   ],
   "category": "floor",
-  "muscles": [
-   "hips",
-   "low back",
-   "outer hips",
-   "spinal erectors"
-  ],
   "basePoseId": "easy"
  },
  {
@@ -944,12 +668,6 @@
    "Crane Pose"
   ],
   "category": "arm-balance",
-  "muscles": [
-   "core",
-   "shoulders",
-   "wrists",
-   "hip flexors"
-  ],
   "drishti": "the floor about three feet ahead"
  },
  {
@@ -960,7 +678,6 @@
    "Baby Crow"
   ],
   "category": "arm-balance",
-  "muscles": [],
   "drishti": "Nasagrai or Nasagre (nose)",
   "basePoseId": "crow-kakasana"
  },
@@ -978,12 +695,6 @@
    "Nantum Natarajasana"
   ],
   "category": "standing",
-  "muscles": [
-   "standing-leg glutes",
-   "quads",
-   "hip flexors",
-   "shoulders"
-  ],
   "drishti": "Hastagrai or Hastagre (hands)"
  },
  {
@@ -995,11 +706,6 @@
    "Knee-to-Ear Pose"
   ],
   "category": "inversion",
-  "muscles": [
-   "hamstrings",
-   "spinal erectors",
-   "shoulders"
-  ],
   "drishti": "Nasagra or Nasikagra (tip of the nose)"
  },
  {
@@ -1011,12 +717,6 @@
   ],
   "category": "inversion",
   "difficulty": 3,
-  "muscles": [
-   "shoulders",
-   "core",
-   "hamstrings",
-   "upper back"
-  ],
   "drishti": "toward the toes",
   "basePoseId": "downward-facing-dog"
  },
@@ -1026,11 +726,6 @@
   "sanskrit": "Adho Mukha Shvanasana",
   "category": "floor",
   "difficulty": 2,
-  "muscles": [
-   "core",
-   "legs",
-   "postural muscles"
-  ],
   "drishti": "Navel or tops of the thighs"
  },
  {
@@ -1043,11 +738,6 @@
    "maksikanagasana-1"
   ],
   "category": "arm-balance",
-  "muscles": [
-   "core",
-   "legs",
-   "postural muscles"
-  ],
   "drishti": "down toward the floor"
  },
  {
@@ -1056,12 +746,6 @@
   "sanskrit": "Garudasana",
   "category": "standing",
   "difficulty": 3,
-  "muscles": [
-   "quads",
-   "glutes",
-   "shoulders",
-   "ankles"
-  ],
   "drishti": "forward"
  },
  {
@@ -1073,11 +757,6 @@
    "Easy Pose"
   ],
   "category": "floor",
-  "muscles": [
-   "hips",
-   "hamstrings",
-   "core"
-  ],
   "drishti": "Nasagrai or Nasagre (nose)"
  },
  {
@@ -1085,11 +764,6 @@
   "name": "Eight Angle Pose",
   "sanskrit": "Ashtavakrasana",
   "category": "arm-balance",
-  "muscles": [
-   "core",
-   "legs",
-   "postural muscles"
-  ],
   "drishti": "Nasagrai (nose tip) or down to the floor"
  },
  {
@@ -1102,12 +776,6 @@
    "Knees-Chest-Chin Pose"
   ],
   "category": "transition",
-  "muscles": [
-   "chest",
-   "triceps",
-   "core",
-   "shoulders"
-  ],
   "drishti": "floor slightly ahead"
  },
  {
@@ -1119,7 +787,6 @@
    "Standing Side Bend"
   ],
   "category": "standing",
-  "muscles": [],
   "drishti": "Urdhva or Antara Drishti (up to the sky)",
   "basePoseId": "parshvasana"
  },
@@ -1132,7 +799,6 @@
    "Lifted Leg Crescent Pose"
   ],
   "category": "standing",
-  "muscles": [],
   "drishti": "Urdhva or Antara Drishti (up to the sky)",
   "basePoseId": "indudalasana"
  },
@@ -1144,7 +810,6 @@
    "One-Legged King Pigeon"
   ],
   "category": "floor",
-  "muscles": [],
   "drishti": "gaze forward, eyes soft",
   "basePoseId": "one-legged-king-pigeon"
  },
@@ -1157,13 +822,6 @@
    "Single Leg Bridge"
   ],
   "category": "floor",
-  "muscles": [
-   "glutes",
-   "hamstrings",
-   "quadriceps",
-   "core",
-   "lower back"
-  ],
   "drishti": "Up toward the raised foot or straight up at the ceiling",
   "basePoseId": "bridge"
  },
@@ -1178,14 +836,6 @@
    "Figure Four Chair"
   ],
   "category": "standing",
-  "muscles": [
-   "glutes",
-   "quadriceps",
-   "hamstrings",
-   "core",
-   "outer hips",
-   "ankles"
-  ],
   "drishti": "forward or slightly down toward the floor",
   "basePoseId": "chair"
  },
@@ -1199,7 +849,6 @@
    "One-Legged Chair Pose"
   ],
   "category": "standing",
-  "muscles": [],
   "drishti": "Forward and slightly down, toward the floor ahead",
   "basePoseId": "eka-pada-utkatasana-1"
  },
@@ -1213,7 +862,6 @@
    "One-Legged Standing Forward Bend"
   ],
   "category": "standing",
-  "muscles": [],
   "drishti": "toward the standing leg or the mat"
  },
  {
@@ -1226,7 +874,6 @@
    "Extended Hand to Big Toe Side Plank"
   ],
   "category": "arm-balance",
-  "muscles": [],
   "drishti": "down toward the floor beside the supporting hand",
   "basePoseId": "side-plank"
  },
@@ -1235,11 +882,6 @@
   "name": "Elbow Balance Pose",
   "sanskrit": "Shayanasana",
   "category": "arm-balance",
-  "muscles": [
-   "spinal extensors",
-   "chest",
-   "shoulders"
-  ],
   "drishti": "Bhrumadhye or Ajna Chakra (third eye, between the eyebrows)"
  },
  {
@@ -1250,11 +892,6 @@
    "One Leg Over Arm Pose"
   ],
   "category": "arm-balance",
-  "muscles": [
-   "core",
-   "legs",
-   "postural muscles"
-  ],
   "drishti": "Forward gaze, out over the straight leg"
  },
  {
@@ -1266,11 +903,6 @@
    "Fetus Pose"
   ],
   "category": "floor",
-  "muscles": [
-   "hips",
-   "hamstrings",
-   "core"
-  ],
   "drishti": "Nasagrai (tip of the nose) or a soft downward gaze"
  },
  {
@@ -1282,12 +914,6 @@
   ],
   "category": "standing",
   "difficulty": 3,
-  "muscles": [
-   "quads",
-   "obliques",
-   "adductors",
-   "lats"
-  ],
   "drishti": "Down toward the floor or front foot"
  },
  {
@@ -1299,12 +925,6 @@
    "Side Plank with Overhead Reach"
   ],
   "category": "arm-balance",
-  "muscles": [
-   "obliques",
-   "shoulders",
-   "adductors",
-   "glutes"
-  ],
   "drishti": "up toward the top hand",
   "basePoseId": "side-plank"
  },
@@ -1319,11 +939,6 @@
    "Standing Big Toe Side Balance"
   ],
   "category": "standing",
-  "muscles": [
-   "core",
-   "legs",
-   "postural muscles"
-  ],
   "drishti": "Urdhva Drishti (upward)",
   "basePoseId": "standing-hand-to-big-toe"
  },
@@ -1337,13 +952,6 @@
    "Reclined Big Toe Pose"
   ],
   "category": "floor",
-  "muscles": [
-   "hamstrings",
-   "calves",
-   "hip flexors",
-   "core",
-   "lower back"
-  ],
   "drishti": "eyes closed or a soft gaze straight up",
   "basePoseId": "supine-hand-to-big-toe"
  },
@@ -1360,11 +968,6 @@
   ],
   "category": "floor",
   "difficulty": 2,
-  "muscles": [
-   "piriformis",
-   "glutes",
-   "outer hips"
-  ],
   "drishti": "Bhrumadhye or Ajna Chakra (third eye, between the eyebrows)"
  },
  {
@@ -1377,11 +980,6 @@
    "Ankle-to-Knee Pose"
   ],
   "category": "floor",
-  "muscles": [
-   "outer hips",
-   "glutes",
-   "piriformis"
-  ],
   "drishti": "Soft gaze forward, level with the eyes or slightly below"
  },
  {
@@ -1394,12 +992,6 @@
    "tittibhasana-1"
   ],
   "category": "arm-balance",
-  "muscles": [
-   "shoulders",
-   "core",
-   "hip flexors",
-   "wrists"
-  ],
   "drishti": "Forward and slightly up"
  },
  {
@@ -1408,12 +1000,6 @@
   "sanskrit": "Matsyasana",
   "category": "floor",
   "difficulty": 2,
-  "muscles": [
-   "chest",
-   "throat",
-   "spinal extensors",
-   "hip flexors"
-  ],
   "drishti": "Bhrumadhye or Ajna Chakra (third eye, between the eyebrows)"
  },
  {
@@ -1425,11 +1011,6 @@
    "Stick Pose"
   ],
   "category": "floor",
-  "muscles": [
-   "core",
-   "legs",
-   "postural muscles"
-  ],
   "drishti": "Nasagrai or Nasagre (nose)"
  },
  {
@@ -1443,11 +1024,6 @@
    "eka-pada-koundinyasana-1"
   ],
   "category": "arm-balance",
-  "muscles": [
-   "core",
-   "legs",
-   "postural muscles"
-  ],
   "drishti": "forward"
  },
  {
@@ -1458,11 +1034,6 @@
    "Flying Crow Pose"
   ],
   "category": "arm-balance",
-  "muscles": [
-   "core",
-   "legs",
-   "postural muscles"
-  ],
   "drishti": "a fixed spot on the mat slightly ahead of the hands"
  },
  {
@@ -1470,11 +1041,6 @@
   "name": "Flying Warrior Pose",
   "sanskrit": "Vishvamitrasana",
   "category": "arm-balance",
-  "muscles": [
-   "core",
-   "legs",
-   "postural muscles"
-  ],
   "drishti": "Gaze down toward the floor past the extended leg"
  },
  {
@@ -1489,11 +1055,6 @@
    "eka-pada-shirshasana"
   ],
   "category": "floor",
-  "muscles": [
-   "hips",
-   "hamstrings",
-   "core"
-  ],
   "drishti": "forward"
  },
  {
@@ -1505,11 +1066,6 @@
    "Leg Behind Head Forward Fold"
   ],
   "category": "floor",
-  "muscles": [
-   "hips",
-   "hamstrings",
-   "core"
-  ],
   "drishti": "toward the extended foot",
   "basePoseId": "foot-behind-the-head-i"
  },
@@ -1527,12 +1083,6 @@
    "Hanumanasana in Pincha Mayurasana"
   ],
   "category": "inversion",
-  "muscles": [
-   "shoulders",
-   "core",
-   "upper back",
-   "glutes"
-  ],
   "drishti": "floor between the hands",
   "basePoseId": "handstand"
  },
@@ -1545,11 +1095,6 @@
   ],
   "category": "transition",
   "difficulty": 4,
-  "muscles": [
-   "hips",
-   "hamstrings",
-   "core"
-  ],
   "drishti": "Nasagrai or Nasagre (nose)",
   "basePoseId": "plank"
  },
@@ -1558,12 +1103,6 @@
   "name": "Frog Pose",
   "sanskrit": "Bhekasana",
   "category": "floor",
-  "muscles": [
-   "quads",
-   "hip flexors",
-   "chest",
-   "shoulders"
-  ],
   "drishti": "forward and up"
  },
  {
@@ -1575,11 +1114,6 @@
    "The Splits"
   ],
   "category": "floor",
-  "muscles": [
-   "hamstrings",
-   "hip flexors",
-   "quads"
-  ],
   "drishti": "Urdhva (upward, toward the ceiling)"
  },
  {
@@ -1593,12 +1127,6 @@
   ],
   "category": "standing",
   "difficulty": 2,
-  "muscles": [
-   "ankles",
-   "adductors",
-   "glutes",
-   "core"
-  ],
   "drishti": "Nasagrai or Nasagre (nose)"
  },
  {
@@ -1606,12 +1134,6 @@
   "name": "Gate Pose",
   "sanskrit": "Parighasana",
   "category": "floor",
-  "muscles": [
-   "obliques",
-   "adductors",
-   "lats",
-   "intercostals"
-  ],
   "drishti": "Up toward the raised hand"
  },
  {
@@ -1622,7 +1144,6 @@
    "Pose Dedicated to Sage Gheranda 6"
   ],
   "category": "floor",
-  "muscles": [],
   "drishti": "Nasagrai (tip of the nose) or a soft point on the floor just ahead",
   "basePoseId": "sage-gherandas"
  },
@@ -1632,12 +1153,6 @@
   "sanskrit": "Utkata Konasana",
   "category": "standing",
   "difficulty": 3,
-  "muscles": [
-   "quads",
-   "glutes",
-   "adductors",
-   "shoulders"
-  ],
   "drishti": "forward"
  },
  {
@@ -1649,7 +1164,6 @@
    "Yogic Seat Pose A"
   ],
   "category": "floor",
-  "muscles": [],
   "drishti": "forward",
   "basePoseId": "bound-angle"
  },
@@ -1662,11 +1176,6 @@
    "pada-hastasana"
   ],
   "category": "standing",
-  "muscles": [
-   "hamstrings",
-   "wrists",
-   "shoulders"
-  ],
   "drishti": "Nasagrai or Nasagre (nose)"
  },
  {
@@ -1677,11 +1186,6 @@
    "Half Bow Pose"
   ],
   "category": "floor",
-  "muscles": [
-   "quads",
-   "spinal extensors",
-   "hip flexors"
-  ],
   "drishti": "forward and slightly down"
  },
  {
@@ -1693,13 +1197,6 @@
    "L-Handstand at the Wall"
   ],
   "category": "inversion",
-  "muscles": [
-   "shoulders",
-   "triceps",
-   "core",
-   "wrists and forearms",
-   "upper back"
-  ],
   "drishti": "Hastagrai or Hastagre (hands)",
   "basePoseId": "handstand"
  },
@@ -1712,11 +1209,6 @@
   ],
   "category": "floor",
   "difficulty": 3,
-  "muscles": [
-   "hip external rotators",
-   "hip flexors",
-   "glutes"
-  ],
   "drishti": "straight ahead",
   "basePoseId": "pigeon"
  },
@@ -1730,11 +1222,6 @@
    "Half Front Split"
   ],
   "category": "floor",
-  "muscles": [
-   "core",
-   "legs",
-   "postural muscles"
-  ],
   "drishti": "down towards the front foot",
   "basePoseId": "front-splits"
  },
@@ -1748,11 +1235,6 @@
   ],
   "category": "standing",
   "difficulty": 2,
-  "muscles": [
-   "hamstrings",
-   "calves",
-   "spinal erectors"
-  ],
   "drishti": "toward the floor",
   "basePoseId": "standing-forward-bend"
  },
@@ -1769,12 +1251,6 @@
    "Prasarita Padottanasana in Adho Mukha Vrksasana"
   ],
   "category": "inversion",
-  "muscles": [
-   "shoulders",
-   "core",
-   "wrists",
-   "glutes"
-  ],
   "drishti": "down at the floor between the hands"
  },
  {
@@ -1783,11 +1259,6 @@
   "sanskrit": "Ananda Balasana",
   "category": "floor",
   "difficulty": 1,
-  "muscles": [
-   "adductors",
-   "hamstrings",
-   "hips"
-  ],
   "basePoseId": "corpse"
  },
  {
@@ -1799,7 +1270,6 @@
    "Revolved Half Moon Bow Pose"
   ],
   "category": "standing",
-  "muscles": [],
   "drishti": "Urdhva Drishti (up toward the sky)"
  },
  {
@@ -1811,11 +1281,6 @@
    "Head Beyond the Knee Pose"
   ],
   "category": "floor",
-  "muscles": [
-   "hamstrings",
-   "calves",
-   "spinal erectors"
-  ],
   "drishti": "along the extended leg toward the toes"
  },
  {
@@ -1827,11 +1292,6 @@
    "Head Beyond the Knee Pose"
   ],
   "category": "floor",
-  "muscles": [
-   "hamstrings",
-   "calves",
-   "spinal erectors"
-  ],
   "drishti": "along the extended leg toward the toes",
   "basePoseId": "head-to-knee"
  },
@@ -1844,11 +1304,6 @@
    "Head Beyond the Knee Pose"
   ],
   "category": "floor",
-  "muscles": [
-   "hamstrings",
-   "calves",
-   "spinal erectors"
-  ],
   "drishti": "tip of the big toe",
   "basePoseId": "head-to-knee-i"
  },
@@ -1861,11 +1316,6 @@
    "Head-to-Knee Forward Bend C"
   ],
   "category": "floor",
-  "muscles": [
-   "hamstrings",
-   "calves",
-   "spinal erectors"
-  ],
   "drishti": "Padhayoragrai or Padayoragre (toes/feet), Nasagrai or Nasagre (nose)",
   "basePoseId": "head-to-knee-i"
  },
@@ -1877,13 +1327,6 @@
    "One-Knee Tuck Headstand Prep"
   ],
   "category": "inversion",
-  "muscles": [
-   "shoulders",
-   "triceps",
-   "core",
-   "hip flexors",
-   "upper back"
-  ],
   "drishti": "down toward the floor",
   "basePoseId": "dolphin"
  },
@@ -1895,11 +1338,6 @@
    "Thunderbolt Pose"
   ],
   "category": "floor",
-  "muscles": [
-   "quads",
-   "ankles",
-   "shin muscles"
-  ],
   "drishti": "Nasagrai or Nasagre (nose)"
  },
  {
@@ -1907,11 +1345,6 @@
   "name": "Heron Pose",
   "sanskrit": "Kraunchasana",
   "category": "floor",
-  "muscles": [
-   "hamstrings",
-   "hip flexors",
-   "core"
-  ],
   "drishti": "Straight ahead, or toward the toes of the raised foot"
  },
  {
@@ -1924,12 +1357,6 @@
   ],
   "category": "standing",
   "difficulty": 3,
-  "muscles": [
-   "quads",
-   "hip flexors",
-   "glutes",
-   "core"
-  ],
   "drishti": "forward",
   "basePoseId": "lunge"
  },
@@ -1941,7 +1368,6 @@
    "One Foot Behind the Head Pose A & B Prep"
   ],
   "category": "floor",
-  "muscles": [],
   "drishti": "Padayoragrai or Padayoragre (toes of the extended foot)"
  },
  {
@@ -1949,12 +1375,6 @@
   "name": "Horse Pose",
   "sanskrit": "Vatayanasana",
   "category": "floor",
-  "muscles": [
-   "quads",
-   "hips",
-   "ankles",
-   "core"
-  ],
   "drishti": "Angushtamadhye or Angushta Ma Dyai (thumbs)"
  },
  {
@@ -1966,13 +1386,6 @@
    "Standing Flamingo Fold"
   ],
   "category": "standing",
-  "muscles": [
-   "core",
-   "hamstrings",
-   "glutes",
-   "ankles",
-   "postural muscles"
-  ],
   "drishti": "floor beside the standing foot"
  },
  {
@@ -1983,7 +1396,6 @@
    "Crescent Moon Pose"
   ],
   "category": "standing",
-  "muscles": [],
   "drishti": "Urdhva or Antara Drishti (up to the sky)"
  },
  {
@@ -1994,11 +1406,6 @@
    "Two-Legged Inverted Staff Pose"
   ],
   "category": "inversion",
-  "muscles": [
-   "hips",
-   "hamstrings",
-   "core"
-  ],
   "drishti": "Bhrumadhye or Ajna Chakra (third eye, between the eyebrows)",
   "basePoseId": "staff"
  },
@@ -2010,7 +1417,6 @@
    "Pose Dedicated to Garuda on the Knees"
   ],
   "category": "floor",
-  "muscles": [],
   "drishti": "Hastagrai or Urdhva (toward the hands, upward)",
   "basePoseId": "eagle"
  },
@@ -2023,7 +1429,6 @@
    "jathara-parivartanasana"
   ],
   "category": "floor",
-  "muscles": [],
   "drishti": "Bhrumadhye or Ajna Chakra (third eye, between the eyebrows)",
   "basePoseId": "supine-spinal-twist"
  },
@@ -2035,7 +1440,6 @@
    "Pose Dedicated to Goddess Kali"
   ],
   "category": "standing",
-  "muscles": [],
   "drishti": "Nasagrai or Nasagre (nose)",
   "basePoseId": "goddess"
  },
@@ -2048,7 +1452,6 @@
    "Dove Pose"
   ],
   "category": "floor",
-  "muscles": [],
   "drishti": "toward the floor behind the head",
   "basePoseId": "camel"
  },
@@ -2060,7 +1463,6 @@
    "Shoulder Pressure Pose Prep"
   ],
   "category": "standing",
-  "muscles": [],
   "drishti": "Nasagra (tip of the nose)"
  },
  {
@@ -2072,12 +1474,6 @@
    "Knee Hug Balance"
   ],
   "category": "standing",
-  "muscles": [
-   "standing-leg",
-   "hip flexors",
-   "core",
-   "balance"
-  ],
   "basePoseId": "mountain"
  },
  {
@@ -2088,11 +1484,6 @@
    "Tall Kneeling"
   ],
   "category": "transition",
-  "muscles": [
-   "quads",
-   "core",
-   "postural back"
-  ],
   "drishti": "forward"
  },
  {
@@ -2104,7 +1495,6 @@
    "Standing Angle Pose"
   ],
   "category": "standing",
-  "muscles": [],
   "drishti": "up toward the hands"
  },
  {
@@ -2112,14 +1502,6 @@
   "name": "Little Thunderbolt Pose",
   "sanskrit": "Laghuvajrasana",
   "category": "floor",
-  "muscles": [
-   "quadriceps",
-   "hip flexors",
-   "spinal extensors",
-   "chest",
-   "shoulders",
-   "neck"
-  ],
   "drishti": "Bhrumadhye or Ajna Chakra (third eye, between the eyebrows)",
   "basePoseId": "thunderbolt"
  },
@@ -2134,10 +1516,6 @@
   "category": "inversion",
   "tags": [
    "restorative"
-  ],
-  "muscles": [
-   "hamstrings (passive)",
-   "pelvic floor (relax)"
   ]
  },
  {
@@ -2146,11 +1524,6 @@
   "sanskrit": "Utthan Pristhasana",
   "category": "floor",
   "difficulty": 3,
-  "muscles": [
-   "hip flexors",
-   "adductors",
-   "hamstrings"
-  ],
   "drishti": "hands or the earth ahead"
  },
  {
@@ -2163,13 +1536,6 @@
   ],
   "category": "floor",
   "difficulty": 2,
-  "muscles": [
-   "spinal extensors",
-   "glutes",
-   "hamstrings",
-   "core",
-   "shoulders"
-  ],
   "drishti": "forward",
   "basePoseId": "shalabhasana"
  },
@@ -2178,11 +1544,6 @@
   "name": "Locust II Pose",
   "sanskrit": "Shalabhasana B",
   "category": "floor",
-  "muscles": [
-   "spinal extensors",
-   "chest",
-   "shoulders"
-  ],
   "drishti": "forward",
   "basePoseId": "shalabhasana"
  },
@@ -2194,11 +1555,6 @@
    "Locust C"
   ],
   "category": "floor",
-  "muscles": [
-   "spinal extensors",
-   "chest",
-   "shoulders"
-  ],
   "drishti": "Floor just ahead of you",
   "basePoseId": "locust-i"
  },
@@ -2210,11 +1566,6 @@
    "Lotus position"
   ],
   "category": "floor",
-  "muscles": [
-   "hips",
-   "external rotators",
-   "ankles"
-  ],
   "drishti": "Nasagrai or Nasagre (nose)"
  },
  {
@@ -2223,12 +1574,6 @@
   "sanskrit": "Anjaneyasana",
   "category": "standing",
   "difficulty": 2,
-  "muscles": [
-   "hip flexors",
-   "quads",
-   "glutes",
-   "psoas"
-  ],
   "drishti": "forward, or up toward the hands",
   "basePoseId": "lunge"
  },
@@ -2240,13 +1585,6 @@
    "Kneeling Lunge Foot Grab"
   ],
   "category": "standing",
-  "muscles": [
-   "quads",
-   "hip flexors",
-   "glutes",
-   "hamstrings",
-   "core"
-  ],
   "drishti": "forward",
   "basePoseId": "low-lunge"
  },
@@ -2262,12 +1600,6 @@
   ],
   "category": "standing",
   "difficulty": 2,
-  "muscles": [
-   "hip flexors",
-   "quads",
-   "glutes",
-   "hamstrings"
-  ],
   "drishti": "forward"
  },
  {
@@ -2281,13 +1613,6 @@
    "Low Plank on Forearms"
   ],
   "category": "floor",
-  "muscles": [
-   "core",
-   "shoulders",
-   "upper back",
-   "glutes",
-   "quads"
-  ],
   "drishti": "Nasagrai or Nasagre (nose)",
   "basePoseId": "plank"
  },
@@ -2298,8 +1623,7 @@
   "altNames": [
    "Pose Dedicated to Makara—Prone Modification"
   ],
-  "category": "floor",
-  "muscles": []
+  "category": "floor"
  },
  {
   "id": "mat-eagle-arms",
@@ -2310,11 +1634,6 @@
    "Seated Eagle Arms Floor"
   ],
   "category": "floor",
-  "muscles": [
-   "shoulders",
-   "upper back",
-   "rhomboids"
-  ],
   "drishti": "forward past the hands"
  },
  {
@@ -2328,12 +1647,6 @@
   "category": "floor",
   "tags": [
    "restorative"
-  ],
-  "muscles": [
-   "side body",
-   "shoulders",
-   "hip flexors",
-   "whole front line"
   ]
  },
  {
@@ -2342,12 +1655,6 @@
   "sanskrit": "Tadasana",
   "category": "standing",
   "difficulty": 1,
-  "muscles": [
-   "quads",
-   "calves",
-   "core",
-   "postural back"
-  ],
   "drishti": "soft gaze forward at eye level"
  },
  {
@@ -2359,7 +1666,6 @@
    "Shoulderstand"
   ],
   "category": "inversion",
-  "muscles": [],
   "drishti": "Soft gaze toward the third eye, between the eyebrows",
   "basePoseId": "supported-shoulder-stand"
  },
@@ -2372,7 +1678,6 @@
    "Balancing Table Pose Modification"
   ],
   "category": "standing",
-  "muscles": [],
   "drishti": "Angushtamadhye or Angushta Ma Dyai (thumbs)",
   "basePoseId": "tiger"
  },
@@ -2384,12 +1689,6 @@
    "pashasana"
   ],
   "category": "standing",
-  "muscles": [
-   "ankles",
-   "obliques",
-   "shoulders",
-   "hips"
-  ],
   "drishti": "Gaze softly down toward the floor"
  },
  {
@@ -2402,11 +1701,6 @@
    "eka-pada-raja-kapotasana-1"
   ],
   "category": "floor",
-  "muscles": [
-   "hips",
-   "hamstrings",
-   "core"
-  ],
   "drishti": "upward",
   "basePoseId": "raja-kapotasana"
  },
@@ -2415,7 +1709,6 @@
   "name": "Big Toe Bow Pose",
   "sanskrit": "Padangushta Dhanurasana",
   "category": "floor",
-  "muscles": [],
   "drishti": "forward, toward the horizon",
   "basePoseId": "bow"
  },
@@ -2428,7 +1721,6 @@
    "Advanced Cobra Pose"
   ],
   "category": "floor",
-  "muscles": [],
   "drishti": "Up and back, following the arch of the spine",
   "basePoseId": "cobra"
  },
@@ -2441,7 +1733,6 @@
    "Full Matsyendrasana"
   ],
   "category": "floor",
-  "muscles": [],
   "drishti": "Parshva Drishti (to the right), Parshva Drishti (to the left)",
   "basePoseId": "seated-twist"
  },
@@ -2453,7 +1744,6 @@
    "Full Boat Pose"
   ],
   "category": "floor",
-  "muscles": [],
   "drishti": "Forward and slightly up",
   "basePoseId": "boat"
  },
@@ -2466,14 +1756,6 @@
    "Twisted Low Lunge"
   ],
   "category": "floor",
-  "muscles": [
-   "hip flexors",
-   "quadriceps",
-   "glutes",
-   "obliques",
-   "spinal rotators",
-   "chest"
-  ],
   "drishti": "Urdhva or Antara Drishti (up to the sky)",
   "basePoseId": "low-lunge"
  },
@@ -2486,7 +1768,6 @@
    "Revolved Easy Seat"
   ],
   "category": "floor",
-  "muscles": [],
   "drishti": "Parsva Drishti (gaze to the side, over the shoulder)",
   "basePoseId": "parivritta-sukhasana"
  },
@@ -2499,7 +1780,6 @@
    "Revolved Child Pose"
   ],
   "category": "floor",
-  "muscles": [],
   "basePoseId": "childs"
  },
  {
@@ -2510,13 +1790,6 @@
    "Revolved Head to Knee Pose"
   ],
   "category": "floor",
-  "muscles": [
-   "hamstrings",
-   "obliques",
-   "latissimus dorsi",
-   "inner thighs",
-   "spinal rotators"
-  ],
   "drishti": "Urdhva or Antara Drishti (up to the sky)",
   "basePoseId": "head-to-knee-i"
  },
@@ -2528,7 +1801,6 @@
    "Revolved Sundial Pose 3"
   ],
   "category": "floor",
-  "muscles": [],
   "drishti": "up toward the raised foot",
   "basePoseId": "heron"
  },
@@ -2542,7 +1814,6 @@
    "Rotated Side Angle Pose"
   ],
   "category": "standing",
-  "muscles": [],
   "drishti": "Hastagrai or Hastagre (hands)",
   "basePoseId": "konasana"
  },
@@ -2556,7 +1827,6 @@
    "Revolved Wide-Legged Seated Pose"
   ],
   "category": "floor",
-  "muscles": [],
   "drishti": "toward the foot you reach for",
   "basePoseId": "wide-splits"
  },
@@ -2569,7 +1839,6 @@
    "Twisted Easy Pose"
   ],
   "category": "floor",
-  "muscles": [],
   "drishti": "Parshva Drishti (to the right), Parshva Drishti (to the left)",
   "basePoseId": "easy"
  },
@@ -2581,7 +1850,6 @@
    "Revolved Thunderbolt Pose"
   ],
   "category": "floor",
-  "muscles": [],
   "drishti": "Parshva Drishti (to the right), Parshva Drishti (to the left)",
   "basePoseId": "hero"
  },
@@ -2593,7 +1861,6 @@
    "Sideways Son of Anjani (Lord Hanuman) Lunge Pose"
   ],
   "category": "floor",
-  "muscles": [],
   "drishti": "down toward the floor",
   "basePoseId": "low-lunge"
  },
@@ -2607,7 +1874,6 @@
    "Side Knee to Ear Pose"
   ],
   "category": "inversion",
-  "muscles": [],
   "drishti": "tip of the nose",
   "basePoseId": "deaf-mans"
  },
@@ -2620,7 +1886,6 @@
    "Wounded Rooster Pose"
   ],
   "category": "arm-balance",
-  "muscles": [],
   "drishti": "down at the floor",
   "basePoseId": "rooster"
  },
@@ -2632,7 +1897,6 @@
    "Seated Side Bend"
   ],
   "category": "floor",
-  "muscles": [],
   "drishti": "Hastagrai (up toward the raised hand)",
   "basePoseId": "easy"
  },
@@ -2644,7 +1908,6 @@
    "Sideways Full Forward Bend"
   ],
   "category": "standing",
-  "muscles": [],
   "drishti": "toward the front shin",
   "basePoseId": "standing-forward-bend"
  },
@@ -2657,7 +1920,6 @@
    "Tree Pose Side Bend"
   ],
   "category": "standing",
-  "muscles": [],
   "drishti": "forward",
   "basePoseId": "tree"
  },
@@ -2669,7 +1931,6 @@
    "Standing Side Bend"
   ],
   "category": "standing",
-  "muscles": [],
   "drishti": "Nasagrai or Nasagre (nose), Urdhva or Antara Drishti (up to the sky)"
  },
  {
@@ -2681,7 +1942,6 @@
    "Toppling Tree"
   ],
   "category": "standing",
-  "muscles": [],
   "drishti": "Downward, at a spot on the floor in front of you"
  },
  {
@@ -2689,14 +1949,6 @@
   "name": "Peacock Pose",
   "sanskrit": "Mayurasana",
   "category": "arm-balance",
-  "muscles": [
-   "core",
-   "wrists",
-   "shoulders",
-   "arms",
-   "back",
-   "legs"
-  ],
   "drishti": "Downward, toward the floor"
  },
  {
@@ -2707,11 +1959,6 @@
    "Swinging Pose"
   ],
   "category": "arm-balance",
-  "muscles": [
-   "core",
-   "legs",
-   "postural muscles"
-  ],
   "drishti": "Nasagrai or Nasagre (nose)"
  },
  {
@@ -2719,11 +1966,6 @@
   "name": "Pigeon Pose",
   "sanskrit": "Eka Pada Rajakapotasana",
   "category": "floor",
-  "muscles": [
-   "hip external rotators",
-   "hip flexors",
-   "glutes"
-  ],
   "drishti": "forward"
  },
  {
@@ -2738,12 +1980,6 @@
   ],
   "category": "floor",
   "difficulty": 3,
-  "muscles": [
-   "core",
-   "shoulders",
-   "quads",
-   "glutes"
-  ],
   "drishti": "Down at the mat between the hands"
  },
  {
@@ -2752,12 +1988,6 @@
   "sanskrit": "Halasana",
   "category": "inversion",
   "difficulty": 4,
-  "muscles": [
-   "hamstrings",
-   "spinal extensors",
-   "shoulders",
-   "core"
-  ],
   "drishti": "Navel, or eyes closed softly"
  },
  {
@@ -2769,7 +1999,6 @@
    "Tiptoe Chair Pose"
   ],
   "category": "standing",
-  "muscles": [],
   "drishti": "forward",
   "basePoseId": "chair"
  },
@@ -2782,13 +2011,6 @@
    "Tiptoe Pose"
   ],
   "category": "standing",
-  "muscles": [
-   "calves",
-   "ankles and feet",
-   "quadriceps",
-   "inner thighs",
-   "core"
-  ],
   "drishti": "forward"
  },
  {
@@ -2800,7 +2022,6 @@
    "Reverse Prayer Feet Spread Out Full Forward Bend"
   ],
   "category": "standing",
-  "muscles": [],
   "drishti": "Nasagrai or Nasagre (nose)",
   "basePoseId": "wide-legged-forward-bend-iv"
  },
@@ -2818,12 +2039,6 @@
   ],
   "category": "floor",
   "difficulty": 2,
-  "muscles": [
-   "shoulders",
-   "lats",
-   "spine",
-   "hips"
-  ],
   "drishti": "Bhrumadhye or Ajna Chakra (third eye, between the eyebrows)"
  },
  {
@@ -2834,11 +2049,6 @@
    "Intense Side Stretch Pose"
   ],
   "category": "standing",
-  "muscles": [
-   "hamstrings",
-   "calves",
-   "hip stabilizers"
-  ],
   "drishti": "Padayoragrai (toes)"
  },
  {
@@ -2850,7 +2060,6 @@
    "Full Pigeon Pose"
   ],
   "category": "floor",
-  "muscles": [],
   "drishti": "Forward, gazing straight ahead",
   "basePoseId": "kapotasana"
  },
@@ -2865,11 +2074,6 @@
   "category": "floor",
   "tags": [
    "restorative"
-  ],
-  "muscles": [
-   "low back (passive)",
-   "hips",
-   "nervous system"
   ]
  },
  {
@@ -2883,11 +2087,6 @@
   "category": "floor",
   "tags": [
    "restorative"
-  ],
-  "muscles": [
-   "adductors",
-   "hips",
-   "chest (passive)"
   ],
   "drishti": "Eyes closed, or a soft gaze up at the ceiling",
   "basePoseId": "bound-angle"
@@ -2904,9 +2103,6 @@
   "category": "floor",
   "tags": [
    "restorative"
-  ],
-  "muscles": [
-   "full-body release"
   ]
  },
  {
@@ -2919,12 +2115,6 @@
   ],
   "category": "standing",
   "difficulty": 2,
-  "muscles": [
-   "obliques",
-   "quads",
-   "shoulders",
-   "hip flexors"
-  ],
   "drishti": "Hastagrai or Hastagre (hands)"
  },
  {
@@ -2932,11 +2122,6 @@
   "name": "Revolved Bird of Paradise Pose",
   "sanskrit": "Parivritta Svarga Dvijasana",
   "category": "standing",
-  "muscles": [
-   "core",
-   "legs",
-   "postural muscles"
-  ],
   "drishti": "Parshva Drishti (to the side)",
   "basePoseId": "bird-of-paradise"
  },
@@ -2949,12 +2134,6 @@
    "Twisted Chair"
   ],
   "category": "standing",
-  "muscles": [
-   "quads",
-   "obliques",
-   "glutes",
-   "core"
-  ],
   "drishti": "Urdhva or Antara Drishti (up to the sky)",
   "basePoseId": "chair"
  },
@@ -2963,12 +2142,6 @@
   "name": "Revolved Half Moon",
   "sanskrit": "Parivrtta Ardha Chandrasana",
   "category": "standing",
-  "muscles": [
-   "standing-leg glutes",
-   "obliques",
-   "hamstrings",
-   "core"
-  ],
   "drishti": "up toward the top fingertips",
   "basePoseId": "ardha-chandrasana-namaskar"
  },
@@ -2982,11 +2155,6 @@
    "Revolved Extended Hand to Toe Pose"
   ],
   "category": "standing",
-  "muscles": [
-   "core",
-   "legs",
-   "postural muscles"
-  ],
   "drishti": "forward at eye level",
   "basePoseId": "standing-hand-to-big-toe"
  },
@@ -3000,12 +2168,6 @@
   ],
   "category": "standing",
   "difficulty": 4,
-  "muscles": [
-   "hamstrings",
-   "obliques",
-   "spinal rotators",
-   "hips"
-  ],
   "drishti": "up toward the top hand",
   "basePoseId": "triangle"
  },
@@ -3018,11 +2180,6 @@
    "Revolved Wide Legged Forward Fold"
   ],
   "category": "standing",
-  "muscles": [
-   "hamstrings",
-   "calves",
-   "spinal erectors"
-  ],
   "drishti": "Downward, toward the floor",
   "basePoseId": "wide-legged-forward-bend-i"
  },
@@ -3034,13 +2191,6 @@
    "Cockerel Pose"
   ],
   "category": "arm-balance",
-  "muscles": [
-   "wrists",
-   "forearms",
-   "shoulders",
-   "core",
-   "hip flexors"
-  ],
   "drishti": "forward on a fixed point"
  },
  {
@@ -3053,11 +2203,6 @@
    "gherandasana-1"
   ],
   "category": "floor",
-  "muscles": [
-   "core",
-   "legs",
-   "postural muscles"
-  ],
   "drishti": "forward on the floor ahead"
  },
  {
@@ -3071,12 +2216,6 @@
    "Marichyasana 1"
   ],
   "category": "floor",
-  "muscles": [
-   "hamstrings",
-   "hips",
-   "shoulders",
-   "obliques"
-  ],
   "drishti": "Toward the extended foot or the floor"
  },
  {
@@ -3090,11 +2229,6 @@
    "Half Lotus Marichi's Forward Bend"
   ],
   "category": "floor",
-  "muscles": [
-   "hips",
-   "hamstrings",
-   "shoulders"
-  ],
   "drishti": "Padagre (tip of the big toe)",
   "basePoseId": "sage-marichis-i"
  },
@@ -3109,11 +2243,6 @@
   ],
   "category": "floor",
   "difficulty": 3,
-  "muscles": [
-   "obliques",
-   "spinal rotators",
-   "hips"
-  ],
   "drishti": "Parshva Drishti (to the left)",
   "basePoseId": "sage-marichis-i"
  },
@@ -3128,11 +2257,6 @@
    "Marichi's Pose IV"
   ],
   "category": "floor",
-  "muscles": [
-   "hips",
-   "obliques",
-   "shoulders"
-  ],
   "drishti": "Parshva Drishti (to the right), Parshva Drishti (to the left)",
   "basePoseId": "sage-marichis-i"
  },
@@ -3144,7 +2268,6 @@
    "Supported Twined Legs Sphinx Pose"
   ],
   "category": "floor",
-  "muscles": [],
   "drishti": "Bhrumadhye or Ajna Chakra (third eye, between the eyebrows)",
   "basePoseId": "sphinx"
  },
@@ -3156,7 +2279,6 @@
    "Rabbit Foot Pose"
   ],
   "category": "inversion",
-  "muscles": [],
   "drishti": "Nabhi, Nabhicakre, or Nabi Chakra (belly button)"
  },
  {
@@ -3167,7 +2289,6 @@
    "Elbow Plank"
   ],
   "category": "arm-balance",
-  "muscles": [],
   "drishti": "Gaze forward and slightly down toward the floor ahead",
   "basePoseId": "makara-dandasana"
  },
@@ -3176,11 +2297,6 @@
   "name": "Scorpion Pose",
   "sanskrit": "Vrischikasana A",
   "category": "inversion",
-  "muscles": [
-   "core",
-   "legs",
-   "postural muscles"
-  ],
   "drishti": "Down toward the floor between the hands"
  },
  {
@@ -3191,12 +2307,6 @@
    "Cactus Arms"
   ],
   "category": "floor",
-  "muscles": [
-   "chest",
-   "shoulders",
-   "upper back",
-   "postural muscles"
-  ],
   "drishti": "forward",
   "basePoseId": "easy"
  },
@@ -3209,11 +2319,6 @@
   ],
   "category": "chair",
   "difficulty": 1,
-  "muscles": [
-   "core",
-   "spinal flexors",
-   "upper back"
-  ],
   "drishti": "toward the knees",
   "basePoseId": "seated-rest"
  },
@@ -3226,11 +2331,6 @@
   ],
   "category": "chair",
   "difficulty": 1,
-  "muscles": [
-   "spinal extensors",
-   "chest",
-   "shoulders"
-  ],
   "drishti": "upward",
   "basePoseId": "seated-rest"
  },
@@ -3245,11 +2345,6 @@
   ],
   "category": "floor",
   "difficulty": 2,
-  "muscles": [
-   "hamstrings",
-   "calves",
-   "spinal erectors"
-  ],
   "drishti": "Padayoragrai or Padayoragre (toes/feet), Nasagrai or Nasagre (nose)"
  },
  {
@@ -3261,11 +2356,6 @@
    "Seated Forward Bend"
   ],
   "category": "floor",
-  "muscles": [
-   "hamstrings",
-   "calves",
-   "spinal erectors"
-  ],
   "drishti": "toward the feet",
   "basePoseId": "seated-forward-bend-i"
  },
@@ -3278,11 +2368,6 @@
    "Seated Forward Bend C"
   ],
   "category": "floor",
-  "muscles": [
-   "hamstrings",
-   "calves",
-   "spinal erectors"
-  ],
   "drishti": "shins",
   "basePoseId": "seated-forward-bend-i"
  },
@@ -3291,13 +2376,6 @@
   "name": "Seated Gate Pose",
   "sanskrit": "Upavistha Parighasana",
   "category": "floor",
-  "muscles": [
-   "obliques",
-   "intercostals",
-   "hamstrings",
-   "hips",
-   "core"
-  ],
   "drishti": "gently upward, past the raised arm",
   "basePoseId": "gate"
  },
@@ -3310,13 +2388,6 @@
    "Half Bound Lotus Forward Fold"
   ],
   "category": "floor",
-  "muscles": [
-   "hamstrings",
-   "calves",
-   "spinal erectors",
-   "hip external rotators",
-   "shoulders"
-  ],
   "drishti": "Padayoragre (toes of the extended foot)",
   "basePoseId": "seated-forward-bend-i"
  },
@@ -3329,22 +2400,13 @@
    "Soft Seat Rest"
   ],
   "category": "chair",
-  "difficulty": 1,
-  "muscles": [
-   "nervous system",
-   "postural back (passive)"
-  ]
+  "difficulty": 1
  },
  {
   "id": "seated-three-limbed-forward-bend",
   "name": "Seated Three Limbed Forward Bend Pose",
   "sanskrit": "Tiryan Mukha Eka Pada Paschimottanasana",
-  "category": "floor",
-  "muscles": [
-   "hamstrings",
-   "calves",
-   "spinal erectors"
-  ]
+  "category": "floor"
  },
  {
   "id": "seated-twist",
@@ -3356,11 +2418,6 @@
    "ardha-matsyendrasana-1"
   ],
   "category": "floor",
-  "muscles": [
-   "obliques",
-   "spinal rotators",
-   "hips"
-  ],
   "drishti": "Over the back shoulder, in the direction of the twist"
  },
  {
@@ -3373,12 +2430,6 @@
   ],
   "category": "chair",
   "difficulty": 1,
-  "muscles": [
-   "shoulders",
-   "chest",
-   "upper back",
-   "arms"
-  ],
   "drishti": "over the front hand",
   "basePoseId": "seated-rest"
  },
@@ -3390,7 +2441,6 @@
    "Grasshopper Pose"
   ],
   "category": "floor",
-  "muscles": [],
   "drishti": "forward, slightly down"
  },
  {
@@ -3401,13 +2451,6 @@
    "Shoulder Pressing Arm Balance"
   ],
   "category": "arm-balance",
-  "muscles": [
-   "shoulders",
-   "wrists",
-   "arms",
-   "core",
-   "hips"
-  ],
   "drishti": "Tip of the nose (nasagrai) or the floor"
  },
  {
@@ -3422,12 +2465,6 @@
    "parshva-bakasana"
   ],
   "category": "arm-balance",
-  "muscles": [
-   "obliques",
-   "shoulders",
-   "wrists",
-   "core"
-  ],
   "drishti": "forward",
   "basePoseId": "crow-kakasana"
  },
@@ -3436,12 +2473,6 @@
   "name": "Side Lunge",
   "sanskrit": "Skandasana",
   "category": "standing",
-  "muscles": [
-   "adductors",
-   "quads",
-   "glutes",
-   "ankles"
-  ],
   "drishti": "Nasagrai or Nasagre (tip of the nose), or a soft forward gaze",
   "basePoseId": "lunge"
  },
@@ -3459,12 +2490,6 @@
    "Tree Pose in Side Plank Modification"
   ],
   "category": "floor",
-  "muscles": [
-   "obliques",
-   "shoulders",
-   "glutes",
-   "wrists"
-  ],
   "drishti": "Angushtamadhye or Angushta Ma Dyai (thumbs)",
   "basePoseId": "plank"
  },
@@ -3479,11 +2504,6 @@
    "Straddle Fold"
   ],
   "category": "standing",
-  "muscles": [
-   "hamstrings",
-   "calves",
-   "spinal erectors"
-  ],
   "drishti": "toward the floor",
   "basePoseId": "wide-legged-forward-bend-i"
  },
@@ -3495,14 +2515,6 @@
    "Yogic Sleep Pose"
   ],
   "category": "floor",
-  "muscles": [
-   "core",
-   "spine",
-   "hamstrings",
-   "hips",
-   "inner thighs",
-   "shoulders"
-  ],
   "drishti": "closed eyes"
  },
  {
@@ -3513,12 +2525,6 @@
    "Locust Pose"
   ],
   "category": "floor",
-  "muscles": [
-   "spinal extensors",
-   "chest",
-   "shoulders",
-   "upper back"
-  ],
   "drishti": "forward"
  },
  {
@@ -3532,11 +2538,6 @@
   ],
   "category": "floor",
   "difficulty": 1,
-  "muscles": [
-   "spinal extensors",
-   "chest",
-   "core"
-  ],
   "drishti": "Forward, level with the floor",
   "basePoseId": "reverse-corpse"
  },
@@ -3545,12 +2546,6 @@
   "name": "Staff Pose",
   "sanskrit": "Dandasana",
   "category": "floor",
-  "muscles": [
-   "core",
-   "hip flexors",
-   "quads",
-   "postural back"
-  ],
   "drishti": "Nasagrai (tip of nose), gazing straight ahead"
  },
  {
@@ -3562,12 +2557,6 @@
    "Anuvittasana"
   ],
   "category": "standing",
-  "muscles": [
-   "spinal extensors",
-   "chest",
-   "hip flexors",
-   "core"
-  ],
   "drishti": "upward, toward the sky"
  },
  {
@@ -3578,11 +2567,6 @@
    "Standing Foot to Head Pose"
   ],
   "category": "standing",
-  "muscles": [
-   "core",
-   "legs",
-   "postural muscles"
-  ],
   "drishti": "forward"
  },
  {
@@ -3596,13 +2580,6 @@
    "trivikramasana"
   ],
   "category": "standing",
-  "muscles": [
-   "standing leg glutes and quads",
-   "core",
-   "hamstrings",
-   "shoulders and arms",
-   "ankles"
-  ],
   "drishti": "forward, eyes soft"
  },
  {
@@ -3614,11 +2591,6 @@
   ],
   "category": "standing",
   "difficulty": 2,
-  "muscles": [
-   "hamstrings",
-   "calves",
-   "spinal erectors"
-  ],
   "drishti": "Nasagrai or Nasagre (nose)"
  },
  {
@@ -3631,11 +2603,6 @@
    "Half Bound Lotus Forward Fold"
   ],
   "category": "standing",
-  "muscles": [
-   "hamstrings",
-   "calves",
-   "spinal erectors"
-  ],
   "drishti": "Nasagrai or Nasagre (nose)"
  },
  {
@@ -3649,11 +2616,6 @@
    "Hand to Big Toe"
   ],
   "category": "standing",
-  "muscles": [
-   "core",
-   "legs",
-   "postural muscles"
-  ],
   "drishti": "Forward, straight ahead"
  },
  {
@@ -3666,12 +2628,6 @@
    "Chair-Supported Hinge"
   ],
   "category": "standing",
-  "muscles": [
-   "hamstrings",
-   "glutes",
-   "low back",
-   "core"
-  ],
   "drishti": "up"
  },
  {
@@ -3683,12 +2639,6 @@
    "Overhead Side Bend"
   ],
   "category": "standing",
-  "muscles": [
-   "obliques",
-   "side body",
-   "shoulders",
-   "intercostals"
-  ],
   "drishti": "gaze gently upward"
  },
  {
@@ -3700,11 +2650,6 @@
    "Standing Split"
   ],
   "category": "standing",
-  "muscles": [
-   "core",
-   "legs",
-   "postural muscles"
-  ],
   "drishti": "Toward the toes or the floor beneath you"
  },
  {
@@ -3716,7 +2661,6 @@
    "Reverse Plank Prep"
   ],
   "category": "floor",
-  "muscles": [],
   "drishti": "Upward and slightly back, following the tilt of the head, or eyes closed",
   "basePoseId": "fish"
  },
@@ -3728,7 +2672,6 @@
    "Revolved Yoga Squat"
   ],
   "category": "standing",
-  "muscles": [],
   "drishti": "down toward the floor",
   "basePoseId": "noose"
  },
@@ -3741,7 +2684,6 @@
    "Easy Tree Pose"
   ],
   "category": "standing",
-  "muscles": [],
   "drishti": "Parshva Drishti (to the right), Parshva Drishti (to the left)"
  },
  {
@@ -3753,11 +2695,6 @@
    "Reclining Foot Behind Head Pose"
   ],
   "category": "floor",
-  "muscles": [
-   "core",
-   "legs",
-   "postural muscles"
-  ],
   "drishti": "toward the raised foot",
   "basePoseId": "supine-hand-to-big-toe"
  },
@@ -3771,11 +2708,6 @@
    "Reclining Hand to Big Toe Pose"
   ],
   "category": "floor",
-  "muscles": [
-   "core",
-   "legs",
-   "postural muscles"
-  ],
   "drishti": "Padayoragrai (toes of the raised foot)",
   "basePoseId": "corpse"
  },
@@ -3791,10 +2723,6 @@
   ],
   "category": "floor",
   "difficulty": 1,
-  "muscles": [
-   "obliques",
-   "spinal rotators"
-  ],
   "drishti": "Over the shoulder of the extended arm, away from the knees"
  },
  {
@@ -3806,11 +2734,6 @@
    "Supine Wide-Leg Split"
   ],
   "category": "floor",
-  "muscles": [
-   "adductors",
-   "hamstrings",
-   "hips"
-  ],
   "drishti": "up toward the ceiling"
  },
  {
@@ -3823,11 +2746,6 @@
   ],
   "category": "chair",
   "difficulty": 1,
-  "muscles": [
-   "calves",
-   "ankles",
-   "feet"
-  ],
   "drishti": "forward",
   "basePoseId": "seated-rest"
  },
@@ -3841,12 +2759,6 @@
    "shirshasana-1"
   ],
   "category": "inversion",
-  "muscles": [
-   "shoulders",
-   "core",
-   "upper back",
-   "arms"
-  ],
   "drishti": "tip of the nose"
  },
  {
@@ -3858,11 +2770,6 @@
   ],
   "category": "inversion",
   "difficulty": 4,
-  "muscles": [
-   "core",
-   "legs",
-   "postural muscles"
-  ],
   "drishti": "Toes or feet"
  },
  {
@@ -3873,7 +2780,6 @@
    "Supine Lotus Pose"
   ],
   "category": "floor",
-  "muscles": [],
   "drishti": "Bhrumadhye or Ajna Chakra (third eye, between the eyebrows)",
   "basePoseId": "lotus"
  },
@@ -3886,13 +2792,6 @@
    "Hero Pose Lying Back"
   ],
   "category": "floor",
-  "muscles": [
-   "quadriceps",
-   "hip flexors",
-   "ankles",
-   "knees",
-   "lower back"
-  ],
   "drishti": "eyes closed or gaze soft toward the ceiling",
   "basePoseId": "hero"
  },
@@ -3906,13 +2805,6 @@
    "Compass Pose"
   ],
   "category": "floor",
-  "muscles": [
-   "hamstrings",
-   "hips",
-   "obliques",
-   "shoulders",
-   "groin"
-  ],
   "drishti": "Urdhva or Antara Drishti (up to the sky)"
  },
  {
@@ -3925,11 +2817,6 @@
   ],
   "category": "floor",
   "difficulty": 1,
-  "muscles": [
-   "core",
-   "legs",
-   "postural muscles"
-  ],
   "drishti": "forward and slightly down"
  },
  {
@@ -3943,7 +2830,6 @@
    "Anjali Mudra Tadasana"
   ],
   "category": "standing",
-  "muscles": [],
   "drishti": "Nasagrai or Nasagre (nose)",
   "basePoseId": "mountain"
  },
@@ -3957,7 +2843,6 @@
    "Raised Bound Hands Pose"
   ],
   "category": "standing",
-  "muscles": [],
   "drishti": "Nasagrai or Nasagre (nose)",
   "basePoseId": "upward-salute"
  },
@@ -3966,7 +2851,6 @@
   "name": "Pose Inspired by Shiva’s Vigorous Cycle of Life Dance",
   "sanskrit": "Tandavasana",
   "category": "standing",
-  "muscles": [],
   "drishti": "Hastagiri or Hastagare (hands)"
  },
  {
@@ -3975,11 +2859,6 @@
   "sanskrit": "Parsva Balasana",
   "category": "floor",
   "difficulty": 2,
-  "muscles": [
-   "rear shoulders",
-   "rhomboids",
-   "obliques"
-  ],
   "drishti": "out to the side"
  },
  {
@@ -3991,11 +2870,6 @@
    "Rock Pose"
   ],
   "category": "floor",
-  "muscles": [
-   "quads",
-   "ankles",
-   "shins"
-  ],
   "drishti": "Nasagrai or a steady gaze forward at a fixed point"
  },
  {
@@ -4003,12 +2877,6 @@
   "name": "Tiger Pose",
   "sanskrit": "Vyaghrasana",
   "category": "floor",
-  "muscles": [
-   "glutes",
-   "spinal extensors",
-   "shoulders",
-   "core"
-  ],
   "drishti": "Forward, following the curve of the spine"
  },
  {
@@ -4019,7 +2887,6 @@
    "Full Wheel Pose"
   ],
   "category": "standing",
-  "muscles": [],
   "drishti": "Bhrumadhye or Ajna Chakra (third eye, between the eyebrows)",
   "basePoseId": "wheel"
  },
@@ -4031,7 +2898,6 @@
    "Firefly Pose C Prep"
   ],
   "category": "standing",
-  "muscles": [],
   "drishti": "Down toward the floor",
   "basePoseId": "standing-forward-bend"
  },
@@ -4040,12 +2906,6 @@
   "name": "Toe Stand",
   "sanskrit": "Padangushthasana",
   "category": "standing",
-  "muscles": [
-   "ankles",
-   "calves",
-   "core",
-   "quads"
-  ],
   "drishti": "forward",
   "basePoseId": "prapadasana"
  },
@@ -4057,12 +2917,6 @@
    "Turtle Pose"
   ],
   "category": "floor",
-  "muscles": [
-   "hamstrings",
-   "adductors",
-   "shoulders",
-   "back"
-  ],
   "drishti": "Down toward the floor"
  },
  {
@@ -4075,12 +2929,6 @@
   ],
   "category": "standing",
   "difficulty": 2,
-  "muscles": [
-   "standing-leg glutes",
-   "ankles",
-   "core",
-   "hip external rotators"
-  ],
   "drishti": "Forward at eye level"
  },
  {
@@ -4092,7 +2940,6 @@
    "Three Limbed Face to Foot Seated Forward Bend"
   ],
   "category": "floor",
-  "muscles": [],
   "drishti": "toward the extended foot",
   "basePoseId": "seated-forward-bend-i"
  },
@@ -4105,12 +2952,6 @@
   ],
   "category": "standing",
   "difficulty": 2,
-  "muscles": [
-   "hamstrings",
-   "obliques",
-   "adductors",
-   "shoulders"
-  ],
   "drishti": "top hand"
  },
  {
@@ -4124,11 +2965,6 @@
    "Headstand 5"
   ],
   "category": "inversion",
-  "muscles": [
-   "core",
-   "legs",
-   "postural muscles"
-  ],
   "drishti": "tip of the nose",
   "basePoseId": "supported-headstand"
  },
@@ -4142,7 +2978,6 @@
    "Equal Bound Angle Pose 1"
   ],
   "category": "floor",
-  "muscles": [],
   "drishti": "forward",
   "basePoseId": "bound-angle"
  },
@@ -4155,7 +2990,6 @@
    "Upavistha Prapadasana"
   ],
   "category": "standing",
-  "muscles": [],
   "drishti": "Angushtamadhye or Angushta Ma Dyai (thumbs)",
   "basePoseId": "prapadasana"
  },
@@ -4170,14 +3004,6 @@
   ],
   "category": "floor",
   "difficulty": 3,
-  "muscles": [
-   "chest",
-   "shoulders",
-   "triceps",
-   "spine",
-   "abdomen",
-   "glutes"
-  ],
   "drishti": "toward the ceiling"
  },
  {
@@ -4188,13 +3014,6 @@
    "Reverse Plank"
   ],
   "category": "floor",
-  "muscles": [
-   "glutes",
-   "hamstrings",
-   "shoulders",
-   "triceps",
-   "core"
-  ],
   "drishti": "Upward, toward the sky",
   "basePoseId": "plank"
  },
@@ -4204,11 +3023,6 @@
   "sanskrit": "Urdhva Hastasana",
   "category": "standing",
   "difficulty": 1,
-  "muscles": [
-   "shoulders",
-   "core",
-   "postural back"
-  ],
   "drishti": "Forward"
  },
  {
@@ -4220,7 +3034,6 @@
    "Tiptoe Squat Arms Overhead"
   ],
   "category": "standing",
-  "muscles": [],
   "drishti": "Nasagrai or Nasagre (nose)",
   "basePoseId": "prapadasana"
  },
@@ -4232,7 +3045,6 @@
    "Uneven Sphinx Pose"
   ],
   "category": "floor",
-  "muscles": [],
   "drishti": "forward and slightly up",
   "basePoseId": "sphinx"
  },
@@ -4241,7 +3053,6 @@
   "name": "Extended Triangle Pose",
   "sanskrit": "Utthita Trikonasana",
   "category": "standing",
-  "muscles": [],
   "drishti": "down toward the floor or the bottom hand",
   "basePoseId": "triangle"
  },
@@ -4254,7 +3065,6 @@
    "Reversed Tortoise Pose"
   ],
   "category": "inversion",
-  "muscles": [],
   "drishti": "toward the feet",
   "basePoseId": "tortoise"
  },
@@ -4263,7 +3073,6 @@
   "name": "Inverted Locust Pose",
   "sanskrit": "Viparita Shalabhasana",
   "category": "floor",
-  "muscles": [],
   "basePoseId": "shalabhasana"
  },
  {
@@ -4275,7 +3084,6 @@
    "Uneven Eight Angle Pose"
   ],
   "category": "arm-balance",
-  "muscles": [],
   "drishti": "down at the floor",
   "basePoseId": "eight-angle"
  },
@@ -4289,7 +3097,6 @@
    "Uneven Bridge"
   ],
   "category": "floor",
-  "muscles": [],
   "drishti": "Bhrumadhye or Ajna Chakra (third eye, between the eyebrows)",
   "basePoseId": "bridge"
  },
@@ -4302,7 +3109,6 @@
    "Tree Pose"
   ],
   "category": "standing",
-  "muscles": [],
   "drishti": "A steady forward gaze at a fixed point ahead",
   "basePoseId": "tree"
  },
@@ -4317,11 +3123,6 @@
   ],
   "category": "standing",
   "difficulty": 3,
-  "muscles": [
-   "core",
-   "legs",
-   "postural muscles"
-  ],
   "drishti": "Forward, or softly up toward the hands"
  },
  {
@@ -4335,11 +3136,6 @@
   ],
   "category": "standing",
   "difficulty": 3,
-  "muscles": [
-   "core",
-   "legs",
-   "postural muscles"
-  ],
   "drishti": "Hastagrai or Hastagre (hands)"
  },
  {
@@ -4353,11 +3149,6 @@
   ],
   "category": "standing",
   "difficulty": 4,
-  "muscles": [
-   "core",
-   "legs",
-   "postural muscles"
-  ],
   "drishti": "Down toward the floor"
  },
  {
@@ -4373,11 +3164,6 @@
    "restorative"
   ],
   "difficulty": 1,
-  "muscles": [
-   "hamstrings",
-   "hip flexors",
-   "core (light)"
-  ],
   "drishti": "up toward the toes",
   "basePoseId": "staff"
  },
@@ -4391,13 +3177,6 @@
   ],
   "category": "floor",
   "difficulty": 5,
-  "muscles": [
-   "glutes",
-   "shoulders",
-   "spinal extensors",
-   "quads",
-   "wrists"
-  ],
   "drishti": "Toward the mat between the hands"
  },
  {
@@ -4409,7 +3188,6 @@
    "Standing Viparita Kurmasana"
   ],
   "category": "standing",
-  "muscles": [],
   "drishti": "Nasagrai (nose)",
   "basePoseId": "wide-legged-forward-bend-iv"
  },
@@ -4424,11 +3202,6 @@
    "Wide Legged Forward Bend I Pose"
   ],
   "category": "standing",
-  "muscles": [
-   "hamstrings",
-   "calves",
-   "spinal erectors"
-  ],
   "drishti": "Nasagrai or Nasagre (nose)"
  },
  {
@@ -4445,11 +3218,6 @@
    "Feet Spread Out Full Forward Bend"
   ],
   "category": "standing",
-  "muscles": [
-   "hamstrings",
-   "calves",
-   "spinal erectors"
-  ],
   "drishti": "toward the floor",
   "basePoseId": "wide-legged-forward-bend-i"
  },
@@ -4465,11 +3233,6 @@
    "Hands to Big Toes Feet Spread Out Full Forward Bend"
   ],
   "category": "standing",
-  "muscles": [
-   "hamstrings",
-   "calves",
-   "spinal erectors"
-  ],
   "drishti": "toward the floor"
  },
  {
@@ -4487,11 +3250,6 @@
    "Feet Spread Out Full Forward Bend"
   ],
   "category": "standing",
-  "muscles": [
-   "hamstrings",
-   "calves",
-   "spinal erectors"
-  ],
   "drishti": "Nasagrai or Nasagre (nose)",
   "basePoseId": "wide-legged-forward-bend-i"
  },
@@ -4508,11 +3266,6 @@
    "upavishta-konasana"
   ],
   "category": "floor",
-  "muscles": [
-   "adductors",
-   "hamstrings",
-   "hips"
-  ],
   "drishti": "toward the floor",
   "basePoseId": "wide-splits"
  },
@@ -4527,11 +3280,6 @@
    "Middle Splits"
   ],
   "category": "floor",
-  "muscles": [
-   "adductors",
-   "hamstrings",
-   "hips"
-  ],
   "drishti": "Bhrumadhye or Ajna Chakra (third eye, between the eyebrows)"
  },
  {
@@ -4544,12 +3292,6 @@
    "chamatkarasana"
   ],
   "category": "floor",
-  "muscles": [
-   "shoulders",
-   "glutes",
-   "spinal extensors",
-   "hip flexors"
-  ],
   "drishti": "Bhrumadhye or Ajna Chakra (third eye, between the eyebrows) or Hastagrai or Hastagre (hands)"
  },
  {
@@ -4562,11 +3304,6 @@
   ],
   "category": "floor",
   "difficulty": 1,
-  "muscles": [
-   "hips",
-   "low back (passive)",
-   "core"
-  ],
   "drishti": "up at the ceiling"
  }
 ]

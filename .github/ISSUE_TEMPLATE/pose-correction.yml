@@ -35,6 +35,12 @@ body:
       description: For example "the back heel should be down" or "the hips should face the long edge of the mat".
     validations:
       required: true
+  - type: textarea
+    id: edit-data
+    attributes:
+      label: 3D data (optional)
+      description: Filled in for you when you edit the pose in the viewer and press Suggest this edit. Please don't change it. A maintainer can apply it with one click.
+      render: text
   - type: input
     id: tradition
     attributes:

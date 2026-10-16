@@ -6,9 +6,9 @@ body:
   - type: markdown
     attributes:
       value: |
-        If you're comfortable with JSON you can add the routine directly as a file in `routines/` (see docs/FORMAT.md). Otherwise describe it here and a maintainer will turn it into a file and credit you.
+        Prefer the [Routines editor](https://syntithenai.github.io/open-yoga-poses/routines.html): it fills this form for you. A maintainer can apply a machine-readable submission with the `apply-edit` label.
   - type: input
-    id: title
+    id: routine-title
     attributes:
       label: Title
     validations:
@@ -17,7 +17,7 @@ body:
     id: author
     attributes:
       label: Credit as
-      description: Your name, and a link to your website or studio if you'd like one.
+      description: Your name. Include your email in angle brackets (Name &lt;you@example.com&gt;) so you can claim the routine in SynthYoga with the same signed-in account.
     validations:
       required: true
   - type: dropdown
@@ -25,11 +25,11 @@ body:
     attributes:
       label: Level
       options:
-        - 1 Gentle
-        - 2 Easy
-        - 3 Moderate
-        - 4 Challenging
-        - 5 Advanced
+        - "1"
+        - "2"
+        - "3"
+        - "4"
+        - "5"
   - type: textarea
     id: steps
     attributes:
@@ -41,6 +41,12 @@ body:
         low-lunge, 30s, left
     validations:
       required: true
+  - type: textarea
+    id: edit-data
+    attributes:
+      label: Routine data (from the editor)
+      description: Machine-readable open-yoga-edit/1 envelope. Leave blank if you only filled the steps above by hand.
+      render: json
   - type: textarea
     id: notes
     attributes:

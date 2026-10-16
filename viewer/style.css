@@ -45,7 +45,125 @@ a {
 
 .top nav {
   display: flex;
-  gap: 1rem;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  align-items: center;
+}
+
+.auth {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.auth-who {
+  font-size: 0.85rem;
+  color: var(--muted);
+  max-width: 10rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.auth-btn,
+.meta-dialog button,
+.meta-dialog .linkish {
+  padding: 0.35rem 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: 0.4rem;
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.auth-btn.linkish,
+.meta-dialog .linkish {
+  border: 0;
+  background: transparent;
+  color: var(--accent);
+  text-decoration: underline;
+  padding-inline: 0.2rem;
+}
+
+.meta-dialog {
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+  padding: 0;
+  max-width: min(36rem, 96vw);
+  max-height: 90vh;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.meta-dialog::backdrop {
+  background: rgba(40, 20, 10, 0.45);
+}
+
+.meta-dialog form {
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+}
+
+.meta-head,
+.meta-foot {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.meta-foot {
+  border-bottom: 0;
+  border-top: 1px solid var(--line);
+  justify-content: flex-end;
+}
+
+.meta-head h2 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.meta-body {
+  padding: 0.75rem 1rem 1rem;
+  overflow-y: auto;
+}
+
+.meta-body .field {
+  margin-top: 0.55rem;
+}
+
+.meta-body textarea,
+.meta-body input,
+.meta-body select {
+  width: 100%;
+  padding: 0.4rem 0.55rem;
+  border: 1px solid var(--line);
+  border-radius: 0.4rem;
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.9rem;
+}
+
+.meta-body .check {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.meta-body .check input {
+  width: auto;
+}
+
+.meta-dialog button.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
 }
 
 .layout {
@@ -162,13 +280,20 @@ a {
 
 .stage-bar {
   display: flex;
-  gap: 1rem;
+  gap: 0.75rem;
   align-items: center;
   justify-content: space-between;
   padding-top: 0.5rem;
+  flex-wrap: wrap;
 }
 
-.stage-bar select,
+.look-summary {
+  margin: 0;
+  flex: 1;
+  min-width: 8rem;
+  font-size: 0.85rem;
+}
+
 .stage-bar button,
 .actions a,
 .actions button {
@@ -183,13 +308,293 @@ a {
   cursor: pointer;
 }
 
+.settings-dialog {
+  max-width: min(40rem, 96vw);
+}
+
+.settings-lede {
+  margin: 0 0 0.5rem;
+}
+
+.settings-section {
+  margin: 1rem 0 0.45rem;
+  font-size: 0.95rem;
+}
+
+.pick-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr));
+  gap: 0.45rem;
+}
+
+.pick {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.35rem 0.45rem;
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.78rem;
+  text-align: center;
+  cursor: pointer;
+}
+
+.pick.selected {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+.pick-preview {
+  display: block;
+  width: 72px;
+  height: 108px;
+  object-fit: contain;
+  border-radius: 0.3rem;
+  background: var(--soft);
+}
+
+.pick-preview-empty {
+  border: 1px solid var(--line);
+}
+
+.pick-label {
+  line-height: 1.2;
+}
+
+.brand-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.brand-link:hover {
+  color: var(--accent);
+}
+
+.routines-layout {
+  display: grid;
+  grid-template-columns: minmax(14rem, 18rem) 1fr;
+  gap: 1.25rem;
+  padding: 1rem 1.25rem;
+  min-height: calc(100vh - 12rem);
+}
+
+.routines-side {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.routines-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.routines-toolbar .primary,
+.chip-btn,
+.routines-actions button,
+.routines-add-row button {
+  padding: 0.35rem 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: 0.4rem;
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.routines-toolbar .primary,
+.routines-actions button.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.chip-btn {
+  display: inline-flex;
+  align-items: center;
+}
+
+.routines-heading {
+  margin: 0.75rem 0 0.25rem;
+  font-size: 0.95rem;
+}
+
+.routine-pick-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.routine-pick {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.1rem;
+  width: 100%;
+  margin-bottom: 0.35rem;
+  padding: 0.45rem 0.55rem;
+  border: 1px solid var(--line);
+  border-radius: 0.45rem;
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.routine-pick span {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.routine-pick.selected {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+.routines-editor {
+  min-width: 0;
+}
+
+.routines-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.routines-actions .linkish {
+  border: 0;
+  background: transparent;
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.routines-meta-row {
+  display: grid;
+  grid-template-columns: 8rem 1fr;
+  gap: 0.75rem;
+}
+
+.routines-email-hint {
+  margin: 0.25rem 0 0.75rem;
+  font-size: 0.85rem;
+}
+
+.routines-add-row {
+  display: flex;
+  gap: 0.5rem;
+  margin: 0.5rem 0 0.75rem;
+}
+
+.routines-add-row input {
+  flex: 1;
+  padding: 0.4rem 0.55rem;
+  border: 1px solid var(--line);
+  border-radius: 0.4rem;
+  font: inherit;
+}
+
+.routines-editor .field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-top: 0.55rem;
+}
+
+.routines-editor .field input,
+.routines-editor .field textarea,
+.routines-editor .field select {
+  padding: 0.4rem 0.55rem;
+  border: 1px solid var(--line);
+  border-radius: 0.4rem;
+  font: inherit;
+}
+
+.step-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.step-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+  padding: 0.55rem;
+  margin-bottom: 0.45rem;
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+  background: #fff;
+}
+
+.step-main {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.35rem 0.75rem;
+}
+
+.step-pose {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
+.field.tight {
+  margin-top: 0;
+  font-size: 0.85rem;
+}
+
+.step-ops {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.step-ops button {
+  padding: 0.15rem 0.4rem;
+  border: 1px solid var(--line);
+  border-radius: 0.3rem;
+  background: var(--soft);
+  cursor: pointer;
+}
+
+@media (max-width: 800px) {
+  .routines-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .routines-meta-row,
+  .step-main {
+    grid-template-columns: 1fr;
+  }
+}
+
+.info-title {
+  overflow: auto;
+}
+
 .info h2 {
   margin: 0;
+}
+
+.info .google-pose {
+  float: right;
+  margin: 0.15rem 0 0;
+  font-size: 0.85rem;
 }
 
 .info .sanskrit {
   margin: 0.15rem 0;
   font-style: italic;
+  clear: both;
 }
 
 .info code {
@@ -226,6 +631,181 @@ a {
   border-left: 3px solid var(--accent);
   background: var(--soft);
   font-size: 0.85rem;
+}
+
+.dot {
+  color: var(--accent);
+  font-size: 0.7rem;
+  vertical-align: middle;
+}
+
+.panel {
+  margin-top: 1rem;
+  padding: 0.6rem 0.75rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 0.6rem;
+  background: #fff;
+}
+
+.panel h3 {
+  margin: 0;
+}
+
+.panel .actions {
+  margin: 0.6rem 0 0;
+}
+
+.panel p {
+  margin: 0.4rem 0;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.75rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.4rem;
+}
+
+.row[hidden] {
+  display: none;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin-top: 0.4rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.field input,
+.field select,
+.panel button {
+  padding: 0.35rem 0.55rem;
+  border: 1px solid var(--line);
+  border-radius: 0.4rem;
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.9rem;
+}
+
+.panel button {
+  cursor: pointer;
+}
+
+.panel button[aria-pressed='true'],
+.panel button.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.panel button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  background: var(--soft);
+  font-size: 0.8rem;
+}
+
+.dot.pending {
+  color: #9a6a00;
+}
+
+.pill {
+  display: inline-block;
+  padding: 0.05rem 0.45rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--soft);
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+.pill.waiting,
+.pill.review {
+  border-color: #e6c37a;
+  background: #fdf1d6;
+  color: #6b4a00;
+}
+
+.pill.merged {
+  border-color: #9fd0a6;
+  background: #e4f4e6;
+  color: #1d5b27;
+}
+
+.pill.closed {
+  color: var(--muted);
+}
+
+.edit-status {
+  font-size: 0.85rem;
+}
+
+.info .suggestions {
+  list-style: none;
+  margin: 0.4rem 0 0;
+  padding: 0;
+}
+
+.suggestions li {
+  padding: 0.3rem 0;
+  border-top: 1px solid var(--line);
+  font-size: 0.85rem;
+}
+
+.timeline {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.25rem 0.6rem;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.timeline #scrub-time {
+  grid-column: 2;
+}
+
+.track {
+  position: relative;
+  padding-bottom: 0.9rem;
+}
+
+.track input {
+  width: 100%;
+  margin: 0;
+}
+
+.keys {
+  position: absolute;
+  inset: auto 0.5rem 0 0.5rem;
+  height: 0.9rem;
+}
+
+.panel .keys button {
+  position: absolute;
+  top: 0;
+  width: 0.8rem;
+  height: 0.8rem;
+  padding: 0;
+  transform: translateX(-50%) rotate(45deg);
+  border: 2px solid var(--accent);
+  border-radius: 0.1rem;
+  background: #fff;
+}
+
+.panel .keys button[aria-pressed='true'] {
+  background: var(--accent);
 }
 
 .foot {

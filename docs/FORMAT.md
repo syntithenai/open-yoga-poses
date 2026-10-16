@@ -38,7 +38,6 @@ An array, one entry per pose:
   "altNames": ["Warrior 2"],
   "category": "standing",
   "difficulty": 3,
-  "muscles": ["core", "legs"],
   "drishti": "Over the front fingertips",
   "basePoseId": "warrior-ii"
 }
@@ -48,24 +47,52 @@ An array, one entry per pose:
 - `difficulty`: 1 (gentle) to 5 (advanced). Optional, and only set where a person has rated the pose; rating the rest is welcome.
 - `basePoseId`: set on named variations, pointing at the pose they vary.
 
-## Muscles: `muscles.json` (`yoga-muscles-pack/1`)
+## Moves: `transitions.json` (`yoga-transitions/1`)
+
+How the body travels from one pose to another, keyed `"<from>><to>"`. Without an entry, players blend straight from one pose to the next.
 
 ```json
 {
-  "format": "yoga-muscles-pack/1",
-  "poses": {
-    "warrior-ii": {
-      "reviewed": true,
-      "muscles": [{ "id": "gluteus_medius", "side": "L", "role": "stabilise", "level": 2 }]
+  "format": "yoga-transitions/1",
+  "transitions": {
+    "cat>cow": {
+      "durationSec": 3,
+      "breath": "inhale",
+      "keys": [
+        { "t": 0.5, "pose": { "bones": { "root": [0.98, 0.2, 0, 0], "spine03": [0.99, 0.1, 0, 0] }, "root": { "head": [0, 0.1, 0.5] } }, "ease": "out" }
+      ],
+      "endEase": "inOut"
     }
   }
 }
 ```
 
-- `role`: `stretch`, `contract` or `stabilise`.
-- `side`: `L`, `R` or `both`.
-- `level`: 1 (light) to 3 (strong).
-- `reviewed`: `false` for entries drafted automatically and not yet checked by a person. Reviewing them is a great first contribution.
+| Field | Meaning |
+|---|---|
+| `durationSec` | How long the move takes, 0.2 to 30 seconds. |
+| `breath` | Optional: `inhale` or `exhale` when the move follows one breath. |
+| `keys` | Up to 8 in-between shapes. `t` runs from 0 (the first pose) to 1 (the second), strictly increasing. A key's `bones` use the same rotations as a pose file and must include `root`; a bone that isn't listed keeps its parent's rotation. |
+| `keys[].ease` | How the body arrives at this key from the one before: `inOut` (smooth, the default), `linear` (even), `in` (speeding up) or `out` (slowing down). |
+| `endEase` | How the body arrives at the second pose from the last key. |
+
+A key has no `restAxes` of its own: players blend the two poses' `restAxes` at `t`. `viewer/transition.js` plays a move.
+
+## Suggested edits (`open-yoga-edit/1`)
+
+The viewer's **Suggest this edit** and **Suggest this move** buttons put the edited 3D data into the issue, so a maintainer can apply it by adding the `apply-edit` label (or locally with `python3 tools/apply_edit.py issue.md`).
+
+```json
+{ "format": "open-yoga-edit/1", "kind": "pose", "pose": "warrior-ii", "bones": { "upperarm01.L": [0.7, 0.1, -0.7, 0.1] }, "root": { "head": [0.09, 0.22, 0.64] } }
+{ "format": "open-yoga-edit/1", "kind": "move", "from": "cat", "to": "cow", "transition": { "durationSec": 3, "keys": [] } }
+{ "format": "open-yoga-edit/1", "kind": "app-pose", "pose": "warrior-ii", "bones": { "root": [1, 0, 0, 0] }, "fields": { "name": "Warrior II", "sanskrit": "Virabhadrasana B", "description": "…" }, "animations": [] }
+{ "format": "open-yoga-edit/1", "kind": "routine", "routine": { "format": "open-yoga-routine/1", "id": "gentle-morning", "title": "Gentle morning", "steps": [] } }
+```
+
+A pose edit lists only the bones that changed; they replace those bones in `poses/<id>.json`. A move edit replaces the whole move. A routine edit writes `routines/<id>.json`.
+
+An **app-pose** edit comes from the SynthYoga pose editor or a signed-in suggest on this viewer. It must include bones. It may also carry `creditName`, catalog fields (`name`, `sanskrit`, `altNames`, `category`, `intensity` → `difficulty`, `tags`, `drishti`, `basePoseId`), other teaching fields (written to `incoming/` as a patch for the app's `apply_pose_edits.ts`), and keyframed `animations` (written as moves when both pose ids are in the catalog). An empty `sourcePoseId` means a new pose: `apply_edit.py` creates `poses/<id>.json` and a catalog entry.
+
+When the JSON is long, the viewer sends it as one line, `OYE1.` followed by the JSON compressed with raw deflate and encoded as base64url (no padding). In Python: `json.loads(zlib.decompress(base64.urlsafe_b64decode(token + "=" * (-len(token) % 4)), -15))`.
 
 ## Routine: `routines/<id>.json` (`open-yoga-routine/1`)
 
@@ -90,7 +117,7 @@ An array, one entry per pose:
 | Field | Meaning |
 |---|---|
 | `id` | Lowercase letters, numbers and hyphens. Must match the file name. |
-| `author` | Who to credit. `url` is optional. |
+| `author` | Who to credit. `url` is optional. `email` (optional) lets the author claim the routine in SynthYoga when signed in with the same address. |
 | `level` | 1 (gentle) to 5 (advanced). |
 | `steps[].pose` | A pose id from `catalog.json`. |
 | `steps[].holdSec` | How long to stay, 1 to 600 seconds. |

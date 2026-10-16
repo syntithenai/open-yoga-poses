@@ -1,0 +1,23 @@
+{
+ "format": "yoga-transitions/1",
+ "transitions": {
+  "cat>cow": {
+   "durationSec": 3.0,
+   "breath": "inhale",
+   "keys": [],
+   "endEase": "inOut"
+  },
+  "seated-cat>seated-cow": {
+   "durationSec": 3.0,
+   "breath": "inhale",
+   "keys": [],
+   "endEase": "inOut"
+  },
+  "seated-cow>seated-cat": {
+   "durationSec": 3.0,
+   "breath": "exhale",
+   "keys": [],
+   "endEase": "inOut"
+  }
+ }
+}

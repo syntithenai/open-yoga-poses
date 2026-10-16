@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check the library's data files: poses, catalog, muscles, routines and characters.
+"""Check the library's data files: poses, catalog, moves (transitions), routines and characters.
 
 Run from the repo root: python3 tools/validate.py
 Exits 1 and lists every problem when anything is wrong.
@@ -16,9 +16,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 ID_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 CATEGORIES = {"standing", "floor", "arm-balance", "inversion", "chair", "breath", "transition"}
-ROLES = {"stretch", "contract", "stabilise"}
-SIDES = {"L", "R", "both"}
 STEP_SIDES = {"right", "left"}
+EASES = {"linear", "in", "out", "inOut"}
+MAX_KEYS = 8
 
 errors: list[str] = []
 
@@ -39,6 +39,19 @@ def is_vec(v, n: int) -> bool:
     return isinstance(v, list) and len(v) == n and all(isinstance(x, (int, float)) and math.isfinite(x) for x in v)
 
 
+def check_bones(where: str, bones, bones_known: set[str]) -> None:
+    if not isinstance(bones, dict) or "root" not in bones:
+        err(where, '"bones" must be an object that includes "root"')
+        return
+    for name, q in bones.items():
+        if name not in bones_known:
+            err(where, f"unknown bone {name!r}")
+        if not is_vec(q, 4):
+            err(where, f"bone {name!r} must be a quaternion [w, x, y, z]")
+        elif abs(math.sqrt(sum(x * x for x in q)) - 1) > 1e-3:
+            err(where, f"bone {name!r} quaternion is not unit length")
+
+
 def check_pose(path: Path, bones_known: set[str]) -> str | None:
     where = f"poses/{path.name}"
     doc = load(path)
@@ -53,17 +66,7 @@ def check_pose(path: Path, bones_known: set[str]) -> str | None:
         err(where, "file name must be lowercase letters, numbers and hyphens")
     if doc.get("rig") != "makehuman-default":
         err(where, 'rig must be "makehuman-default"')
-    bones = doc.get("bones")
-    if not isinstance(bones, dict) or "root" not in bones:
-        err(where, '"bones" must be an object that includes "root"')
-        bones = {}
-    for name, q in bones.items():
-        if name not in bones_known:
-            err(where, f"unknown bone {name!r}")
-        if not is_vec(q, 4):
-            err(where, f"bone {name!r} must be a quaternion [w, x, y, z]")
-        elif abs(math.sqrt(sum(x * x for x in q)) - 1) > 1e-3:
-            err(where, f"bone {name!r} quaternion is not unit length")
+    check_bones(where, doc.get("bones"), bones_known)
     for name, ax in (doc.get("restAxes") or {}).items():
         if name not in bones_known:
             err(where, f"restAxes: unknown bone {name!r}")
@@ -103,8 +106,6 @@ def check_catalog(pose_ids: set[str]) -> set[str]:
         d = p.get("difficulty")
         if d is not None and d not in (1, 2, 3, 4, 5):
             err(where, "difficulty must be 1 to 5")
-        if not isinstance(p.get("muscles", []), list):
-            err(where, "muscles must be a list")
         if pid not in pose_ids:
             err(where, f"no pose file poses/{pid}.json")
     for pid in sorted(pose_ids - seen):
@@ -116,25 +117,52 @@ def check_catalog(pose_ids: set[str]) -> set[str]:
     return seen
 
 
-def check_muscles(catalog: set[str]) -> None:
-    data = load(ROOT / "muscles.json")
+def check_transitions(catalog: set[str], bones_known: set[str]) -> int:
+    path = ROOT / "transitions.json"
+    if not path.is_file():
+        return 0
+    data = load(path)
     if not isinstance(data, dict):
-        return
-    if data.get("format") != "yoga-muscles-pack/1":
-        err("muscles.json", 'format must be "yoga-muscles-pack/1"')
-    for pid, entry in (data.get("poses") or {}).items():
-        where = f"muscles.json {pid}"
-        if pid not in catalog:
-            err(where, "pose is not in the catalog")
-        for m in entry.get("muscles") or []:
-            if not isinstance(m.get("id"), str):
-                err(where, "every muscle needs an id")
-            if m.get("role") not in ROLES:
-                err(where, f"{m.get('id')}: role must be one of {sorted(ROLES)}")
-            if m.get("side") not in SIDES:
-                err(where, f"{m.get('id')}: side must be L, R or both")
-            if m.get("level") not in (1, 2, 3):
-                err(where, f"{m.get('id')}: level must be 1, 2 or 3")
+        return 0
+    if data.get("format") != "yoga-transitions/1":
+        err("transitions.json", 'format must be "yoga-transitions/1"')
+    moves = data.get("transitions") or {}
+    for key, tr in moves.items():
+        where = f"transitions.json {key}"
+        a, sep, b = key.partition(">")
+        if not sep or a == b:
+            err(where, 'key must be "<from-id>><to-id>"')
+        for pid in (a, b):
+            if pid not in catalog:
+                err(where, f"pose {pid!r} is not in catalog.json")
+        if not isinstance(tr, dict):
+            err(where, "must be an object")
+            continue
+        dur = tr.get("durationSec")
+        if not isinstance(dur, (int, float)) or not 0.2 <= dur <= 30:
+            err(where, "durationSec must be 0.2 to 30")
+        if "endEase" in tr and tr["endEase"] not in EASES:
+            err(where, f"endEase must be one of {sorted(EASES)}")
+        keys = tr.get("keys")
+        if not isinstance(keys, list) or len(keys) > MAX_KEYS:
+            err(where, f"keys must be a list of at most {MAX_KEYS}")
+            continue
+        last = 0.0
+        for i, k in enumerate(keys):
+            kw = f"{where} key {i + 1}"
+            t = k.get("t") if isinstance(k, dict) else None
+            if not isinstance(t, (int, float)) or not last < t < 1:
+                err(kw, "t must be between 0 and 1 and later than the key before")
+            else:
+                last = t
+            if "ease" in k and k["ease"] not in EASES:
+                err(kw, f"ease must be one of {sorted(EASES)}")
+            pose = k.get("pose") if isinstance(k, dict) else None
+            check_bones(kw, (pose or {}).get("bones"), bones_known)
+            head = ((pose or {}).get("root") or {}).get("head")
+            if head is not None and not is_vec(head, 3):
+                err(kw, "root.head must be [x, y, z]")
+    return len(moves)
 
 
 def check_routine(path: Path, catalog: set[str]) -> None:
@@ -178,22 +206,47 @@ def check_characters() -> None:
             err("characters/index.json", f"{c.get('id')}: missing file {c.get('file')}")
 
 
+def check_styles() -> None:
+    path = ROOT / "styles" / "index.json"
+    if not path.is_file():
+        err("styles/index.json", "missing")
+        return
+    data = load(path)
+    if not isinstance(data, list) or not data:
+        err("styles/index.json", "must list at least one costume")
+        return
+    for s in data:
+        if not s.get("id") or not s.get("label"):
+            err("styles/index.json", f"entry needs id and label: {s!r}")
+        if not isinstance(s.get("top"), list) or not isinstance(s.get("bottom"), list):
+            err("styles/index.json", f"{s.get('id')}: top and bottom colours required")
+
+
 def main() -> int:
     bones_known = set(load(ROOT / "tools" / "rig-bones.json") or [])
     if not bones_known:
         err("tools/rig-bones.json", "must list the rig's bone names")
     pose_ids = {pid for p in sorted((ROOT / "poses").glob("*.json")) if (pid := check_pose(p, bones_known))}
     catalog = check_catalog(pose_ids)
-    check_muscles(catalog)
+    moves = check_transitions(catalog, bones_known)
     for r in sorted((ROOT / "routines").glob("*.json")):
+        if r.name == "index.json":
+            continue
         check_routine(r, catalog)
     check_characters()
+    check_styles()
     if errors:
         print(f"{len(errors)} problem(s):")
         for e in errors:
             print(f"  {e}")
         return 1
-    print(f"OK: {len(pose_ids)} poses, {len(list((ROOT / 'routines').glob('*.json')))} routines")
+    routine_n = len([p for p in (ROOT / "routines").glob("*.json") if p.name != "index.json"])
+    print(
+        f"OK: {len(pose_ids)} poses, {moves} moves, "
+        f"{routine_n} routines, "
+        f"{len(load(ROOT / 'characters' / 'index.json') or [])} characters, "
+        f"{len(load(ROOT / 'styles' / 'index.json') or [])} costumes"
+    )
     return 0
 
 

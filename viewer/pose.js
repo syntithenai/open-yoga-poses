@@ -6,11 +6,26 @@
  */
 import * as THREE from 'three'
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
+import { applyLook, lookMaterial, resolveLook } from './look.js'
 
 /** Rest axes further apart than this (radians) are bodies too different to correct between. */
 const MAX_ALIGN = 1.05
 
 const qFrom = (a) => new THREE.Quaternion(a[1], a[2], a[3], a[0]).normalize()
+const round = (v, n = 5) => Math.round(v * 10 ** n) / 10 ** n
+const qTo = (q) => {
+  const s = q.w < 0 ? -1 : 1
+  return [round(s * q.w), round(s * q.x), round(s * q.y), round(s * q.z)]
+}
+
+/** The rest-axis correction applyPose adds for bone `n`, or null when there is none. */
+function correction(body, n, axes) {
+  const ax = axes && axes[n]
+  if (!ax) return null
+  const src = new THREE.Vector3(...ax).normalize()
+  if (body.restAxis[n].angleTo(src) >= MAX_ALIGN) return null
+  return new THREE.Quaternion().setFromUnitVectors(body.restAxis[n], src)
+}
 
 function framed(body, obj) {
   body.frame.updateMatrixWorld(true)
@@ -18,32 +33,10 @@ function framed(body, obj) {
 }
 
 /**
- * The body GLB marks wardrobe regions in COLOR_0 (r top, g bottom, b hair; alpha < 0.5 accent).
- * Bake the palette into plain vertex colours.
+ * Load a body GLB. COLOR_0 stays as wardrobe-region markers; colours and costumes are applied
+ * later with `setBodyLook` (look.js shader).
  */
-function paint(mesh, palette) {
-  const src = mesh.geometry.getAttribute('color')
-  if (!src) return
-  const rgb = (c) => new THREE.Color().setRGB(c[0] / 255, c[1] / 255, c[2] / 255, THREE.SRGBColorSpace)
-  const skin = rgb(palette.skin)
-  const top = rgb(palette.top)
-  const bottom = rgb(palette.bottom)
-  const hair = rgb(palette.hair)
-  const out = new Float32Array(src.count * 3)
-  for (let i = 0; i < src.count; i++) {
-    let c = skin
-    if (src.getY(i) > 0.5) c = bottom
-    if (src.getX(i) > 0.5) c = top
-    if (src.getZ(i) > 0.5) c = hair
-    if (src.itemSize === 4 && src.getW(i) < 0.5) c = top
-    out[i * 3] = c.r
-    out[i * 3 + 1] = c.g
-    out[i * 3 + 2] = c.b
-  }
-  mesh.geometry.setAttribute('color', new THREE.BufferAttribute(out, 3))
-}
-
-export async function loadBody(url, palette) {
+export async function loadBody(url) {
   const gltf = await new GLTFLoader().loadAsync(url)
   const root = gltf.scene
   const frame = root.getObjectByName('pose_frame')
@@ -59,8 +52,9 @@ export async function loadBody(url, palette) {
     if (o.isSkinnedMesh && !mesh) mesh = o
   })
   if (!frame || !mesh || !bones.root) throw new Error('This body has no pose_frame, skinned mesh or root bone')
-  if (palette) paint(mesh, palette)
-  mesh.material = new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.8, metalness: 0 })
+  const { material, uniforms } = lookMaterial()
+  uniforms.uRestMatrix.value.compose(mesh.position, mesh.quaternion, mesh.scale)
+  mesh.material = material
   mesh.castShadow = true
   mesh.frustumCulled = false
   root.updateMatrixWorld(true)
@@ -71,7 +65,7 @@ export async function loadBody(url, palette) {
     for (const c of b.children) if (c.isBone) walk(c)
   })(bones.root)
 
-  const body = { root, frame, mesh, bones, order, restQ: {}, restAxis: {}, restPos: {} }
+  const body = { root, frame, mesh, bones, order, restQ: {}, restAxis: {}, restPos: {}, uniforms }
   for (const n of order) {
     const q = new THREE.Quaternion()
     framed(body, bones[n]).decompose(new THREE.Vector3(), q, new THREE.Vector3())
@@ -80,6 +74,12 @@ export async function loadBody(url, palette) {
     body.restPos[n] = bones[n].position.clone()
   }
   return body
+}
+
+/** Apply a costume style over a character palette (live, no reload). */
+export function setBodyLook(body, style, palette) {
+  if (!body?.uniforms) return
+  applyLook(body.uniforms, resolveLook(style, palette))
 }
 
 /** Poses the body and stands it on the floor (z = 0 in the pose frame). */
@@ -94,13 +94,8 @@ export function applyPose(body, doc) {
     let d
     if (bones[n]) {
       d = qFrom(bones[n])
-      const ax = axes[n]
-      if (ax) {
-        const src = new THREE.Vector3(...ax).normalize()
-        if (body.restAxis[n].angleTo(src) < MAX_ALIGN) {
-          d.multiply(new THREE.Quaternion().setFromUnitVectors(body.restAxis[n], src))
-        }
-      }
+      const corr = correction(body, n, axes)
+      if (corr) d.multiply(corr)
     } else {
       d = parent ? delta[parent].clone() : new THREE.Quaternion()
     }
@@ -115,6 +110,35 @@ export function applyPose(body, doc) {
   body.root.updateMatrixWorld(true)
   body.bones.root.position.z -= lowestZ(body)
   body.root.updateMatrixWorld(true)
+}
+
+/**
+ * The body's current shape as pose data, the inverse of applyPose. `base` supplies the rest axes to
+ * undo (so the result plays back the same on every body) and bone names to always write, so the
+ * result can be compared bone by bone with `base`. Other bones are written only where they differ
+ * from their parent, because a missing bone follows its parent.
+ */
+export function capturePose(body, base = {}, keep = Object.keys(base.bones || {})) {
+  body.root.updateMatrixWorld(true)
+  const always = new Set(keep)
+  const pos = new THREE.Vector3()
+  const scl = new THREE.Vector3()
+  const q = new THREE.Quaternion()
+  const delta = {}
+  const bones = {}
+  for (const n of body.order) {
+    framed(body, body.bones[n]).decompose(pos, q, scl)
+    const d = q.clone().multiply(body.restQ[n].clone().invert()).normalize()
+    delta[n] = d
+    const parent = body.bones[n].parent
+    const inherited = parent && parent.isBone ? delta[parent.name] : null
+    if (always.has(n) || !inherited || Math.abs(inherited.dot(d)) < 1 - 1e-9) {
+      const corr = correction(body, n, base.restAxes)
+      bones[n] = qTo(corr ? d.clone().multiply(corr.invert()) : d)
+    }
+  }
+  const p = body.bones.root.position
+  return { bones, root: { head: [round(p.x, 6), round(p.y, 6), round(p.z, 6)] } }
 }
 
 function lowestZ(body) {

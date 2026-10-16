@@ -3,6 +3,7 @@
   "id": "joe",
   "label": "Joe",
   "file": "joe.glb",
+  "preview": "joe.webp",
   "palette": {
    "skin": [
     232,
@@ -27,9 +28,94 @@
   }
  },
  {
+  "id": "amara",
+  "label": "Amara",
+  "file": "amara.glb",
+  "preview": "amara.webp",
+  "palette": {
+   "skin": [
+    110,
+    70,
+    46
+   ],
+   "hair": [
+    22,
+    18,
+    16
+   ],
+   "top": [
+    196,
+    84,
+    52
+   ],
+   "bottom": [
+    44,
+    40,
+    56
+   ]
+  }
+ },
+ {
+  "id": "kenji",
+  "label": "Kenji",
+  "file": "kenji.glb",
+  "preview": "kenji.webp",
+  "palette": {
+   "skin": [
+    234,
+    194,
+    152
+   ],
+   "hair": [
+    30,
+    24,
+    22
+   ],
+   "top": [
+    40,
+    110,
+    90
+   ],
+   "bottom": [
+    50,
+    52,
+    60
+   ]
+  }
+ },
+ {
+  "id": "mia",
+  "label": "Mia",
+  "file": "mia.glb",
+  "preview": "mia.webp",
+  "palette": {
+   "skin": [
+    226,
+    182,
+    152
+   ],
+   "hair": [
+    120,
+    82,
+    46
+   ],
+   "top": [
+    38,
+    120,
+    130
+   ],
+   "bottom": [
+    52,
+    50,
+    70
+   ]
+  }
+ },
+ {
   "id": "priya",
   "label": "Priya",
   "file": "priya.glb",
+  "preview": "priya.webp",
   "palette": {
    "skin": [
     174,
@@ -54,9 +140,66 @@
   }
  },
  {
+  "id": "ravi",
+  "label": "Ravi",
+  "file": "ravi.glb",
+  "preview": "ravi.webp",
+  "palette": {
+   "skin": [
+    170,
+    114,
+    78
+   ],
+   "hair": [
+    48,
+    42,
+    40
+   ],
+   "top": [
+    176,
+    92,
+    40
+   ],
+   "bottom": [
+    46,
+    52,
+    60
+   ]
+  }
+ },
+ {
+  "id": "grace",
+  "label": "Grace",
+  "file": "grace.glb",
+  "preview": "grace.webp",
+  "palette": {
+   "skin": [
+    120,
+    78,
+    56
+   ],
+   "hair": [
+    200,
+    196,
+    190
+   ],
+   "top": [
+    176,
+    150,
+    230
+   ],
+   "bottom": [
+    40,
+    40,
+    52
+   ]
+  }
+ },
+ {
   "id": "kwame",
   "label": "Kwame",
   "file": "kwame.glb",
+  "preview": "kwame.webp",
   "palette": {
    "skin": [
     96,
@@ -81,29 +224,114 @@
   }
  },
  {
-  "id": "mia",
-  "label": "Mia",
-  "file": "mia.glb",
+  "id": "diego",
+  "label": "Diego",
+  "file": "diego.glb",
+  "preview": "diego.webp",
   "palette": {
    "skin": [
-    226,
-    182,
-    152
+    194,
+    140,
+    98
    ],
    "hair": [
-    120,
-    82,
-    46
+    34,
+    24,
+    18
    ],
    "top": [
-    38,
-    120,
-    130
+    170,
+    40,
+    48
+   ],
+   "bottom": [
+    44,
+    46,
+    54
+   ]
+  }
+ },
+ {
+  "id": "lucia",
+  "label": "Lucia",
+  "file": "lucia.glb",
+  "preview": "lucia.webp",
+  "palette": {
+   "skin": [
+    200,
+    146,
+    104
+   ],
+   "hair": [
+    40,
+    28,
+    20
+   ],
+   "top": [
+    60,
+    90,
+    170
+   ],
+   "bottom": [
+    40,
+    40,
+    52
+   ]
+  }
+ },
+ {
+  "id": "omar",
+  "label": "Omar",
+  "file": "omar.glb",
+  "preview": "omar.webp",
+  "palette": {
+   "skin": [
+    210,
+    160,
+    118
+   ],
+   "hair": [
+    36,
+    26,
+    20
+   ],
+   "top": [
+    90,
+    110,
+    60
+   ],
+   "bottom": [
+    48,
+    46,
+    52
+   ]
+  }
+ },
+ {
+  "id": "linh",
+  "label": "Linh",
+  "file": "linh.glb",
+  "preview": "linh.webp",
+  "palette": {
+   "skin": [
+    204,
+    150,
+    106
+   ],
+   "hair": [
+    26,
+    20,
+    18
+   ],
+   "top": [
+    230,
+    140,
+    60
    ],
    "bottom": [
     52,
-    50,
-    70
+    56,
+    74
    ]
   }
  }

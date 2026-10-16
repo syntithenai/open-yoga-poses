@@ -1,0 +1,412 @@
+[
+ {
+  "id": "classic",
+  "label": "Classic",
+  "top": [
+   32,
+   46,
+   82
+  ],
+  "bottom": [
+   58,
+   59,
+   66
+  ],
+  "preview": "classic.webp"
+ },
+ {
+  "id": "studio",
+  "label": "Studio",
+  "top": [
+   143,
+   170,
+   140
+  ],
+  "bottom": [
+   52,
+   54,
+   60
+  ],
+  "accent": [
+   214,
+   196,
+   160
+  ],
+  "preview": "studio.webp"
+ },
+ {
+  "id": "tie-dye",
+  "label": "Tie-dye",
+  "top": [
+   236,
+   120,
+   90
+  ],
+  "bottom": [
+   62,
+   92,
+   140
+  ],
+  "pattern": {
+   "kind": "tie-dye",
+   "color": [
+    255,
+    214,
+    90
+   ],
+   "scale": 9,
+   "regions": [
+    "top"
+   ]
+  },
+  "preview": "tie-dye.webp"
+ },
+ {
+  "id": "galaxy",
+  "label": "Galaxy",
+  "top": [
+   28,
+   22,
+   64
+  ],
+  "bottom": [
+   18,
+   16,
+   40
+  ],
+  "pattern": {
+   "kind": "galaxy",
+   "color": [
+    150,
+    96,
+    220
+   ],
+   "scale": 6,
+   "regions": [
+    "top",
+    "bottom"
+   ],
+   "glow": 1.4
+  },
+  "rough": {
+   "top": 0.55,
+   "bottom": 0.55
+  },
+  "preview": "galaxy.webp"
+ },
+ {
+  "id": "marble",
+  "label": "Marble statue",
+  "skin": [
+   236,
+   232,
+   224
+  ],
+  "hair": [
+   224,
+   220,
+   210
+  ],
+  "top": [
+   240,
+   236,
+   228
+  ],
+  "bottom": [
+   232,
+   228,
+   220
+  ],
+  "accent": [
+   120,
+   150,
+   70
+  ],
+  "pattern": {
+   "kind": "marble",
+   "color": [
+    160,
+    156,
+    150
+   ],
+   "scale": 7,
+   "regions": [
+    "skin",
+    "top",
+    "bottom",
+    "hair"
+   ]
+  },
+  "rough": {
+   "skin": 0.4,
+   "top": 0.4,
+   "bottom": 0.4,
+   "hair": 0.4
+  },
+  "preview": "marble.webp"
+ },
+ {
+  "id": "android",
+  "label": "Android",
+  "skin": [
+   196,
+   202,
+   210
+  ],
+  "hair": "skin",
+  "top": [
+   64,
+   68,
+   76
+  ],
+  "bottom": [
+   52,
+   56,
+   62
+  ],
+  "pattern": {
+   "kind": "panels",
+   "color": [
+    80,
+    230,
+    255
+   ],
+   "scale": 9,
+   "regions": [
+    "skin",
+    "hair"
+   ],
+   "glow": 1.6
+  },
+  "rough": {
+   "skin": 0.3,
+   "hair": 0.3,
+   "top": 0.45,
+   "bottom": 0.45
+  },
+  "metal": {
+   "skin": 0.5,
+   "hair": 0.5,
+   "top": 0.3,
+   "bottom": 0.3
+  },
+  "preview": "android.webp"
+ },
+ {
+  "id": "edwardian",
+  "label": "Edwardian bather",
+  "top": [
+   30,
+   40,
+   82
+  ],
+  "bottom": [
+   30,
+   40,
+   82
+  ],
+  "accent": [
+   240,
+   238,
+   230
+  ],
+  "pattern": {
+   "kind": "stripes",
+   "color": [
+    240,
+    238,
+    230
+   ],
+   "scale": 14,
+   "regions": [
+    "top",
+    "bottom"
+   ]
+  },
+  "preview": "edwardian.webp"
+ },
+ {
+  "id": "strongman",
+  "label": "Circus strongman",
+  "top": [
+   214,
+   168,
+   96
+  ],
+  "bottom": [
+   214,
+   168,
+   96
+  ],
+  "accent": [
+   96,
+   58,
+   30
+  ],
+  "pattern": {
+   "kind": "spots",
+   "color": [
+    58,
+    38,
+    22
+   ],
+   "scale": 22,
+   "regions": [
+    "top",
+    "bottom"
+   ]
+  },
+  "rough": {
+   "accent": 0.55
+  },
+  "preview": "strongman.webp"
+ },
+ {
+  "id": "aerobics",
+  "label": "80s aerobics",
+  "top": [
+   240,
+   64,
+   150
+  ],
+  "bottom": [
+   40,
+   40,
+   52
+  ],
+  "accent": [
+   40,
+   200,
+   190
+  ],
+  "pattern": {
+   "kind": "zigzag",
+   "color": [
+    40,
+    200,
+    190
+   ],
+   "scale": 10,
+   "regions": [
+    "top"
+   ]
+  },
+  "preview": "aerobics.webp"
+ },
+ {
+  "id": "egyptian",
+  "label": "Ancient Egyptian",
+  "top": [
+   242,
+   236,
+   220
+  ],
+  "bottom": [
+   242,
+   236,
+   220
+  ],
+  "accent": [
+   212,
+   168,
+   60
+  ],
+  "pattern": {
+   "kind": "stripes",
+   "color": [
+    34,
+    64,
+    150
+   ],
+   "scale": 40,
+   "regions": [
+    "accent"
+   ]
+  },
+  "rough": {
+   "accent": 0.35
+  },
+  "metal": {
+   "accent": 0.45
+  },
+  "preview": "egyptian.webp"
+ },
+ {
+  "id": "trooper",
+  "label": "Space trooper",
+  "hair": "skin",
+  "top": [
+   44,
+   46,
+   52
+  ],
+  "bottom": [
+   44,
+   46,
+   52
+  ],
+  "accent": [
+   236,
+   238,
+   240
+  ],
+  "pattern": {
+   "kind": "panels",
+   "color": [
+    130,
+    136,
+    146
+   ],
+   "scale": 12,
+   "regions": [
+    "accent"
+   ]
+  },
+  "rough": {
+   "accent": 0.3
+  },
+  "preview": "trooper.webp"
+ },
+ {
+  "id": "alien",
+  "label": "Alien",
+  "skin": [
+   120,
+   196,
+   96
+  ],
+  "hair": "skin",
+  "top": [
+   190,
+   196,
+   206
+  ],
+  "bottom": [
+   150,
+   156,
+   168
+  ],
+  "pattern": {
+   "kind": "spots",
+   "color": [
+    170,
+    228,
+    130
+   ],
+   "scale": 18,
+   "regions": [
+    "skin",
+    "hair"
+   ]
+  },
+  "rough": {
+   "top": 0.4,
+   "bottom": 0.4
+  },
+  "metal": {
+   "top": 0.35,
+   "bottom": 0.35
+  },
+  "preview": "alien.webp"
+ }
+]

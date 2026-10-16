@@ -1,0 +1,43 @@
+name: Move between poses
+description: A new or improved keyframed move from one pose to another, made in the viewer.
+title: "Move: "
+labels: ["move"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you. The easiest way to fill this in is from the viewer: open a pose, add a move under **Moves**, then press **Suggest this move**.
+  - type: input
+    id: from
+    attributes:
+      label: From pose id
+      placeholder: cat
+    validations:
+      required: true
+  - type: input
+    id: to
+    attributes:
+      label: To pose id
+      placeholder: cow
+    validations:
+      required: true
+  - type: textarea
+    id: edit-data
+    attributes:
+      label: 3D data
+      description: Filled in for you by the viewer. Please don't change it.
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: What does the move do? (optional)
+      description: For example "the back knee comes down before the hands lift" or the breath it follows.
+  - type: checkboxes
+    id: licence
+    attributes:
+      label: Licence
+      options:
+        - label: I agree my contribution can be used in the library under CC BY-SA 4.0.
+          required: true

@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Routines · Open Yoga Poses</title>
+    <meta name="description" content="Build and share yoga routines as open-yoga-routine/1 JSON. Download a file for SynthYoga, or submit it to the open library." />
+    <link rel="stylesheet" href="viewer/style.css" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23a3261c'/%3E%3C/svg%3E" />
+    <script type="module" src="viewer/routines.js"></script>
+  </head>
+  <body>
+    <header class="top">
+      <div>
+        <h1><a href="./" class="brand-link">Open Yoga Poses</a> · Routines</h1>
+        <p class="lede">Build a sequence, download it for SynthYoga’s Routines page, or submit it to this library. Routines you submit with your signed-in email can be claimed in the app when you use the same account.</p>
+      </div>
+      <nav>
+        <div id="auth" class="auth" aria-label="Account"></div>
+        <a href="./">Poses</a>
+        <a href="https://github.com/syntithenai/open-yoga-poses">GitHub</a>
+      </nav>
+    </header>
+
+    <main class="routines-layout">
+      <aside class="routines-side" aria-label="Routine list">
+        <div class="routines-toolbar">
+          <button type="button" id="new-routine" class="primary">New routine</button>
+          <label class="chip-btn">
+            Import file
+            <input id="import-file" type="file" accept="application/json,.json" hidden />
+          </label>
+        </div>
+        <h2 class="routines-heading">In the library</h2>
+        <ul id="library-list" class="routine-pick-list"></ul>
+        <h2 class="routines-heading">In this browser</h2>
+        <ul id="draft-list" class="routine-pick-list"></ul>
+        <p id="draft-empty" class="muted">No drafts yet.</p>
+      </aside>
+
+      <section class="routines-editor" aria-label="Edit routine">
+        <p id="routines-message" class="note" hidden role="status"></p>
+        <div id="editor" hidden>
+          <div class="routines-actions">
+            <button type="button" id="download-routine">Download JSON</button>
+            <button type="button" id="submit-routine" class="primary">Submit to library</button>
+            <button type="button" id="discard-draft" class="linkish">Discard draft</button>
+          </div>
+          <label class="field">Title <input id="r-title" type="text" required /></label>
+          <label class="field">Description <textarea id="r-desc" rows="2"></textarea></label>
+          <div class="routines-meta-row">
+            <label class="field">Level
+              <select id="r-level">
+                <option value="1">1 Gentle</option>
+                <option value="2">2 Easy</option>
+                <option value="3">3 Moderate</option>
+                <option value="4">4 Challenging</option>
+                <option value="5">5 Advanced</option>
+              </select>
+            </label>
+            <label class="field">Credit as <input id="r-author" type="text" autocomplete="name" /></label>
+          </div>
+          <p class="muted routines-email-hint" id="r-email-hint"></p>
+          <h3>Steps</h3>
+          <p class="muted">Add poses from the open catalog. Hold times are in seconds.</p>
+          <div class="routines-add-row">
+            <input id="pose-q" type="search" list="pose-options" placeholder="Search a pose to add…" aria-label="Search pose to add" />
+            <button type="button" id="add-pose">Add</button>
+          </div>
+          <datalist id="pose-options"></datalist>
+          <ol id="step-list" class="step-list"></ol>
+          <p id="step-empty" class="muted">No steps yet — search above to add a pose.</p>
+        </div>
+        <p id="editor-empty" class="muted">Pick a library routine, import a file, or start a new one.</p>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <p>Routines use the <code>open-yoga-routine/1</code> format (CC BY-SA 4.0). In SynthYoga, open <strong>Routines</strong> and choose <strong>Import file</strong>, or claim a submitted routine when signed in with the same email.</p>
+    </footer>
+  </body>
+</html>
