@@ -6,7 +6,7 @@ Thank you for helping. Teachers and practitioners know these shapes far better t
 
 | You want to | Do this |
 |---|---|
-| Fix a pose that looks wrong | Sign in with Google, turn on **Edit the 3D body**, drag the joints, fill **Edit details** (name, description, and the rest), then **Suggest this edit**. Or [open a pose correction](https://github.com/syntithenai/open-yoga-poses/issues/new?template=pose-correction.yml) in words: "the back heel should be down", "the hips should face the long edge of the mat". |
+| Fix a pose that looks wrong | Sign in (Google, Apple, or GitHub), turn on **Edit the 3D body**, drag the joints, fill **Edit details** (name, description, and the rest), then **Suggest this edit**. Or [open a pose correction](https://github.com/syntithenai/open-yoga-poses/issues/new?template=pose-correction.yml) in words: "the back heel should be down", "the hips should face the long edge of the mat". |
 | Shape the move between two poses | In the viewer, add a move under **Moves**, add keyframes on the timeline, then choose **Suggest this move**. |
 | Suggest a pose we don't have | Sign in, choose **New pose**, edit the 3D body and details, then suggest. Or [describe it in words](https://github.com/syntithenai/open-yoga-poses/issues/new?template=new-pose.yml). |
 | Share a routine | Add a file in `routines/` (below), or [describe it in an issue](https://github.com/syntithenai/open-yoga-poses/issues/new?template=new-routine.yml). |
@@ -23,7 +23,7 @@ Each pose file stores, for every bone of the MakeHuman "default" rig, its rotati
 
 Ways to edit:
 
-- **In the viewer.** Sign in with Google, turn on **Edit the 3D body**, click a joint and turn it with the rings. Edits are saved in your browser (only on that device) and marked with ● in the list. **Edit details** covers teaching fields; **Suggest this edit** opens a GitHub issue with the 3D shape, fields and your credit name; **Download edited pose** gives you the whole file for a pull request.
+- **In the viewer.** Sign in (Google, Apple, or GitHub), turn on **Edit the 3D body**, click a joint and turn it with the rings. Edits are saved in your browser (only on that device) and marked with ● in the list. **Edit details** covers teaching fields; **Suggest this edit** opens a GitHub issue with the 3D shape, fields and your credit name; **Download edited pose** gives you the whole file for a pull request.
 - **Blender with MPFB2.** Build a human with the default rig, set each pose bone's rotation from the file, adjust, and write the rotations back. Bones you don't list follow their parent.
 - **Any tool that reads glTF.** Load `characters/joe_anny.glb`, pose it, and export the armature-space rotations relative to the rest pose.
 - **By hand**, for small fixes: the viewer reloads the file each time you open the pose, so you can tweak a value and refresh.

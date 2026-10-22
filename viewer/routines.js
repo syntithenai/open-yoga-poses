@@ -247,7 +247,7 @@ async function submitRoutine() {
   }
   const user = getUser()
   if (!user) {
-    message('Sign in with Google so the routine can be claimed in SynthYoga with your email.')
+    message('Sign in so the routine can be claimed in SynthYoga with your email.')
     return
   }
   doc.author.email = user.email

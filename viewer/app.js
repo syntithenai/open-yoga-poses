@@ -550,7 +550,7 @@ async function suggestPose() {
     }
   }
   if (!getUser()) {
-    state.message = 'Sign in with Google to suggest an edit (so we can credit you).'
+    state.message = 'Sign in to suggest an edit (so we can credit you).'
     return renderInfo()
   }
   const fields = catalogFieldsFromPose(state.byId.get(id) || { id, name: id })
@@ -571,6 +571,7 @@ async function suggestPose() {
     props: edit.props,
     fields,
   })
+  env.authorEmail = credit.authorEmail || getUser()?.email || ''
   await sendAppPose(env, id)
 }
 
@@ -585,7 +586,7 @@ async function sendAppPose(env, id) {
       accessToken: token,
       licenceAccepted: true,
       envelope: env,
-      authorEmail: user?.email,
+      authorEmail: env.authorEmail || user?.email,
       authorName: env.creditName || user?.name,
     })
     store.markSubmitted('pose', id)
@@ -599,7 +600,7 @@ async function sendAppPose(env, id) {
 
 async function startNewPose() {
   if (!getUser()) {
-    state.message = 'Sign in with Google to create a new pose.'
+    state.message = 'Sign in to create a new pose.'
     return renderInfo()
   }
   const details = await openMetaDialog({

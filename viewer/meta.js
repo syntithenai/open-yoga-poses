@@ -3,7 +3,7 @@
  * a suggestion to the repo — they must not block saving details locally.
  */
 import * as store from './store.js'
-import { creditName as authCreditName } from './auth.js'
+import { creditName as authCreditName, getUser } from './auth.js'
 
 const CATEGORIES = [
   ['standing', 'Standing'],
@@ -60,9 +60,15 @@ export function detailsFieldsHtml(f) {
 }
 
 /** Credit + licence only — shown when submitting to the repo. */
-export function submitCreditHtml(credit) {
+export function submitCreditHtml(credit, { email = '', needEmail = false } = {}) {
+  const emailField = needEmail
+    ? `<label class="field">Contact email <input name="authorEmail" type="email" required value="${esc(email || '')}" autocomplete="email" placeholder="so you can claim this in SynthYoga" /></label>`
+    : email
+      ? `<input type="hidden" name="authorEmail" value="${esc(email)}" />`
+      : ''
   return `
     <label class="field">Credit as <input name="creditName" value="${esc(credit || '')}" autocomplete="name" /></label>
+    ${emailField}
     <label class="field check"><input name="licence" type="checkbox" /> I agree this suggestion can be used under CC BY-SA 4.0</label>
   `
 }
@@ -104,18 +110,22 @@ export function readCreditForm(form) {
   const g = (n) => form.elements.namedItem(n)
   return {
     creditName: String(g('creditName')?.value || '').trim() || authCreditName(),
+    authorEmail: String(g('authorEmail')?.value || '').trim().toLowerCase(),
     licenceAccepted: Boolean(g('licence')?.checked),
   }
 }
 
 /**
  * Small modal: credit name (autofilled from login) + CC licence for Suggest.
- * @returns {Promise<{ creditName: string, licenceAccepted: boolean } | null>}
+ * @returns {Promise<{ creditName: string, authorEmail: string, licenceAccepted: boolean } | null>}
  */
-export function openSubmitCreditDialog({ creditName = '' } = {}) {
+export function openSubmitCreditDialog({ creditName = '', authorEmail = '' } = {}) {
   return new Promise((resolve) => {
     const existing = document.getElementById('meta-dialog')
     if (existing) existing.remove()
+    const user = getUser()
+    const email = authorEmail || user?.email || ''
+    const needEmail = !email
     const dlg = document.createElement('dialog')
     dlg.id = 'meta-dialog'
     dlg.className = 'meta-dialog'
@@ -127,7 +137,7 @@ export function openSubmitCreditDialog({ creditName = '' } = {}) {
         </header>
         <div class="meta-body">
           <p class="muted">Your suggestion is shared under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>. Choose how you are credited.</p>
-          ${submitCreditHtml(creditName || authCreditName())}
+          ${submitCreditHtml(creditName || authCreditName(), { email, needEmail })}
         </div>
         <footer class="meta-foot">
           <button type="submit" value="cancel" formnovalidate>Cancel</button>
@@ -148,6 +158,10 @@ export function openSubmitCreditDialog({ creditName = '' } = {}) {
       const data = readCreditForm(form)
       if (!data.creditName) {
         form.elements.namedItem('creditName')?.focus()
+        return
+      }
+      if (needEmail && (!data.authorEmail || !data.authorEmail.includes('@'))) {
+        form.elements.namedItem('authorEmail')?.focus()
         return
       }
       if (!data.licenceAccepted) {
