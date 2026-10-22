@@ -15,10 +15,11 @@ The data is licensed CC BY-SA 4.0, so anything built from it, including your imp
 | Path | What it is | Licence |
 |---|---|---|
 | `poses/<id>.json` | One pose per file (`yoga-pose/1`): joint rotations, rest axes, root position and floor contacts | CC BY-SA 4.0 |
-| `catalog.json` | Names, Sanskrit, alternate names, category and difficulty for every pose | CC BY-SA 4.0 |
+| `catalog.json` | Names, Sanskrit, category, difficulty and teaching fields for every pose | CC BY-SA 4.0 |
 | `transitions.json` | Keyframed moves between poses (`yoga-transitions/1`) | CC BY-SA 4.0 |
 | `routines/<id>.json` | Shared sequences (`open-yoga-routine/1`) | CC BY-SA 4.0 |
-| `characters/*.glb` | Rigged bodies to show the poses on (all 12 characters) | CC0 |
+| `characters/*.glb` | Rigged light bodies to show the poses on (all 12 characters) | CC0 |
+| `characters/hd/*.glb` | Optional high-detail MPFB bodies (face, hair, eyes) | CC0 |
 | `characters/*.webp`, `styles/*.webp` | Settings dialog preview thumbnails | MIT |
 | `styles/index.json` | Costume looks for the viewer's Settings dialog | MIT |
 | `index.html`, `viewer/`, `tools/` | The viewer and the validation script | MIT |

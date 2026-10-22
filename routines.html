@@ -11,14 +11,25 @@
   </head>
   <body>
     <header class="top">
-      <div>
-        <h1><a href="./" class="brand-link">Open Yoga Poses</a> · Routines</h1>
-        <p class="lede">Build a sequence, download it for SynthYoga’s Routines page, or submit it to this library. Routines you submit with your signed-in email can be claimed in the app when you use the same account.</p>
-      </div>
-      <nav>
+      <div class="top-bar">
+        <h1><a href="./" class="brand-link">Open Yoga Poses</a></h1>
+        <p class="lede compact">
+          <a class="icon-link" href="https://github.com/syntithenai/open-yoga-poses" title="GitHub" aria-label="GitHub repository" target="_blank" rel="noopener">
+            <svg viewBox="0 0 16 16" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/></svg>
+          </a>
+          <span>Everything freely usable under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">Creative Commons BY-SA 4.0</a>.</span>
+          <span class="app-cta">Try timed practice and more with the SynthYoga app
+            <a class="app-btn" href="https://yoga.synthfit.online/" target="_blank" rel="noopener" title="Open SynthYoga">
+              <img src="viewer/synthyoga-mark.png" width="24" height="24" alt="" />
+              <span>SynthYoga</span>
+            </a>
+          </span>
+        </p>
         <div id="auth" class="auth" aria-label="Account"></div>
-        <a href="./">Poses</a>
-        <a href="https://github.com/syntithenai/open-yoga-poses">GitHub</a>
+      </div>
+      <nav class="page-tabs" aria-label="Library sections">
+        <a href="./" class="page-tab">Poses</a>
+        <a href="routines.html" class="page-tab" aria-current="page">Routines</a>
       </nav>
     </header>
 
@@ -76,7 +87,12 @@
     </main>
 
     <footer class="foot">
-      <p>Routines use the <code>open-yoga-routine/1</code> format (CC BY-SA 4.0). In SynthYoga, open <strong>Routines</strong> and choose <strong>Import file</strong>, or claim a submitted routine when signed in with the same email.</p>
+      <p class="foot-row">
+        <a class="icon-link" href="https://github.com/syntithenai/open-yoga-poses" title="GitHub" aria-label="GitHub" target="_blank" rel="noopener">
+          <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/></svg>
+        </a>
+        <span>Routines: <code>open-yoga-routine/1</code> under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">Creative Commons BY-SA 4.0</a> · Import in SynthYoga → Routines, or claim when signed in with the same email · Contributors credited by the name they choose</span>
+      </p>
     </footer>
   </body>
 </html>

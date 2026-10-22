@@ -3,10 +3,16 @@
  *
  * Pose rotations are armature-space deltas from the rest pose, expressed in the GLB's
  * `pose_frame` (metres, Z up, body facing -Y). Bones without a rotation follow their parent.
+ *
+ * Light Anny bodies use COLOR_0 wardrobe markers + look.js. High-detail MPFB bodies
+ * (`extras.yoga.source === 'mpfb'`) keep baked face/hair textures via hdLook.js.
  */
 import * as THREE from 'three'
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js'
+import { applyHdLook, hairAlphaToCoverage, HD_SHELL_ROLES } from './hdLook.js'
 import { applyLook, lookMaterial, resolveLook } from './look.js'
+import { cloneProps, setBodyProps } from './props.js'
 
 /** Rest axes further apart than this (radians) are bodies too different to correct between. */
 const MAX_ALIGN = 1.05
@@ -32,16 +38,21 @@ function framed(body, obj) {
   return new THREE.Matrix4().copy(body.frame.matrixWorld).invert().multiply(obj.matrixWorld)
 }
 
+function makeLoader() {
+  return new GLTFLoader().setMeshoptDecoder(MeshoptDecoder)
+}
+
 /**
- * Load a body GLB. COLOR_0 stays as wardrobe-region markers; colours and costumes are applied
- * later with `setBodyLook` (look.js shader).
+ * Load a body GLB. Pass `renderer` when loading an HD body so hair can use alpha-to-coverage.
  */
-export async function loadBody(url) {
-  const gltf = await new GLTFLoader().loadAsync(url)
+export async function loadBody(url, { renderer } = {}) {
+  const gltf = await makeLoader().loadAsync(url)
   const root = gltf.scene
   const frame = root.getObjectByName('pose_frame')
+  const yoga = gltf.parser.json.extras?.yoga
+  const hd = yoga?.source === 'mpfb'
   const bones = {}
-  let mesh = null
+  const skinned = []
   root.traverse((o) => {
     if (o.isBone) {
       // GLTFLoader strips "." from node names; pose files use MakeHuman names ("upperarm01.L").
@@ -49,14 +60,29 @@ export async function loadBody(url) {
       if (assoc && assoc.nodes !== undefined) o.name = gltf.parser.json.nodes[assoc.nodes].name
       bones[o.name] = o
     }
-    if (o.isSkinnedMesh && !mesh) mesh = o
+    if (o.isSkinnedMesh) skinned.push(o)
   })
+  const parts = hd
+    ? skinned.map((m) => ({ mesh: m, role: String(m.userData.yoga_role ?? '') }))
+    : skinned.slice(0, 1).map((m) => ({ mesh: m, role: 'body' }))
+  const mesh = hd ? parts.find((p) => p.role === 'skin')?.mesh : parts[0]?.mesh
   if (!frame || !mesh || !bones.root) throw new Error('This body has no pose_frame, skinned mesh or root bone')
-  const { material, uniforms } = lookMaterial()
-  uniforms.uRestMatrix.value.compose(mesh.position, mesh.quaternion, mesh.scale)
-  mesh.material = material
-  mesh.castShadow = true
-  mesh.frustumCulled = false
+
+  let uniforms = null
+  let hdLook = null
+  const palette = yoga?.palette || null
+  if (hd) {
+    hdLook = applyHdLook(parts, palette)
+    if (renderer) hairAlphaToCoverage(parts, renderer)
+  } else {
+    const look = lookMaterial()
+    uniforms = look.uniforms
+    uniforms.uRestMatrix.value.compose(mesh.position, mesh.quaternion, mesh.scale)
+    mesh.material = look.material
+    mesh.castShadow = true
+    mesh.frustumCulled = false
+  }
+
   root.updateMatrixWorld(true)
 
   const order = []
@@ -65,11 +91,30 @@ export async function loadBody(url) {
     for (const c of b.children) if (c.isBone) walk(c)
   })(bones.root)
 
-  const body = { root, frame, mesh, bones, order, restQ: {}, restAxis: {}, restPos: {}, uniforms }
+  const floorParts = hd ? parts.filter((p) => HD_SHELL_ROLES.has(p.role)).map((p) => p.mesh) : [mesh]
+  const body = {
+    root,
+    frame,
+    mesh,
+    hd,
+    parts,
+    floorParts,
+    bones,
+    order,
+    restQ: {},
+    restAxis: {},
+    restPos: {},
+    restHead: {},
+    uniforms,
+    hdLook,
+    palette,
+  }
   for (const n of order) {
     const q = new THREE.Quaternion()
-    framed(body, bones[n]).decompose(new THREE.Vector3(), q, new THREE.Vector3())
+    const head = new THREE.Vector3()
+    framed(body, bones[n]).decompose(head, q, new THREE.Vector3())
     body.restQ[n] = q
+    body.restHead[n] = head
     body.restAxis[n] = new THREE.Vector3(0, 1, 0).applyQuaternion(q).normalize()
     body.restPos[n] = bones[n].position.clone()
   }
@@ -78,8 +123,41 @@ export async function loadBody(url) {
 
 /** Apply a costume style over a character palette (live, no reload). */
 export function setBodyLook(body, style, palette) {
-  if (!body?.uniforms) return
-  applyLook(body.uniforms, resolveLook(style, palette))
+  if (!body) return
+  const look = resolveLook(style, palette || body.palette)
+  if (body.hdLook) body.hdLook.setStyle(look)
+  else if (body.uniforms) applyLook(body.uniforms, look)
+}
+
+/** Rest skeleton in the pose frame for editor tools (poseEdit.js). */
+export function skeletonFromBody(body) {
+  const parent = {}
+  for (const n of body.order) {
+    const p = body.bones[n].parent
+    parent[n] = p?.isBone ? p.name : null
+  }
+  const rootParent = body.bones.root.parent
+  body.root.updateMatrixWorld(true)
+  return {
+    order: body.order,
+    parent,
+    restQ: body.restQ,
+    restHead: body.restHead,
+    rootParent: rootParent ? framed(body, rootParent) : new THREE.Matrix4(),
+  }
+}
+
+/** Dispose GPU resources for a body that is being replaced. */
+export function disposeBody(body) {
+  if (!body) return
+  body.hdLook?.dispose()
+  body.root.traverse((o) => {
+    if (o.isMesh) {
+      o.geometry?.dispose?.()
+      const mats = Array.isArray(o.material) ? o.material : [o.material]
+      for (const m of mats) m?.dispose?.()
+    }
+  })
 }
 
 /** Poses the body and stands it on the floor (z = 0 in the pose frame). */
@@ -110,6 +188,7 @@ export function applyPose(body, doc) {
   body.root.updateMatrixWorld(true)
   body.bones.root.position.z -= lowestZ(body)
   body.root.updateMatrixWorld(true)
+  setBodyProps(body, doc.props)
 }
 
 /**
@@ -138,33 +217,45 @@ export function capturePose(body, base = {}, keep = Object.keys(base.bones || {}
     }
   }
   const p = body.bones.root.position
-  return { bones, root: { head: [round(p.x, 6), round(p.y, 6), round(p.z, 6)] } }
+  const out = { bones, root: { head: [round(p.x, 6), round(p.y, 6), round(p.z, 6)] } }
+  if (Array.isArray(body.propList)) out.props = cloneProps(body.propList)
+  return out
+}
+
+function floorMeshes(body) {
+  return body.floorParts?.length ? body.floorParts : [body.mesh]
 }
 
 function lowestZ(body) {
-  const { mesh, frame } = body
-  const pos = mesh.geometry.getAttribute('position')
-  const inv = new THREE.Matrix4().copy(frame.matrixWorld).invert().multiply(mesh.matrixWorld)
+  const { frame } = body
+  const inv = new THREE.Matrix4()
   const v = new THREE.Vector3()
-  mesh.skeleton.update()
   let lo = Infinity
-  for (let i = 0; i < pos.count; i++) {
-    mesh.getVertexPosition(i, v)
-    v.applyMatrix4(inv)
-    if (v.z < lo) lo = v.z
+  for (const mesh of floorMeshes(body)) {
+    const pos = mesh.geometry.getAttribute('position')
+    if (!pos) continue
+    inv.copy(frame.matrixWorld).invert().multiply(mesh.matrixWorld)
+    mesh.skeleton?.update()
+    for (let i = 0; i < pos.count; i++) {
+      mesh.getVertexPosition(i, v)
+      v.applyMatrix4(inv)
+      if (v.z < lo) lo = v.z
+    }
   }
-  return lo
+  return Number.isFinite(lo) ? lo : 0
 }
 
 /** World-space bounds of the posed body. */
 export function bodyBounds(body) {
-  const { mesh } = body
-  const pos = mesh.geometry.getAttribute('position')
   const box = new THREE.Box3()
   const v = new THREE.Vector3()
-  for (let i = 0; i < pos.count; i += 4) {
-    mesh.getVertexPosition(i, v)
-    box.expandByPoint(v.applyMatrix4(mesh.matrixWorld))
+  for (const mesh of floorMeshes(body)) {
+    const pos = mesh.geometry.getAttribute('position')
+    if (!pos) continue
+    for (let i = 0; i < pos.count; i += 4) {
+      mesh.getVertexPosition(i, v)
+      box.expandByPoint(v.applyMatrix4(mesh.matrixWorld))
+    }
   }
   return box
 }

@@ -43,6 +43,21 @@ CATALOG_FIELD_MAP = {
     "tags": "tags",
     "drishti": "drishti",
     "basePoseId": "basePoseId",
+    "discipline": "discipline",
+    "description": "description",
+    "goodFor": "goodFor",
+    "muscles": "muscles",
+    "breathCue": "breathCue",
+    "transitionIn": "transitionIn",
+    "breathPattern": "breathPattern",
+    "props": "props",
+    "modifications": "modifications",
+    "deepen": "deepen",
+    "avoidIf": "avoidIf",
+    "commonMistakes": "commonMistakes",
+    "alignmentCues": "alignmentCues",
+    "defaultHoldSec": "defaultHoldSec",
+    "minHoldSec": "minHoldSec",
 }
 MAX_KEYS = 8
 MAX_DATA = 512 * 1024
@@ -122,6 +137,17 @@ def apply_pose(env: dict, known: set[str]) -> str:
     if (env.get("root") or {}).get("head") is not None:
         doc.setdefault("root", {})["head"] = head(env["root"]["head"], f"{pid} root.head")
         changes.append("root position")
+    if "props" in env:
+        props = env.get("props")
+        if props is None:
+            raise EditError(f"{pid}: props must be a list")
+        if not isinstance(props, list):
+            raise EditError(f"{pid}: props must be a list")
+        if props:
+            doc["props"] = props
+        else:
+            doc.pop("props", None)
+        changes.append("props")
     if not changes:
         raise EditError("the edit doesn't change anything")
     dump(path, doc)
@@ -218,12 +244,30 @@ def _update_catalog(pose_id: str, fields: dict) -> str | None:
                 entry["category"] = val
                 changed.append("category")
             continue
-        if dest in ("altNames", "tags"):
+        if dest in (
+            "altNames",
+            "tags",
+            "muscles",
+            "props",
+            "modifications",
+            "deepen",
+            "avoidIf",
+            "commonMistakes",
+            "alignmentCues",
+        ):
             if not isinstance(val, list):
                 continue
             names = [str(x).strip() for x in val if str(x).strip()]
             if entry.get(dest) != names:
                 entry[dest] = names
+                changed.append(dest)
+            continue
+        if dest in ("defaultHoldSec", "minHoldSec"):
+            n = int(val) if isinstance(val, (int, float)) else None
+            if n is None or n < 1 or n > 600:
+                continue
+            if entry.get(dest) != n:
+                entry[dest] = n
                 changed.append(dest)
             continue
         if dest == "basePoseId":
@@ -309,13 +353,21 @@ def apply_app_pose(env: dict, known: set[str]) -> str:
     if not bones:
         raise EditError("app-pose submissions need bones")
     path = ROOT / "poses" / f"{pid}.json"
+    geom_props = env.get("props") if isinstance(env.get("props"), list) else None
     if path.is_file():
         doc = json.loads(path.read_text(encoding="utf-8"))
         doc["bones"].update(bones)
         if (env.get("root") or {}).get("head") is not None:
             doc.setdefault("root", {})["head"] = head(env["root"]["head"], f"{pid} root.head")
+        if geom_props is not None:
+            if geom_props:
+                doc["props"] = geom_props
+            else:
+                doc.pop("props", None)
         dump(path, doc)
         bone_note = f"Updated pose {pid}: {len(bones)} bone(s)"
+        if geom_props is not None:
+            bone_note += " + props"
     else:
         if "root" not in bones:
             raise EditError("new poses need a root bone")
@@ -328,8 +380,12 @@ def apply_app_pose(env: dict, known: set[str]) -> str:
         }
         if (env.get("root") or {}).get("head") is not None:
             doc["root"] = {"head": head(env["root"]["head"], f"{pid} root.head")}
+        if geom_props:
+            doc["props"] = geom_props
         dump(path, doc)
         bone_note = f"Added pose {pid}: {len(bones)} bone(s)"
+        if geom_props:
+            bone_note += " + props"
 
     fields = env.get("fields") if isinstance(env.get("fields"), dict) else {}
     parts = [bone_note]

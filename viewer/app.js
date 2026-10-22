@@ -3,13 +3,26 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { accessToken, bindAuthBar, creditName, getUser } from './auth.js'
 import { config } from './config.js'
 import { createEditor, JOINTS } from './editor.js'
-import { openMetaDialog, slugify } from './meta.js'
-import { applyPose, bodyBounds, capturePose, loadBody, setBodyLook } from './pose.js'
+import { applyHandShape, captureBothHandsLocal, handShapeOptionsHtml } from './hands.js'
+import { detailsFieldsHtml, openMetaDialog, openSubmitCreditDialog, readDetailsForm, slugify } from './meta.js'
+import { limbFrom } from './limbs.js'
+import { mirrorPoseDoc } from './mirror.js'
+import { fixHips, levelHips, straightenLimb, straightenSpine, symmetrizePose } from './poseEdit.js'
+import {
+  applyPose,
+  bodyBounds,
+  capturePose,
+  disposeBody,
+  loadBody,
+  setBodyLook,
+  skeletonFromBody,
+} from './pose.js'
 import { loadPrefs, openSettingsDialog, savePrefs } from './settings.js'
 import * as store from './store.js'
 import { appPoseEnvelope, download, githubSubmit, moveEnvelope, openIssueWithData, poseEnvelope, REPO } from './submit.js'
 import { cachedSuggestions, findOwn, forMove, forPose, loadSuggestions, pendingPoseIds, STATUS_LABELS } from './suggestions.js'
 import { DEFAULT_EASE, EASE_LABELS, keyRestAxes, MAX_KEYS, sampleTransition } from './transition.js'
+import { BLOCK_STANDS, PROP_LABEL, blockStandOf } from './props.js'
 
 const CATEGORY_LABELS = {
   standing: 'Standing',
@@ -41,7 +54,15 @@ const state = {
   selected: '',
   character: '',
   style: 'classic',
+  /** 'standard' | 'high' — high loads the MPFB body with a detailed face when published. */
+  bodyDetail: 'standard',
   editing: false,
+  /** When true, the details form replaces the 3D view. */
+  detailsOpen: false,
+  /** Hand-shape dropdowns (UI only; bones are baked into the pose JSON). */
+  handShape: { L: '', R: '' },
+  /** Local finger/metacarpal quats when the current pose was last applied (“as fitted”). */
+  handFitted: {},
   /** Open move: { key, from, to }. While set, the stage shows the move at time `u`. */
   move: null,
   u: 0,
@@ -90,12 +111,22 @@ function published(id) {
   return poseCache.get(id)
 }
 
+/** Snapshot of a local pose edit for the undo stack. */
+function editSnap(edit) {
+  if (!edit) return null
+  return {
+    bones: edit.bones,
+    root: edit.root,
+    ...(Array.isArray(edit.props) ? { props: clone(edit.props) } : {}),
+  }
+}
+
 /** Whether the published pose already has this browser's edit (false until the pose has loaded). */
 function poseInLibrary(id, edit) {
   const doc = loaded.get(id)
   if (!doc) return false
   const env = poseEnvelope(id, doc, edit)
-  return !Object.keys(env.bones).length && !env.root
+  return !Object.keys(env.bones).length && !env.root && !env.props
 }
 
 /** Deep equality with a little slack on numbers, for comparing a move with the published one. */
@@ -116,7 +147,13 @@ const moveInLibrary = (key, edit) => !!state.moves[key] && sameValue(edit.transi
 async function effective(id) {
   const doc = await published(id)
   const edit = store.editedPose(id)
-  return edit ? { ...doc, bones: edit.bones, root: edit.root } : doc
+  if (!edit) return doc
+  return {
+    ...doc,
+    bones: edit.bones,
+    root: edit.root,
+    ...(Array.isArray(edit.props) ? { props: edit.props } : {}),
+  }
 }
 
 const moveKey = (from, to) => `${from}>${to}`
@@ -155,8 +192,24 @@ const editor = createEditor({
   onEnd: () => void editEnded(),
   onSelect: (joint) => {
     if ($('joint')) $('joint').value = joint || ''
+    syncToolsMenu()
+  },
+  onPropSelect: () => {
+    if ($('joint')) $('joint').value = ''
+    renderInfo()
   },
 })
+
+function syncToolsMenu() {
+  const tools = $('pose-tools')
+  if (!tools) return
+  const wrap = tools.parentElement
+  if (!wrap) return
+  const html = toolsMenuHtml()
+  const tmp = document.createElement('div')
+  tmp.innerHTML = html
+  tools.replaceWith(tmp.firstElementChild)
+}
 
 function resize() {
   const { clientWidth: w, clientHeight: h } = view
@@ -199,7 +252,8 @@ function syncLookSummary() {
   if (!el) return
   const c = currentCharacter()
   const s = currentStyle()
-  el.textContent = c && s ? `${c.label} · ${s.label}` : ''
+  const detail = state.bodyDetail === 'high' && c?.hdFile ? ' · High detail' : ''
+  el.textContent = c && s ? `${c.label} · ${s.label}${detail}` : ''
 }
 
 function applyCurrentLook() {
@@ -210,15 +264,24 @@ function applyCurrentLook() {
 }
 
 function persistLook() {
-  savePrefs({ character: state.character, style: state.style })
+  savePrefs({ character: state.character, style: state.style, bodyDetail: state.bodyDetail })
+}
+
+function bodyUrlFor(c) {
+  if (state.bodyDetail === 'high' && c?.hdFile) return `characters/${c.hdFile}`
+  return `characters/${c.file}`
 }
 
 async function setCharacter(id) {
   const c = state.characters.find((x) => x.id === id) || state.characters[0]
   state.character = c.id
-  status('Loading body…')
-  const next = await loadBody(`characters/${c.file}`)
-  if (body) scene.remove(body.root)
+  if (state.bodyDetail === 'high' && !c.hdFile) state.bodyDetail = 'standard'
+  status(state.bodyDetail === 'high' ? 'Loading high-detail body…' : 'Loading body…')
+  const next = await loadBody(bodyUrlFor(c), { renderer })
+  if (body) {
+    scene.remove(body.root)
+    disposeBody(body)
+  }
   body = next
   scene.add(body.root)
   const floor = new THREE.Mesh(new THREE.CircleGeometry(1.6, 64), new THREE.MeshStandardMaterial({ color: 0xead7bd, roughness: 1 }))
@@ -244,11 +307,15 @@ async function openSettings() {
     styles: state.styles,
     character: state.character,
     style: state.style,
+    bodyDetail: state.bodyDetail,
   })
   if (!picked) return
   const characterChanged = picked.character !== state.character
+  const detailChanged = picked.bodyDetail !== state.bodyDetail
   state.style = picked.style
-  if (characterChanged) await setCharacter(picked.character)
+  state.bodyDetail = picked.bodyDetail === 'high' ? 'high' : 'standard'
+  persistLook()
+  if (characterChanged || detailChanged) await setCharacter(picked.character)
   else {
     setStyle(picked.style)
     renderInfo()
@@ -265,11 +332,29 @@ async function refreshStage({ frame = false } = {}) {
     } else {
       applyPose(body, await effective(state.selected))
     }
+    state.handFitted = captureBothHandsLocal(body)
     if (frame) frameBody()
     status('')
   } catch (e) {
     status(`Couldn't load this pose (${e.message}).`)
   }
+}
+
+async function setHand(side, key) {
+  if (!body || !state.selected || state.move) return
+  const id = state.selected
+  const base = await published(id)
+  const before = store.editedPose(id)
+  const stack = undo.get(id) || []
+  stack.push(editSnap(before))
+  undo.set(id, stack.slice(-50))
+  applyHandShape(body, side, key, state.handFitted)
+  const settled = capturePose(body, base)
+  store.savePose(id, settled)
+  state.handShape[side] = key
+  state.message = ''
+  renderInfo()
+  renderList()
 }
 
 function status(text) {
@@ -304,7 +389,7 @@ async function editEnded() {
   applyPose(body, { ...base, ...shape })
   shape = capturePose(body, base)
   const stack = undo.get(id) || []
-  stack.push(before ? { bones: before.bones, root: before.root } : null)
+  stack.push(editSnap(before))
   undo.set(id, stack.slice(-50))
   store.savePose(id, shape)
   state.message = ''
@@ -343,6 +428,8 @@ function setEditing(on) {
   state.editing = on
   editor.setEnabled(on)
   if (!on) editor.select(null)
+  // Details form replaces the 3D view — hide it so Edit 3D actually shows the body.
+  if (on && state.detailsOpen) setDetailsOpen(false)
   renderInfo()
 }
 
@@ -353,6 +440,7 @@ async function undoPose() {
   const prev = stack.pop()
   if (prev) store.savePose(id, prev)
   else store.discardPose(id)
+  state.handShape = { L: '', R: '' }
   await refreshStage()
   renderInfo()
   renderList()
@@ -382,17 +470,67 @@ async function discardPose() {
   renderList()
 }
 
+/** Prefer a local edit when it has content; otherwise keep the catalog value. */
+function coalesceField(localVal, catalogVal) {
+  if (localVal === undefined || localVal === null) return catalogVal
+  if (typeof localVal === 'string' && !localVal.trim()) return catalogVal
+  if (Array.isArray(localVal) && !localVal.length) return catalogVal
+  return localVal
+}
+
+/** Teaching fields from the catalog entry, overlaid with any local edits. */
 function catalogFieldsFromPose(p) {
+  const local = store.poseMeta(p.id)?.fields || {}
   return store.emptyFields({
-    name: p.name || '',
-    sanskrit: p.sanskrit || '',
-    altNames: p.altNames || [],
-    category: p.category || 'standing',
-    tags: p.tags || [],
-    intensity: p.difficulty || 2,
-    drishti: p.drishti || '',
-    basePoseId: p.basePoseId || '',
+    name: coalesceField(local.name, p.name || ''),
+    sanskrit: coalesceField(local.sanskrit, p.sanskrit || ''),
+    altNames: coalesceField(local.altNames, p.altNames || []),
+    category: coalesceField(local.category, p.category || 'standing'),
+    tags: coalesceField(local.tags, p.tags || []),
+    discipline: coalesceField(local.discipline, p.discipline || 'yoga'),
+    intensity: coalesceField(local.intensity, p.difficulty || p.intensity || 2),
+    description: coalesceField(local.description, p.description || ''),
+    goodFor: coalesceField(local.goodFor, p.goodFor || ''),
+    muscles: coalesceField(local.muscles, p.muscles || []),
+    breathCue: coalesceField(local.breathCue, p.breathCue || ''),
+    transitionIn: coalesceField(local.transitionIn, p.transitionIn || ''),
+    breathPattern: coalesceField(local.breathPattern, p.breathPattern || ''),
+    props: coalesceField(local.props, p.props || []),
+    modifications: coalesceField(local.modifications, p.modifications || []),
+    deepen: coalesceField(local.deepen, p.deepen || []),
+    avoidIf: coalesceField(local.avoidIf, p.avoidIf || []),
+    commonMistakes: coalesceField(local.commonMistakes, p.commonMistakes || []),
+    alignmentCues: coalesceField(local.alignmentCues, p.alignmentCues || []),
+    defaultHoldSec: coalesceField(local.defaultHoldSec, p.defaultHoldSec || 30),
+    minHoldSec: coalesceField(local.minHoldSec, p.minHoldSec),
+    drishti: coalesceField(local.drishti, p.drishti || ''),
+    basePoseId: coalesceField(local.basePoseId, p.basePoseId || ''),
+    ...(local.chineseName ? { chineseName: local.chineseName } : {}),
   })
+}
+
+function listLine(label, items) {
+  if (!Array.isArray(items) || !items.length) return ''
+  return `<p><strong>${esc(label)}</strong> ${items.map(esc).join(' · ')}</p>`
+}
+
+/** Compact teaching summary in the info block (catalog + local edits). */
+function teachingSummaryHtml(p) {
+  const f = catalogFieldsFromPose(p)
+  const bits = []
+  if (f.description) bits.push(`<p class="pose-howto">${esc(f.description)}</p>`)
+  if (f.goodFor) bits.push(`<p><strong>Good for</strong> ${esc(f.goodFor)}</p>`)
+  if (f.muscles?.length) bits.push(`<p><strong>Muscles</strong> ${f.muscles.map(esc).join(', ')}</p>`)
+  if (f.breathCue) bits.push(`<p><strong>Breath</strong> ${esc(f.breathCue)}</p>`)
+  if (f.transitionIn) bits.push(`<p><strong>Transition in</strong> ${esc(f.transitionIn)}</p>`)
+  bits.push(listLine('Align', f.alignmentCues))
+  bits.push(listLine('Modify', f.modifications))
+  bits.push(listLine('Deepen', f.deepen))
+  bits.push(listLine('Careful', f.avoidIf))
+  bits.push(listLine('Common mistakes', f.commonMistakes))
+  bits.push(listLine('Props', f.props))
+  if (f.tags?.length) bits.push(`<p class="muted">Tags: ${f.tags.map(esc).join(', ')}</p>`)
+  return bits.filter(Boolean).join('')
 }
 
 async function suggestPose() {
@@ -406,7 +544,7 @@ async function suggestPose() {
   const isNew = Boolean(meta?.isNew)
   if (!isNew) {
     const delta = poseEnvelope(id, await published(id), edit)
-    if (!Object.keys(delta.bones).length && !delta.root && !meta?.fields) {
+    if (!Object.keys(delta.bones).length && !delta.root && !delta.props && !meta?.fields) {
       state.message = 'This pose matches the library, so there is nothing to suggest yet.'
       return renderInfo()
     }
@@ -415,22 +553,23 @@ async function suggestPose() {
     state.message = 'Sign in with Google to suggest an edit (so we can credit you).'
     return renderInfo()
   }
-  const seed = { ...(meta?.fields || catalogFieldsFromPose(state.byId.get(id) || { id, name: id })) }
-  const details = await openMetaDialog({
-    title: isNew ? 'New pose details' : 'Pose details for your suggestion',
-    fields: seed,
-    creditName: meta?.creditName || creditName(),
-  })
-  if (!details) return
-  store.saveMeta(id, { fields: details.fields, creditName: details.creditName, isNew })
+  const fields = catalogFieldsFromPose(state.byId.get(id) || { id, name: id })
+  if (!fields.name) {
+    state.message = 'Fill in Edit info (at least a name) before suggesting.'
+    return renderInfo()
+  }
+  const credit = await openSubmitCreditDialog({ creditName: meta?.creditName || creditName() })
+  if (!credit) return
+  store.saveMeta(id, { fields, creditName: credit.creditName, isNew })
   const env = appPoseEnvelope({
     pose: id,
     sourcePoseId: isNew ? '' : id,
     copyId: `tp-viewer-${id}`,
-    creditName: details.creditName,
+    creditName: credit.creditName,
     bones: edit.bones,
     root: edit.root,
-    fields: details.fields,
+    props: edit.props,
+    fields,
   })
   await sendAppPose(env, id)
 }
@@ -481,7 +620,11 @@ async function startNewPose() {
   }
   const baseId = details.fields.basePoseId && state.byId.has(details.fields.basePoseId) ? details.fields.basePoseId : state.byId.has('mountain') ? 'mountain' : state.catalog[0]?.id
   const base = baseId ? await published(baseId) : { bones: { root: [1, 0, 0, 0] }, root: { head: [0, 0, 0] } }
-  store.savePose(id, { bones: clone(base.bones), root: clone(base.root || { head: [0, 0, 0] }) })
+  store.savePose(id, {
+    bones: clone(base.bones),
+    root: clone(base.root || { head: [0, 0, 0] }),
+    ...(Array.isArray(base.props) ? { props: clone(base.props) } : {}),
+  })
   store.saveMeta(id, {
     isNew: true,
     basePoseId: baseId || '',
@@ -683,11 +826,6 @@ function renderCategories() {
 
 // --- Pose details ---------------------------------------------------------
 
-function fixUrl(p) {
-  const q = new URLSearchParams({ template: 'pose-correction.yml', title: `Pose correction: ${p.id}`, pose: p.id })
-  return `${REPO}/issues/new?${q}`
-}
-
 const shortDate = (iso) => new Date(iso).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' })
 const pill = (status) => `<span class="pill ${status}">${STATUS_LABELS[status]}</span>`
 const ghLink = (url, text) => `<a href="${esc(url)}" target="_blank" rel="noopener">${esc(text)}</a>`
@@ -726,30 +864,25 @@ function ownStatus(edit, matches, inLibrary) {
 
 function suggestionsSection(p) {
   const c = state.suggestions
-  const what = state.move ? 'this move' : 'this pose'
   const items = c ? (state.move ? forMove(c.items, state.move.from, state.move.to) : forPose(c.items, p.id)) : []
   const terms = state.move ? `"${state.move.from}" "${state.move.to}"` : `"${p.id}"`
   const all = `${REPO}/issues?${new URLSearchParams({ q: `is:issue ${terms}` })}`
   let body
-  if (!c) body = '<p class="muted">Checking GitHub…</p>'
-  else if (!c.checkedAt) body = `<p class="muted">Couldn't check GitHub just now (${esc(c.error)}).</p>`
-  else if (!items.length) body = `<p class="muted">No suggestions for ${what} yet.</p>`
+  if (!c) body = '<p class="muted">Checking…</p>'
+  else if (!c.checkedAt) body = `<p class="muted">GitHub check failed${c.error ? `: ${esc(c.error)}` : ''}.</p>`
+  else if (!items.length) body = '<p class="muted">None yet.</p>'
   else {
     body = `<ul class="suggestions">${items.slice(0, SUGGESTIONS_SHOWN).map(suggestionLine).join('')}</ul>${
-      items.length > SUGGESTIONS_SHOWN ? `<p class="muted">${ghLink(all, `All ${items.length} on GitHub`)}</p>` : ''
+      items.length > SUGGESTIONS_SHOWN ? `<p class="muted">${ghLink(all, `All ${items.length}`)}</p>` : ''
     }`
   }
-  const checked = c?.checkedAt
-    ? `<p class="muted">${c.error ? `Couldn't check GitHub just now (${esc(c.error)}). ` : ''}Checked ${new Date(c.checkedAt).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' })}.</p>`
-    : ''
   return `
     <section class="panel">
       <div class="row">
-        <h3>Suggestions on GitHub</h3>
-        <button type="button" id="refresh-suggestions" ${state.checking ? 'disabled' : ''}>${state.checking ? 'Checking…' : 'Check again'}</button>
+        <h3>Suggestions</h3>
+        <button type="button" id="refresh-suggestions" ${state.checking ? 'disabled' : ''}>${state.checking ? '…' : 'Refresh'}</button>
       </div>
       ${body}
-      ${checked}
     </section>`
 }
 
@@ -759,56 +892,124 @@ function easeOptions(selected) {
     .join('')
 }
 
-function editSection(p) {
-  const edit = store.editedPose(p.id)
-  const canUndo = (undo.get(p.id) || []).length > 0
-  const metaOnly = !state.move
-    ? `<div class="actions">
-        <button type="button" id="edit-details">Edit details</button>
-      </div>
-      <p class="muted">Details are name, Sanskrit, description and teaching fields. To submit them, also edit the 3D body, then Suggest.</p>`
-    : ''
-  return `
-    <section class="panel">
-      <div class="row">
-        <h3>Edit</h3>
-        <button type="button" id="edit-toggle" aria-pressed="${state.editing}">${state.editing ? 'Stop editing' : 'Edit the 3D body'}</button>
-      </div>
-      ${
-        state.editing
-          ? `<p class="muted">Click a blue dot, or pick a joint, then drag a ring to turn it. Everything below the joint turns with it. ${
-              state.move ? 'In a move, turning a joint keys the body at the current time.' : 'Your changes save in this browser as you go.'
-            }</p>
-            <label class="field">Joint <select id="joint"><option value="">Pick a joint…</option>${JOINTS.map(([id, label]) => `<option value="${id}" ${editor.joint === id ? 'selected' : ''}>${label}</option>`).join('')}</select></label>`
-          : ''
-      }
-      ${metaOnly}
-      ${!state.move && edit ? poseEditStatus(p.id, edit, canUndo) : ''}
-    </section>`
+function toolsMenuHtml() {
+  const joint = editor.joint
+  const side = joint?.endsWith('.L') ? 'L' : joint?.endsWith('.R') ? 'R' : undefined
+  const canStraighten = !!limbFrom(joint)
+  const symmetrizeLabel =
+    side === 'L' ? 'Symmetrize from left' : side === 'R' ? 'Symmetrize from right' : 'Symmetrize (average)'
+  return `<select id="pose-tools" aria-label="Pose tools">
+      <option value="" selected disabled>Tools</option>
+      <option value="reset">Reset to published</option>
+      <option value="mirror">Mirror left ↔ right</option>
+      <option value="straighten" ${canStraighten ? '' : 'disabled'}>${canStraighten ? 'Straighten limb' : 'Straighten limb (pick an arm/leg)'}</option>
+      <option value="fixHips">Fix hips</option>
+      <option value="straightenSpine">Straighten spine</option>
+      <option value="levelHips">Level hips</option>
+      <option value="symmetrize">${symmetrizeLabel}</option>
+    </select>`
 }
 
-function poseEditStatus(id, edit, canUndo) {
-  const meta = store.poseMeta(id)
-  const isNew = Boolean(meta?.isNew)
-  const inLibrary = !isNew && poseInLibrary(id, edit)
-  const status = `<p class="badge">${isNew ? 'New pose in this browser' : 'Edited in this browser'}, ${new Date(edit.updatedAt).toLocaleString()}</p>
-    <p class="edit-status">${ownStatus(edit, forPose(state.suggestions?.items || [], id), inLibrary)}</p>`
-  if (inLibrary) {
-    return `${status}
-      <div class="actions">
-        <button type="button" class="primary" id="clear-pose">Clear my copy</button>
-        <button type="button" id="download-pose">Download edited pose</button>
+function propsPanelHtml() {
+  const list = body?.propList || []
+  let blocks = 0
+  const rows = list
+    .map((p, i) => {
+      const name = p.type === 'block' ? `Block ${++blocks}` : PROP_LABEL[p.type] || p.type
+      const active = editor.propSel === i
+      const mode = active ? editor.propMode : null
+      const btn = (act, label) =>
+        `<button type="button" class="hdr-btn${mode === act ? ' active' : ''}" data-prop="${act}" data-i="${i}">${label}</button>`
+      let extra = ''
+      if (p.type === 'chair') {
+        const back = (p.size || {}).back ?? 0.42
+        extra = `<label class="prop-slider"><span>Seat</span><input type="range" min="0.3" max="0.7" step="0.01" value="${p.seat[2]}" data-prop-size="seat" data-i="${i}"/><output>${Math.round(p.seat[2] * 100)} cm</output></label>
+          <label class="prop-slider"><span>Back</span><input type="range" min="0.2" max="0.6" step="0.01" value="${back}" data-prop-size="back" data-i="${i}"/><output>${Math.round(back * 100)} cm</output></label>`
+      } else if (p.type === 'block') {
+        const cur = blockStandOf(p)
+        const opts = Object.entries(BLOCK_STANDS)
+          .map(([k, v]) => `<option value="${k}"${k === cur ? ' selected' : ''}>${v.label}</option>`)
+          .join('')
+        extra = `<label class="prop-stand"><span>Stand</span><select data-prop-stand="${i}">${opts}</select></label>`
+      }
+      return `<div class="prop-row${active && mode ? ' is-selected' : ''}">
+        <div class="prop-actions"><span class="prop-name">${esc(name)}</span>${btn('move', 'Move')}${btn('turn', 'Turn')}${btn('remove', 'Remove')}</div>
+        ${extra}
       </div>`
+    })
+    .join('')
+  const has = (type) => list.some((p) => p.type === type)
+  const add = (type, label) => `<button type="button" class="hdr-btn" data-prop-add="${type}">${label}</button>`
+  return `<div class="props-panel" id="props-panel">
+    <p class="muted props-label">Props</p>
+    ${rows}
+    <div class="prop-add">${has('chair') ? '' : add('chair', 'Add chair')}${add('block', 'Add block')}${has('wall') ? '' : add('wall', 'Add wall')}</div>
+    <p class="muted props-hint">Click a prop or Move: drag the arrows to slide it on the floor (blocks also lift). Turn: drag the ring. Props are kept on save.</p>
+  </div>`
+}
+
+function editToolsRow() {
+  if (!state.editing) return ''
+  return `<div class="tools-row">
+    <label class="field">Joint <select id="joint"><option value="">Joint…</option>${JOINTS.map(([id, label]) => `<option value="${id}" ${editor.joint === id ? 'selected' : ''}>${label}</option>`).join('')}</select></label>
+    ${toolsMenuHtml()}
+  </div>
+  <div class="tools-row hands-row" role="group" aria-label="Hand shapes">
+    <label class="field">Left hand <select id="hand-L">${handShapeOptionsHtml(state.handShape.L)}</select></label>
+    <label class="field">Right hand <select id="hand-R">${handShapeOptionsHtml(state.handShape.R)}</select></label>
+  </div>
+  ${propsPanelHtml()}`
+}
+
+/** Push undo + run a prop mutation, then save the pose (same path as a joint drag). */
+async function withPropEdit(fn) {
+  if (!body || !state.selected || state.move) return
+  const id = state.selected
+  const before = store.editedPose(id)
+  const stack = undo.get(id) || []
+  stack.push(editSnap(before))
+  undo.set(id, stack.slice(-50))
+  fn()
+  const base = await published(id)
+  const shape = capturePose(body, base)
+  store.savePose(id, shape)
+  state.message = ''
+  renderInfo()
+  renderList()
+}
+
+/** Edit · undo · discard (and Suggest/Clear when relevant) — first button group. */
+function poseEditActions(p) {
+  if (state.move) return { buttons: '', text: '' }
+  const edit = store.editedPose(p.id)
+  const canUndo = (undo.get(p.id) || []).length > 0
+  const buttons = [
+    `<button type="button" class="info-icon-btn info-icon-btn--edit" id="edit-toggle" aria-pressed="${state.editing}" title="${state.editing ? 'Done editing 3D' : 'Edit 3D'}">${ICO_PENCIL}<span>3D</span></button>`,
+    `<button type="button" class="info-icon-btn info-icon-btn--edit" id="edit-details" aria-pressed="${state.detailsOpen}" title="Edit info">${ICO_PENCIL}<span>Info</span></button>`,
+    `<button type="button" class="info-icon-btn" id="undo-pose" ${canUndo ? '' : 'disabled'} title="Undo last change">${ICO_UNDO}</button>`,
+    `<button type="button" class="info-icon-btn" id="discard-pose" ${edit ? '' : 'disabled'} title="Discard all changes">${ICO_BIN}</button>`,
+  ]
+  const textBits = []
+  if (edit) {
+    const meta = store.poseMeta(p.id)
+    const isNew = Boolean(meta?.isNew)
+    const inLibrary = !isNew && poseInLibrary(p.id, edit)
+    textBits.push(`<span class="badge">${isNew ? 'New' : 'Edited'} · ${new Date(edit.updatedAt).toLocaleString()}</span>`)
+    textBits.push(`<span class="edit-status">${ownStatus(edit, forPose(state.suggestions?.items || [], p.id), inLibrary)}</span>`)
+    if (inLibrary) {
+      buttons.push(`<button type="button" class="info-icon-btn primary" id="clear-pose" title="Clear my copy">Clear</button>`)
+    } else {
+      const signedIn = Boolean(getUser())
+      buttons.push(
+        `<button type="button" class="info-icon-btn primary" id="suggest-pose" ${signedIn ? '' : 'disabled'} title="${edit.submittedAt ? 'Suggest again' : 'Suggest'}">${edit.submittedAt ? 'Suggest again' : 'Suggest'}</button>`,
+      )
+      if (!signedIn) textBits.push('<span class="muted suggest-need-signin">Sign in to suggest</span>')
+    }
   }
-  const signedIn = Boolean(getUser())
-  return `${status}
-    <div class="actions">
-      <button type="button" class="primary" id="suggest-pose" ${signedIn ? '' : 'disabled'} title="${signedIn ? '' : 'Sign in to suggest'}">${edit.submittedAt ? 'Suggest again' : isNew ? 'Suggest new pose' : 'Suggest this edit'}</button>
-      <button type="button" id="download-pose">Download edited pose</button>
-      <button type="button" id="undo-pose" ${canUndo ? '' : 'disabled'}>Undo</button>
-      <button type="button" id="discard-pose">Discard my changes</button>
-    </div>
-    ${signedIn ? '' : '<p class="muted">Sign in with Google to suggest (required for credit).</p>'}`
+  return {
+    buttons: buttons.join(''),
+    text: textBits.length ? `<span class="info-edit-text">${textBits.join(' ')}</span>` : '',
+  }
 }
 
 function creditsSection(p) {
@@ -821,7 +1022,6 @@ function creditsSection(p) {
   return `
     <section class="panel">
       <h3>Credits</h3>
-      <p class="muted">People who suggested changes to this pose on GitHub.</p>
       <ul class="suggestions">${lines.join('')}</ul>
     </section>`
 }
@@ -832,7 +1032,6 @@ function moveSection(p) {
     return `
       <section class="panel">
         <h3>Moves</h3>
-        <p class="muted">A move is the way the body travels from this pose to another, shaped by up to ${MAX_KEYS} keyframes.</p>
         ${
           moves.length
             ? `<div class="chips">${moves
@@ -843,7 +1042,7 @@ function moveSection(p) {
                 .join('')}</div>`
             : ''
         }
-        <label class="field">New move to <input id="move-to" list="pose-options" placeholder="Search for the next pose" autocomplete="off" /></label>
+        <label class="field">New move to <input id="move-to" list="pose-options" placeholder="Next pose…" autocomplete="off" /></label>
       </section>`
   }
   const { from, to, key } = state.move
@@ -854,12 +1053,9 @@ function moveSection(p) {
   return `
     <section class="panel move">
       <div class="row">
-        <h3>Move: ${esc(poseName(from))} → ${esc(poseName(to))}</h3>
+        <h3>${esc(poseName(from))} → ${esc(poseName(to))}</h3>
         <button type="button" id="close-move">Close</button>
       </div>
-      <p class="muted">Scrub to a moment and press Add key here, or turn a joint while editing to key the body there. Click a ◆ to go to a key and change it. ${
-        tr.keys.length ? '' : 'With no keys, the body blends straight from one pose to the other.'
-      }</p>
       <div class="timeline">
         <button type="button" id="play">Play</button>
         <div class="track">
@@ -871,34 +1067,40 @@ function moveSection(p) {
         <span id="scrub-time" class="muted"></span>
       </div>
       <div class="row">
-        <button type="button" id="add-key">Add key here</button>
-        <span class="muted">${tr.keys.length} of ${MAX_KEYS} keys</span>
+        <button type="button" id="add-key">Add key</button>
+        <span class="muted">${tr.keys.length}/${MAX_KEYS}</span>
       </div>
       <div id="key-tools" class="row" ${key0 ? '' : 'hidden'}>
-        <label class="field">Into this key <select id="key-ease">${easeOptions(key0?.ease)}</select></label>
+        <label class="field">Ease <select id="key-ease">${easeOptions(key0?.ease)}</select></label>
         <button type="button" id="delete-key">Delete key</button>
       </div>
       <div class="row">
         <label class="field">Length (s) <input id="duration" type="number" min="0.2" max="30" step="0.1" value="${tr.durationSec}" /></label>
-        <label class="field">Into ${esc(poseName(to))} <select id="end-ease">${easeOptions(tr.endEase)}</select></label>
+        <label class="field">End ease <select id="end-ease">${easeOptions(tr.endEase)}</select></label>
       </div>
       ${
         edit
-          ? `<p class="badge">Edited in this browser</p>
+          ? `<p class="badge">Edited</p>
             <p class="edit-status">${ownStatus(edit, forMove(state.suggestions?.items || [], from, to), inLibrary)}</p>
             <div class="actions">
               ${
                 inLibrary
-                  ? '<button type="button" class="primary" id="clear-move">Clear my copy</button>'
-                  : `<button type="button" class="primary" id="suggest-move">${edit.submittedAt ? 'Suggest again' : 'Suggest this move'}</button>`
+                  ? '<button type="button" class="primary" id="clear-move">Clear</button>'
+                  : `<button type="button" class="primary" id="suggest-move">${edit.submittedAt ? 'Suggest again' : 'Suggest'}</button>`
               }
-              <button type="button" id="download-move">Download move</button>
-              ${inLibrary ? '' : '<button type="button" id="discard-move">Discard my changes</button>'}
+              <button type="button" id="download-move">Download</button>
+              ${inLibrary ? '' : '<button type="button" id="discard-move">Discard</button>'}
             </div>`
           : ''
       }
     </section>`
 }
+
+const ICO_DL = `<svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M8 1a.75.75 0 0 1 .75.75v6.69l2.22-2.22a.75.75 0 1 1 1.06 1.06l-3.5 3.5a.75.75 0 0 1-1.06 0l-3.5-3.5a.75.75 0 0 1 1.06-1.06l2.22 2.22V1.75A.75.75 0 0 1 8 1zm-5 11.25a.75.75 0 0 0 0 1.5h10a.75.75 0 0 0 0-1.5H3z"/></svg>`
+const ICO_COPY = `<svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path fill="currentColor" d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg>`
+const ICO_PENCIL = `<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>`
+const ICO_UNDO = `<svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M4.28 3.22a.75.75 0 0 1 0 1.06L2.81 5.75H9a3.75 3.75 0 1 1 0 7.5H8a.75.75 0 0 1 0-1.5h1a2.25 2.25 0 1 0 0-4.5H2.81l1.47 1.47a.75.75 0 0 1-1.06 1.06l-2.75-2.75a.75.75 0 0 1 0-1.06l2.75-2.75a.75.75 0 0 1 1.06 0z"/></svg>`
+const ICO_BIN = `<svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M6.5 1.75A.75.75 0 0 1 7.25 1h1.5a.75.75 0 0 1 .75.75V3h3.5a.75.75 0 0 1 0 1.5h-.34l-.6 8.1A1.75 1.75 0 0 1 10.32 14H5.68a1.75 1.75 0 0 1-1.74-1.4l-.6-8.1H3A.75.75 0 0 1 3 3h3.5V1.75zm1.5.75v.5h-1.5v-.5h1.5zM5.1 4.5l.58 7.85a.25.25 0 0 0 .25.2h4.14a.25.25 0 0 0 .25-.2l.58-7.85H5.1z"/></svg>`
 
 function renderInfo() {
   const p = state.byId.get(state.selected)
@@ -907,7 +1109,23 @@ function renderInfo() {
     return
   }
   const c = state.characters.find((x) => x.id === state.character) || state.characters[0]
+  const bodyFile = state.bodyDetail === 'high' && c.hdFile ? c.hdFile : c.file
   const googleQ = encodeURIComponent([p.name, p.sanskrit, 'yoga pose'].filter(Boolean).join(' '))
+  const localEdit = store.editedPose(p.id)
+  // One Pose download: edited/draft JSON when present, else published file (no second Download).
+  const poseDl =
+    localEdit || p._draft
+      ? `<button type="button" class="info-icon-btn" id="download-pose" title="Download pose JSON">${ICO_DL}<span>Pose</span></button>`
+      : `<a class="info-icon-btn" href="poses/${p.id}.json" download title="Download pose JSON">${ICO_DL}<span>Pose</span></a>`
+  const editUi = poseEditActions(p)
+  const editGroup = editUi.buttons
+    ? `<div class="info-btn-group info-btn-group--edit" role="group" aria-label="Edit pose">${editUi.buttons}</div>`
+    : ''
+  const filesGroup = `<div class="info-btn-group info-btn-group--files" role="group" aria-label="Download and share">
+      ${poseDl}
+      <a class="info-icon-btn" href="characters/${bodyFile}" download title="Download body GLB">${ICO_DL}<span>Body</span></a>
+      <button type="button" class="info-icon-btn" id="copy" title="Copy link to this pose">${ICO_COPY}<span>Copy</span></button>
+    </div>`
   $('info').innerHTML = `
     <div class="info-title">
       <h2>${esc(p.name)}</h2>
@@ -915,21 +1133,20 @@ function renderInfo() {
     </div>
     ${p.sanskrit ? `<p class="sanskrit">${esc(p.sanskrit)}</p>` : ''}
     <p class="muted"><code>${p.id}</code> · ${esc(CATEGORY_LABELS[p.category] || p.category)}${p.difficulty ? ` · difficulty ${p.difficulty} of 5` : ''}</p>
+    <div class="info-quick">
+      ${editGroup}
+      ${filesGroup}
+      ${editUi.text}
+    </div>
+    ${editToolsRow()}
     ${p.altNames?.length ? `<p class="muted">Also called ${p.altNames.map(esc).join(', ')}</p>` : ''}
     ${p.drishti ? `<p>Gaze: ${esc(p.drishti)}</p>` : ''}
+    ${teachingSummaryHtml(p)}
     ${state.message ? `<p class="note" role="status">${esc(state.message)}</p>` : ''}
-    ${editSection(p)}
     ${moveSection(p)}
     ${creditsSection(p)}
     ${suggestionsSection(p)}
-    <div class="actions">
-      <button type="button" id="new-pose">New pose</button>
-      <a href="${fixUrl(p)}" target="_blank" rel="noopener">Describe a fix in words</a>
-      ${p._draft ? '' : `<a href="poses/${p.id}.json" download>Download pose</a>`}
-      <a href="characters/${c.file}" download>Download body</a>
-      <button type="button" id="copy">Copy link</button>
-    </div>
-    <p class="muted">${p._draft ? 'Draft pose — not in the published library yet.' : `<a href="${REPO}/blob/main/poses/${p.id}.json">Pose file on GitHub</a> · <a href="${REPO}/commits/main/poses/${p.id}.json">History and contributors</a>`}</p>
+    <p class="muted">${p._draft ? 'Draft — not published yet.' : `<a href="${REPO}/blob/main/poses/${p.id}.json" target="_blank" rel="noopener">GitHub</a> · <a href="${REPO}/commits/main/poses/${p.id}.json" target="_blank" rel="noopener">History</a>`}</p>
   `
   syncTimeline()
 }
@@ -953,11 +1170,19 @@ function bindInfo() {
     }
     else if (t.id === 'suggest-pose') await suggestPose()
     else if (t.id === 'edit-details') await editDetails()
-    else if (t.id === 'new-pose') await startNewPose()
     else if (t.id === 'refresh-suggestions') await refreshSuggestions({ force: true })
     else if (t.id === 'download-pose') download(`${id}.json`, await effective(id))
     else if (t.id === 'close-move') await closeMove()
     else if (t.dataset.move) await openMove(...t.dataset.move.split('>'))
+    else if (t.dataset.propAdd) await withPropEdit(() => editor.addProp(t.dataset.propAdd))
+    else if (t.dataset.prop) {
+      const i = Number(t.dataset.i)
+      if (t.dataset.prop === 'remove') await withPropEdit(() => editor.removeProp(i))
+      else {
+        editor.selectProp(i, t.dataset.prop)
+        renderInfo()
+      }
+    }
     else if (t.id === 'play') {
       if (state.playing) stopPlaying()
       else play()
@@ -986,16 +1211,59 @@ function bindInfo() {
     else if (t.id === 'download-move') download(`${state.move.from}--${state.move.to}.json`, { format: 'yoga-transitions/1', transitions: { [state.move.key]: currentMove() } })
     else if (t.id === 'copy') {
       await navigator.clipboard?.writeText(location.href)
-      t.textContent = 'Link copied'
+      const label = t.querySelector('span')
+      if (label) {
+        const prev = label.textContent
+        label.textContent = 'Copied'
+        setTimeout(() => {
+          if (label.isConnected) label.textContent = prev
+        }, 1500)
+      }
     }
   })
+  info.addEventListener('pointerdown', (e) => {
+    const el = e.target.closest('[data-prop-size]')
+    if (!el || !body || !state.selected) return
+    const id = state.selected
+    const before = store.editedPose(id)
+    const stack = undo.get(id) || []
+    stack.push(editSnap(before))
+    undo.set(id, stack.slice(-50))
+  })
   info.addEventListener('input', (e) => {
-    if (e.target.id === 'scrub') void scrubTo(Number(e.target.value) / 1000)
+    if (e.target.id === 'scrub') {
+      void scrubTo(Number(e.target.value) / 1000)
+      return
+    }
+    const el = e.target.closest('[data-prop-size]')
+    if (!el || !body) return
+    const i = Number(el.dataset.i)
+    const v = Number(el.value)
+    editor.setChairSize(i, el.dataset.propSize, v)
+    el.nextElementSibling.textContent = `${Math.round(v * 100)} cm`
   })
   info.addEventListener('change', async (e) => {
     const el = e.target
-    if (el.id === 'joint') editor.select(el.value || null)
-    else if (el.id === 'move-to') {
+    if (el.id === 'joint') {
+      editor.clearPropSelection()
+      editor.select(el.value || null)
+      syncToolsMenu()
+      renderInfo()
+    } else if (el.id === 'pose-tools') {
+      const tool = el.value
+      el.value = ''
+      if (tool) await runPoseTool(tool)
+    } else if (el.id === 'hand-L' || el.id === 'hand-R') {
+      await setHand(el.id === 'hand-L' ? 'L' : 'R', el.value)
+    } else if (el.dataset.propStand != null) {
+      await withPropEdit(() => editor.setBlockStand(Number(el.dataset.propStand), el.value, BLOCK_STANDS))
+    } else if (el.dataset.propSize) {
+      // Seat/back sliders: size already applied on input; persist on change.
+      if (!body || !state.selected) return
+      const base = await published(state.selected)
+      store.savePose(state.selected, capturePose(body, base))
+      renderList()
+    } else if (el.id === 'move-to') {
       const m = /\(([a-z0-9-]+)\)\s*$/.exec(el.value)
       const target = m ? m[1] : state.catalog.find((p) => fold(p.name) === fold(el.value))?.id
       if (target) await openMove(state.selected, target)
@@ -1027,6 +1295,7 @@ async function select(id, { push = true } = {}) {
   }
   state.selected = id
   state.message = ''
+  state.handShape = { L: '', R: '' }
   if (push && location.hash.slice(1) !== id) history.replaceState(null, '', `#${id}`)
   document.title = `${poseName(id)} · Open Yoga Poses`
   renderList()
@@ -1060,31 +1329,131 @@ const hasSubmitted = () =>
 
 // --- Start ----------------------------------------------------------------
 
-async function editDetails() {
+function setDetailsOpen(on) {
+  state.detailsOpen = on
+  const view = $('view')
+  const panel = $('details-panel')
+  const bar = document.querySelector('.stage-bar')
+  if (!panel) return
+  if (on) {
+    view.hidden = true
+    if (bar) bar.hidden = true
+    panel.hidden = false
+    renderDetailsPanel()
+  } else {
+    panel.hidden = true
+    panel.innerHTML = ''
+    view.hidden = false
+    if (bar) bar.hidden = false
+    resize()
+  }
+}
+
+function renderDetailsPanel() {
+  const panel = $('details-panel')
   const id = state.selected
   const p = state.byId.get(id)
-  if (!p) return
+  if (!panel || !p) return
   const meta = store.poseMeta(id)
-  const details = await openMetaDialog({
-    title: meta?.isNew ? 'New pose details' : 'Pose details',
-    fields: meta?.fields || catalogFieldsFromPose(p),
-    creditName: meta?.creditName || creditName(),
-    requireLicence: false,
+  const seed = catalogFieldsFromPose(p)
+  panel.innerHTML = `
+    <form id="details-form">
+      <header class="meta-head" style="border:0;padding:0 0 0.5rem">
+        <h2>${meta?.isNew ? 'New pose details' : 'Pose details'}</h2>
+        <button type="button" id="details-cancel" class="linkish">Back to 3D</button>
+      </header>
+      ${detailsFieldsHtml(seed)}
+      <div class="meta-actions">
+        <button type="button" id="details-cancel-2">Cancel</button>
+        <button type="submit" class="primary">Save details</button>
+      </div>
+    </form>`
+  const form = panel.querySelector('#details-form')
+  const close = () => setDetailsOpen(false)
+  panel.querySelector('#details-cancel')?.addEventListener('click', close)
+  panel.querySelector('#details-cancel-2')?.addEventListener('click', close)
+  form.addEventListener('submit', (e) => {
+    e.preventDefault()
+    if (!form.reportValidity()) return
+    const fields = readDetailsForm(form, { keepChineseName: seed.chineseName })
+    if (!fields.name) return
+    store.saveMeta(id, { fields, creditName: meta?.creditName || creditName(), isNew: meta?.isNew })
+    if (meta?.isNew || p._draft) {
+      p.name = fields.name || p.name
+      p.sanskrit = fields.sanskrit || undefined
+      p.altNames = fields.altNames || []
+      p.category = fields.category || p.category
+      p.difficulty = fields.intensity
+      p.drishti = fields.drishti || undefined
+      p._hay = haystack(p)
+      renderList()
+    }
+    state.message = 'Details saved in this browser.'
+    setDetailsOpen(false)
+    renderInfo()
   })
-  if (!details) return
-  store.saveMeta(id, { fields: details.fields, creditName: details.creditName, isNew: meta?.isNew })
-  if (meta?.isNew || p._draft) {
-    p.name = details.fields.name || p.name
-    p.sanskrit = details.fields.sanskrit || undefined
-    p.altNames = details.fields.altNames || []
-    p.category = details.fields.category || p.category
-    p.difficulty = details.fields.intensity
-    p.drishti = details.fields.drishti || undefined
-    p._hay = haystack(p)
-    renderList()
+}
+
+function editDetails() {
+  if (state.move) {
+    state.message = 'Close the move editor before editing pose details.'
+    return renderInfo()
   }
-  state.message = 'Details saved in this browser.'
+  setEditing(false)
+  setDetailsOpen(true)
+}
+
+async function applyShape(shape) {
+  if (!body || !state.selected || state.move) return
+  const id = state.selected
+  const base = await published(id)
+  const before = store.editedPose(id)
+  const stack = undo.get(id) || []
+  stack.push(editSnap(before))
+  undo.set(id, stack.slice(-50))
+  applyPose(body, { ...base, ...shape })
+  const settled = capturePose(body, base)
+  store.savePose(id, settled)
+  state.message = ''
   renderInfo()
+  renderList()
+  await refreshStage()
+}
+
+async function runPoseTool(tool) {
+  if (!body || !state.selected || !tool) return
+  if (tool === 'reset') {
+    const id = state.selected
+    const doc = await published(id)
+    return applyShape({
+      bones: clone(doc.bones),
+      root: clone(doc.root || { head: [0, 0, 0] }),
+      ...(Array.isArray(doc.props) ? { props: clone(doc.props) } : { props: [] }),
+    })
+  }
+  const current = capturePose(body, await published(state.selected))
+  if (tool === 'mirror') return applyShape(mirrorPoseDoc({ format: 'yoga-pose/1', pose: state.selected, ...current }))
+  const sk = skeletonFromBody(body)
+  const joint = editor.joint
+  const side = joint?.endsWith('.L') ? 'L' : joint?.endsWith('.R') ? 'R' : undefined
+  const doc = {
+    format: 'yoga-pose/1',
+    pose: state.selected,
+    bones: current.bones,
+    root: current.root,
+    ...(Array.isArray(current.props) ? { props: current.props } : {}),
+  }
+  const next =
+    tool === 'straighten'
+      ? straightenLimb(doc, sk, joint)
+      : tool === 'fixHips'
+        ? fixHips(doc, sk)
+        : tool === 'straightenSpine'
+          ? straightenSpine(doc, sk)
+          : tool === 'levelHips'
+            ? levelHips(doc, sk)
+            : symmetrizePose(doc, sk, side)
+  if (next) await applyShape({ bones: next.bones, root: next.root })
 }
 
 async function start() {
@@ -1109,6 +1478,7 @@ async function start() {
   const prefs = loadPrefs()
   state.character = characters.some((c) => c.id === prefs.character) ? prefs.character : characters[0].id
   state.style = styles.some((s) => s.id === prefs.style) ? prefs.style : styles[0]?.id || 'classic'
+  state.bodyDetail = prefs.bodyDetail === 'high' ? 'high' : 'standard'
   $('pose-options').innerHTML = state.catalog.map((p) => `<option value="${esc(p.name)} (${p.id})"></option>`).join('')
 
   bindAuthBar($('auth'), () => renderInfo())
@@ -1117,7 +1487,15 @@ async function start() {
   renderInfo()
   bindInfo()
 
-  $('q').addEventListener('input', renderList)
+  const searchWrap = document.querySelector('.search-wrap')
+  const openSearch = () => searchWrap?.classList.add('is-open')
+  const closeSearchSoon = () => setTimeout(() => searchWrap?.classList.remove('is-open'), 150)
+  $('q').addEventListener('input', () => {
+    renderList()
+    openSearch()
+  })
+  $('q').addEventListener('focus', openSearch)
+  $('q').addEventListener('blur', closeSearchSoon)
   $('cats').addEventListener('click', (e) => {
     const b = e.target.closest('button[data-cat]')
     if (!b) return
@@ -1127,9 +1505,14 @@ async function start() {
   })
   $('list').addEventListener('click', (e) => {
     const b = e.target.closest('button[data-id]')
-    if (b) select(b.dataset.id)
+    if (b) {
+      select(b.dataset.id)
+      searchWrap?.classList.remove('is-open')
+      $('q').blur()
+    }
   })
   $('settings').addEventListener('click', () => void openSettings().then(() => renderInfo()))
+  $('new-pose').addEventListener('click', () => void startNewPose())
   $('reset').addEventListener('click', frameBody)
   window.addEventListener('hashchange', () => void openFromHash())
   store.onEditsChange(() => {

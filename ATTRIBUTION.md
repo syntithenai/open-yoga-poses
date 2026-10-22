@@ -10,8 +10,9 @@ Poses were fitted from photographs and then refined by hand. Only the measured j
 
 ## Bodies (`characters/`)
 
-- [Anny body model](https://github.com/naver/anny): CC0 mesh (code Apache-2.0).
+- [Anny body model](https://github.com/naver/anny): CC0 mesh (code Apache-2.0). Light bodies used by default in the viewer.
 - [MakeHuman system assets](https://files.makehumancommunity.org/asset_packs/makehuman_system_assets/makehuman_system_assets_cc0.zip): CC0, through MPFB2. The skeleton is the MakeHuman "default" rig.
+- High-detail faces (`characters/hd/*.glb`): MPFB2 builds with skin, hair, brows and eyes, also CC0 MakeHuman-derived assets. Optional in the viewer's Settings → Body detail → High.
 
 ## Costumes (`styles/`)
 

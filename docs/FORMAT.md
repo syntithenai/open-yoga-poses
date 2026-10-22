@@ -11,6 +11,9 @@
   "bones": { "root": [0.935, -0.309, -0.085, -0.151], "upperleg01.L": [0.818, -0.025, -0.394, -0.418] },
   "restAxes": { "root": [0, 1, 0], "upperleg01.L": [-0.032, -0.264, -0.964] },
   "root": { "head": [0.094, 0.224, 0.644] },
+  "props": [
+    { "type": "chair", "seat": [0, 0.05, 0.46], "yaw": 0, "size": { "w": 0.46, "d": 0.42, "back": 0.42 }, "manual": true }
+  ],
   "floor": { "lowest": 0, "contacts": ["foot.L", "foot.R"] }
 }
 ```
@@ -22,6 +25,7 @@
 | `bones` | For each bone, its rotation away from the rest pose, in armature space, as a unit quaternion `[w, x, y, z]`. A bone that isn't listed keeps its parent's rotation. |
 | `restAxes` | Optional. The direction each bone pointed at rest on the body the pose was made on. Players use it to correct small differences between bodies. |
 | `root.head` | Position of the root bone's head, in metres. |
+| `props` | Optional 3D geometry props in the pose frame: `chair` (`seat` xyz + `yaw`), `block` (`at` xyz + `yaw` + `size`), `wall` (`at` xy + `yaw`). At most one chair and one wall. This is separate from catalog teaching-field `props` (a string list like `"block", "strap"`). |
 | `floor.contacts` | Bones that touch the floor. Players snap the lowest point of the body to z = 0. |
 
 To apply a pose to a body: walk the skeleton from the root. For each bone, take its rest rotation in the pose frame, multiply by the pose's rotation (the parent's, if the bone isn't listed), then convert to a rotation relative to its parent. `viewer/pose.js` does exactly this in about 60 lines.
@@ -38,7 +42,13 @@ An array, one entry per pose:
   "altNames": ["Warrior 2"],
   "category": "standing",
   "difficulty": 3,
+  "muscles": ["quads", "glutes", "shoulders"],
   "drishti": "Over the front fingertips",
+  "description": "A strong standing lunge with arms reaching out along the mat.",
+  "goodFor": "Leg strength and hip opening.",
+  "breathCue": "Breathe steadily; lengthen on the inhale.",
+  "alignmentCues": ["Front knee tracks over ankle", "Back foot angled ~45°"],
+  "defaultHoldSec": 30,
   "basePoseId": "warrior-ii"
 }
 ```
@@ -46,6 +56,7 @@ An array, one entry per pose:
 - `category`: `standing`, `floor`, `arm-balance`, `inversion`, `chair`, `breath` or `transition`.
 - `difficulty`: 1 (gentle) to 5 (advanced). Optional, and only set where a person has rated the pose; rating the rest is welcome.
 - `basePoseId`: set on named variations, pointing at the pose they vary.
+- Teaching fields (`description`, `goodFor`, `muscles`, `breathCue`, `transitionIn`, `props`, `modifications`, `deepen`, `avoidIf`, `commonMistakes`, `alignmentCues`, hold seconds) are optional and shown in the viewer info block / Edit info form.
 
 ## Moves: `transitions.json` (`yoga-transitions/1`)
 
@@ -82,15 +93,15 @@ A key has no `restAxes` of its own: players blend the two poses' `restAxes` at `
 The viewer's **Suggest this edit** and **Suggest this move** buttons put the edited 3D data into the issue, so a maintainer can apply it by adding the `apply-edit` label (or locally with `python3 tools/apply_edit.py issue.md`).
 
 ```json
-{ "format": "open-yoga-edit/1", "kind": "pose", "pose": "warrior-ii", "bones": { "upperarm01.L": [0.7, 0.1, -0.7, 0.1] }, "root": { "head": [0.09, 0.22, 0.64] } }
+{ "format": "open-yoga-edit/1", "kind": "pose", "pose": "warrior-ii", "bones": { "upperarm01.L": [0.7, 0.1, -0.7, 0.1] }, "root": { "head": [0.09, 0.22, 0.64] }, "props": [{ "type": "block", "at": [0.3, -0.4, 0], "yaw": 0, "size": [0.23, 0.15, 0.075] }] }
 { "format": "open-yoga-edit/1", "kind": "move", "from": "cat", "to": "cow", "transition": { "durationSec": 3, "keys": [] } }
 { "format": "open-yoga-edit/1", "kind": "app-pose", "pose": "warrior-ii", "bones": { "root": [1, 0, 0, 0] }, "fields": { "name": "Warrior II", "sanskrit": "Virabhadrasana B", "description": "…" }, "animations": [] }
 { "format": "open-yoga-edit/1", "kind": "routine", "routine": { "format": "open-yoga-routine/1", "id": "gentle-morning", "title": "Gentle morning", "steps": [] } }
 ```
 
-A pose edit lists only the bones that changed; they replace those bones in `poses/<id>.json`. A move edit replaces the whole move. A routine edit writes `routines/<id>.json`.
+A pose edit lists only the bones that changed; they replace those bones in `poses/<id>.json`. When `props` is present it replaces the pose file's geometry props (an empty list clears them). A move edit replaces the whole move. A routine edit writes `routines/<id>.json`.
 
-An **app-pose** edit comes from the SynthYoga pose editor or a signed-in suggest on this viewer. It must include bones. It may also carry `creditName`, catalog fields (`name`, `sanskrit`, `altNames`, `category`, `intensity` → `difficulty`, `tags`, `drishti`, `basePoseId`), other teaching fields (written to `incoming/` as a patch for the app's `apply_pose_edits.ts`), and keyframed `animations` (written as moves when both pose ids are in the catalog). An empty `sourcePoseId` means a new pose: `apply_edit.py` creates `poses/<id>.json` and a catalog entry.
+An **app-pose** edit comes from the SynthYoga pose editor or a signed-in suggest on this viewer. It must include bones. It may also carry geometry `props`, `creditName`, catalog fields (`name`, `sanskrit`, `altNames`, `category`, `intensity` → `difficulty`, `tags`, `drishti`, `basePoseId`), other teaching fields (written to `incoming/` as a patch for the app's `apply_pose_edits.ts`), and keyframed `animations` (written as moves when both pose ids are in the catalog). An empty `sourcePoseId` means a new pose: `apply_edit.py` creates `poses/<id>.json` and a catalog entry.
 
 When the JSON is long, the viewer sends it as one line, `OYE1.` followed by the JSON compressed with raw deflate and encoded as base64url (no padding). In Python: `json.loads(zlib.decompress(base64.urlsafe_b64decode(token + "=" * (-len(token) % 4)), -15))`.
 

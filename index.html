@@ -19,29 +19,48 @@
   </head>
   <body>
     <header class="top">
-      <div>
+      <div class="top-bar">
         <h1>Open Yoga Poses</h1>
-        <p class="lede">An open library of 3D yoga poses. Spot something wrong? Edit the body right here, then suggest your fix: every correction stays open for everyone. Edits save in your browser until you're ready.</p>
+        <p class="lede compact">
+          <a class="icon-link" href="https://github.com/syntithenai/open-yoga-poses" title="GitHub" aria-label="GitHub repository" target="_blank" rel="noopener">
+            <svg viewBox="0 0 16 16" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/></svg>
+          </a>
+          <span>Everything freely usable under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">Creative Commons BY-SA 4.0</a>.</span>
+          <span class="app-cta">Try timed practice and more with the SynthYoga app
+            <a class="app-btn" href="https://yoga.synthfit.online/" target="_blank" rel="noopener" title="Open SynthYoga">
+              <img src="viewer/synthyoga-mark.png" width="24" height="24" alt="" />
+              <span>SynthYoga</span>
+            </a>
+          </span>
+        </p>
+        <div class="top-actions">
+          <div id="auth" class="auth" aria-label="Account"></div>
+        </div>
       </div>
-      <nav>
-        <div id="auth" class="auth" aria-label="Account"></div>
-        <a href="https://github.com/syntithenai/open-yoga-poses">GitHub</a>
-        <a href="routines.html">Routines</a>
+      <nav class="page-tabs" aria-label="Library sections">
+        <a href="./" class="page-tab" aria-current="page">Poses</a>
+        <a href="routines.html" class="page-tab">Routines</a>
       </nav>
     </header>
 
     <main class="layout">
       <section class="browse" aria-label="Find a pose">
-        <input id="q" type="search" placeholder="Search: warrior, trikonasana, balance…" autocomplete="off" aria-label="Search poses" />
-        <div id="cats" class="chips" role="group" aria-label="Category"></div>
-        <p id="count" class="muted"></p>
-        <ul id="list" class="list"></ul>
+        <div class="browse-toolbar">
+          <button type="button" id="new-pose" class="auth-btn">New pose</button>
+          <button id="settings" type="button" class="auth-btn" aria-haspopup="dialog">Style</button>
+        </div>
+        <div class="search-wrap">
+          <input id="q" type="search" placeholder="Search: warrior, trikonasana, balance…" autocomplete="off" aria-label="Search poses" aria-controls="list" aria-autocomplete="list" />
+          <div id="cats" class="chips" role="group" aria-label="Category"></div>
+          <p id="count" class="muted"></p>
+          <ul id="list" class="list" role="listbox" aria-label="Pose matches"></ul>
+        </div>
       </section>
 
       <section class="stage" aria-label="3D view">
         <div id="view" class="view"><p id="status" class="status">Loading…</p></div>
+        <div id="details-panel" class="details-panel" hidden></div>
         <div class="stage-bar">
-          <button id="settings" type="button" aria-haspopup="dialog">Settings</button>
           <p id="look-summary" class="look-summary muted" aria-live="polite"></p>
           <button id="reset" type="button">Reset view</button>
         </div>
@@ -52,8 +71,12 @@
     </main>
 
     <footer class="foot">
-      <p>Pose data, moves, routines and catalog: <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>, Open Yoga Poses contributors (credited on each pose and in git history). Bodies: CC0 (Anny, MakeHuman). Viewer code: MIT.</p>
-      <p>From <a href="https://yoga.synthfit.online/">SynthYoga</a>, a free yoga app with free tools for teachers and community classes: <a href="https://yoga.synthfit.online/#/for-teachers">yoga.synthfit.online/#/for-teachers</a>. Sign in with the same Google account to suggest poses and be credited.</p>
+      <p class="foot-row">
+        <a class="icon-link" href="https://github.com/syntithenai/open-yoga-poses" title="GitHub" aria-label="GitHub" target="_blank" rel="noopener">
+          <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/></svg>
+        </a>
+        <span>Pose data, moves, routines &amp; catalog: <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">Creative Commons BY-SA 4.0</a> · Viewer MIT · Bodies CC0 (Anny, MakeHuman / MPFB) · © Steve Ryan and Open Yoga Poses contributors</span>
+      </p>
     </footer>
   </body>
 </html>

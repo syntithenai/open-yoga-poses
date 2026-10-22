@@ -16,7 +16,15 @@ const PASTE_HINT = 'The 3D data is on your clipboard. Select this line and paste
 const SAME = 1e-4
 const sameQuat = (a, b) => !!a && !!b && Math.abs(a[0] * b[0] + a[1] * b[1] + a[2] * b[2] + a[3] * b[3]) > 1 - SAME
 
-/** Only the bones that differ from the published pose. */
+function sameProps(a, b) {
+  try {
+    return JSON.stringify(a || []) === JSON.stringify(b || [])
+  } catch {
+    return false
+  }
+}
+
+/** Only the bones / root / props that differ from the published pose. */
 export function poseEnvelope(id, published, edited) {
   const bones = {}
   for (const [n, q] of Object.entries(edited.bones)) {
@@ -26,6 +34,7 @@ export function poseEnvelope(id, published, edited) {
   const head = edited.root?.head
   const was = published.root?.head
   if (head && (!was || head.some((v, i) => Math.abs(v - was[i]) > 1e-4))) env.root = { head }
+  if (Array.isArray(edited.props) && !sameProps(edited.props, published.props)) env.props = edited.props
   return env
 }
 
@@ -37,7 +46,7 @@ export function moveEnvelope(from, to, transition) {
  * Full app-pose envelope (3D + teaching fields + credit) for signed-in submits.
  * `sourcePoseId` empty means a new pose.
  */
-export function appPoseEnvelope({ pose, sourcePoseId = '', copyId = '', creditName = '', bones, root, fields = {}, animations }) {
+export function appPoseEnvelope({ pose, sourcePoseId = '', copyId = '', creditName = '', bones, root, props, fields = {}, animations }) {
   const env = {
     format: EDIT_FORMAT,
     kind: 'app-pose',
@@ -49,6 +58,7 @@ export function appPoseEnvelope({ pose, sourcePoseId = '', copyId = '', creditNa
     fields: fields || {},
   }
   if (root?.head) env.root = { head: root.head }
+  if (Array.isArray(props)) env.props = props
   if (Array.isArray(animations) && animations.length) env.animations = animations
   return env
 }
@@ -72,6 +82,7 @@ export async function githubSubmit({ apiBase, accessToken, licenceAccepted, enve
       pose: envelope.pose,
       bones: envelope.bones,
       ...(envelope.root ? { root: envelope.root } : {}),
+      ...(Array.isArray(envelope.props) ? { props: envelope.props } : {}),
     },
     ...(envelope.animations ? { animations: envelope.animations } : {}),
   }

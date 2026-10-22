@@ -25,7 +25,8 @@
     54,
     32
    ]
-  }
+  },
+  "hdFile": "hd/joe.glb"
  },
  {
   "id": "amara",
@@ -53,7 +54,8 @@
     40,
     56
    ]
-  }
+  },
+  "hdFile": "hd/amara.glb"
  },
  {
   "id": "kenji",
@@ -81,7 +83,8 @@
     52,
     60
    ]
-  }
+  },
+  "hdFile": "hd/kenji.glb"
  },
  {
   "id": "mia",
@@ -109,7 +112,8 @@
     50,
     70
    ]
-  }
+  },
+  "hdFile": "hd/mia.glb"
  },
  {
   "id": "priya",
@@ -137,7 +141,8 @@
     38,
     56
    ]
-  }
+  },
+  "hdFile": "hd/priya.glb"
  },
  {
   "id": "ravi",
@@ -165,7 +170,8 @@
     52,
     60
    ]
-  }
+  },
+  "hdFile": "hd/ravi.glb"
  },
  {
   "id": "grace",
@@ -193,7 +199,8 @@
     40,
     52
    ]
-  }
+  },
+  "hdFile": "hd/grace.glb"
  },
  {
   "id": "kwame",
@@ -221,7 +228,8 @@
     42,
     48
    ]
-  }
+  },
+  "hdFile": "hd/kwame.glb"
  },
  {
   "id": "diego",
@@ -249,7 +257,8 @@
     46,
     54
    ]
-  }
+  },
+  "hdFile": "hd/diego.glb"
  },
  {
   "id": "lucia",
@@ -277,7 +286,8 @@
     40,
     52
    ]
-  }
+  },
+  "hdFile": "hd/lucia.glb"
  },
  {
   "id": "omar",
@@ -305,7 +315,8 @@
     46,
     52
    ]
-  }
+  },
+  "hdFile": "hd/omar.glb"
  },
  {
   "id": "linh",
@@ -333,6 +344,7 @@
     56,
     74
    ]
-  }
+  },
+  "hdFile": "hd/linh.glb"
  }
 ]

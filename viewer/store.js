@@ -1,6 +1,6 @@
 /**
  * Edits kept in this browser (localStorage), so nothing is lost between visits:
- *   poses: { [poseId]: { bones, root, updatedAt, submittedAt? } }      edited shape of a library pose
+ *   poses: { [poseId]: { bones, root, props?, updatedAt, submittedAt? } }  edited shape of a library pose
  *   moves: { ["from>to"]: { transition, updatedAt, submittedAt? } }    edited keyframed move
  *   meta:  { [poseId]: { fields, isNew?, basePoseId?, creditName?, updatedAt } }  teaching fields
  * `submittedAt` is when Suggest last opened GitHub / called github-submit with the edit.
@@ -42,7 +42,13 @@ export const editedPoseIds = () => Object.keys(data.poses)
 const submitted = (entry) => (entry?.submittedAt ? { submittedAt: entry.submittedAt } : {})
 
 export function savePose(id, shape) {
-  data.poses[id] = { bones: shape.bones, root: shape.root, updatedAt: new Date().toISOString(), ...submitted(data.poses[id]) }
+  data.poses[id] = {
+    bones: shape.bones,
+    root: shape.root,
+    ...(Array.isArray(shape.props) ? { props: shape.props } : {}),
+    updatedAt: new Date().toISOString(),
+    ...submitted(data.poses[id]),
+  }
   write()
 }
 export function discardPose(id) {
